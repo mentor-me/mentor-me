@@ -1,0 +1,21 @@
+{
+  "parser"  : "babel-eslint",
+  "extends" : [
+    "airbnb"
+  ],
+  "plugins": [
+    "babel"
+  ],
+  "ecmaFeatures": {
+      "jsx": true
+  },
+  "env": {
+      "es6": true,
+      "node": true
+  },
+  "rules": {
+    "react/jsx-indent": [2, "tab"],
+    "react/jsx-indent-props": [2, "tab"],
+    "semi" : [2, "always"]
+  }
+}
