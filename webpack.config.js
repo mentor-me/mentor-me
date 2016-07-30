@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
+  devtool: 'source-map',
   entry: [
     'webpack/hot/dev-server',
     'webpack-dev-server/client?http://localhost:8080/',
@@ -27,7 +28,6 @@ module.exports = {
     ]
   },
   devServer: {
-    devtool: 'eval',
     hot: true,
     historyApiFallback: true,
     contentBase: './',
