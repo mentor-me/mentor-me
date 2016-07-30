@@ -20,7 +20,6 @@ module.exports = {
         },
         test: /\.js$/,
         loader: [
-          'react-hot',
           'babel-loader'
         ],
         exclude: /node_modules/,
