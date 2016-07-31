@@ -219,7 +219,8 @@ var Appointment = sequelize.define('Appointment', {
 });
 
 
-User.hasMany(Skill, {foreignKey: 'mentorId'});
+User.belongsToMany(Skill, {through: 'UserSkills', foreignKey: 'mentorId'});
+Skill.belongsToMany(User, {through: 'UserSkills', foreignKey: 'skillId'});
 
 User.hasMany(Review, {foreignKey: 'learnerId'});
 User.hasMany(Review, {foreignKey: 'mentorId'});
@@ -234,16 +235,18 @@ User.hasMany(Review, {foreignKey: 'mentorId'});
 User.hasMany(Appointment, {foreignKey: 'learnerId'});
 User.hasMany(Appointment, {foreignKey: 'mentorId'});
 
-Quality.belongsTo(User, {foreignKey: 'mentorId'});
-Preference.belongsTo(User, {foreignKey: 'learnerId'});
+User.hasOne(Quality, {foreignKey: 'mentorId'});
+// Quality.belongsTo(User, {foreignKey: 'mentorId'});
+User.hasOne(Preference, {foreignKey: 'learnerId'});
+// Preference.belongsTo(User, {foreignKey: 'learnerId'});
 
 
 Conversation.hasMany(Message, {foreignKey: 'conversationId'});
 
 //
-// sequelize.sync().then(function(){
-//    console.log("Created tables in db.js");
-// });
+sequelize.sync().then(function(){
+   console.log("Created tables in db.js");
+});
 
 
 // will drop the tables and init them

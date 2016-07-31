@@ -1,6 +1,7 @@
-var router = require("express").Router();
-var _      = require('lodash');
-var Users  = require('../models/user');
+var router    = require("express").Router();
+var _         = require('lodash');
+var Users     = require('../models/user');
+var Learners  = require('../models/userLearner');
 
 
 router.get('/learner', function(req, res){
@@ -11,15 +12,17 @@ router.get('/learner/search', function(req, res){
   console.log("/learner/search");
   var term = req.query.q ;
   console.log(term);
-  Users.userSearchMentors(req, res, term);
+  Learners.learnerSearchMentors(req, res, term);
 
 });
 
 router.get('/learner/mentors', function(req, res){
   console.log("/learner/mentors");
-  Users.userFetchMentors(req, res);
+  Learners.learnerFetchMentors(req, res);
 
 });
+
+
 
 
 router.post('/learner/users', function(req, res){
@@ -30,21 +33,28 @@ router.post('/learner/users', function(req, res){
                 'secondary_role', 'rating', 'total_appointments',
                 'rate', 'description', 'availability'
                 );
+  var skills = req.body.skills
+  var preferences = req.body.preferences
 
-  Users.userCreate(req, res, newUser);
+
+  Learners.learnerCreate(req, res, newUser, skills, preferences);
 });
+
+
+
 
 router.get('/learner/users/:userId', function(req, res){
+  var userId = req.params.userId;
+  Learners.learnerFetchedById(req, res, userId);
+});
 
-
+router.get('/learner/users/:userId/perferences', function(req, res){
+  var userId = req.params.userId;
+  Learners.learnerFetchPreferences(req, res, userId);
 });
 
 
 
-router.get('/learner/users/:userId/mentors', function(req, res){
-
-
-});
 
 
 router.post('/learner/test', function(req, res){
