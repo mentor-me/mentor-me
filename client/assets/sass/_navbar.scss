@@ -1,0 +1,28 @@
+.navbar {
+  background-color: $secondary-gray;
+  #logo {
+    width: 150px;
+  }
+
+  ul {
+    margin-top: 5px;
+  }
+
+  li.nav-item {
+      border-right: 1px solid $secondary-graylight;
+      padding-right: 16px;
+  }
+  li.nav-item:last-child {
+      border-right: none;
+      padding-right: none;
+  }
+
+  img {
+    width: 25px;
+  }
+
+  i.fa {
+    font-size: 1.3em;
+  }
+
+}
