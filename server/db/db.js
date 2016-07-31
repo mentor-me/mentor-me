@@ -25,11 +25,10 @@ sequelize
 
 var Role = sequelize.define('Role', {
   type         : Sequelize.STRING,
-  description  : Sequelize.STRING
 
   },{
    tableName :'Roles', // this will define the table's name
-   timestamps: true   // this will activate the timestamp columns
+   timestamps: false   // this will activate the timestamp columns
  });
 
 
@@ -58,7 +57,7 @@ var User = sequelize.define('User', {
         }
     },
     primary_role       : Sequelize.STRING,
-    sedondary_role     : Sequelize.STRING,
+    secondary_role     : Sequelize.STRING,
     rating             : Sequelize.STRING,
     total_appointments : Sequelize.INTEGER,
     rate               : Sequelize.REAL,
@@ -73,6 +72,9 @@ var User = sequelize.define('User', {
               notEmpty: true
       }
     },
+    salt: {
+      type: Sequelize.STRING
+    },
     passwordHash: {
       type: Sequelize.STRING
     },
@@ -81,11 +83,26 @@ var User = sequelize.define('User', {
       allowNull: false,
       validate: {
           len: [7,100]
+      },
+      set: function(value){
+        var salt = bcrypt.genSaltSync(10);
+        var hashedPassword = bcrypt.hashSync(value, salt);
+
+        this.setDataValue('password', value);
+        this.setDataValue('salt', salt);
+        this.setDataValue('passwordHash', hashedPassword);
+      }
+    },
+  },{
+    tableName :'', // this will define the table's name
+    timestamps: true ,  // this will activate the timestamp columns
+    hooks: {
+      beforeValidate: function(user, options){
+           if(typeof user.email === 'string'){
+               user.email = user.email.toLowerCase();
+        }
       }
     }
-  },{
-    tableName :'Users', // this will define the table's name
-    timestamps: true   // this will activate the timestamp columns
 });
 
 ///////////////////////////////////////////////////
@@ -116,7 +133,7 @@ var Review = sequelize.define('Review', {
 ///////////        MESSAGES          //////////////
 ///////////////////////////////////////////////////
 
-var Messages = sequelize.define('Messages', {
+var Message = sequelize.define('Message', {
   content: Sequelize.TEXT,
   },{
     tableName: 'Messages', // this will define the table's name
@@ -219,7 +236,7 @@ Review.belongsTo(User, {foreignKey: 'mentorId'});
 Conversation.belongsTo(User, {foreignKey: 'learnerId'});
 Conversation.belongsTo(User, {foreignKey: 'mentorId'});
 
-
+//
 // sequelize.sync().then(function(){
 //    console.log("Created tables in db.js");
 // });
@@ -231,6 +248,14 @@ sequelize.sync({force:true}).then(function(){
 });
 
 /// Exports to models
-exports.User   = User;
-exports.Review = Review;
-exports.Role   = Role;
+exports.User         = User;
+exports.Review       = Review;
+exports.Role         = Role;
+exports.Conversation = Conversation;
+exports.Message      = Message;
+exports.Category     = Category;
+exports.Appointment  = Appointment;
+exports.SkillLevel   = SkillLevel;
+exports.Skill        = Skill;
+exports.Preference   = Preference;
+exports.Quality      = Quality;
