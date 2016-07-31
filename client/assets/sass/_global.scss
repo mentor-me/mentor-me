@@ -1,0 +1,95 @@
+
+a, a:visited {
+ color:$accent-red;
+ font-style:none;
+}
+
+a:hover {
+  color:$secondary-white;
+}
+
+.wrapper {
+   min-height:4000px;
+}
+
+.spacer30 {
+  margin-top:30px;
+}
+
+.spacer50 {
+  margin-top:50px;
+}
+
+.spacer80 {
+  margin-top:80px;
+}
+
+.inner-btn {
+  padding: 10px 15px;
+  letter-spacing: 2px;
+  font-weight:200;
+  display: inline-block;
+  border-right: 3px solid $white;
+  border-bottom: 3px solid $white;
+  color: $accent-red;
+}
+
+.outter-btn {
+ background: $accent-red;
+ display: inline-block;
+ border: 1px solid $accent-red;
+ padding: 1px;
+}
+
+.btn-global {
+ padding: 8px 20px;
+ display: block;
+ border: 1px solid $accent-red;
+ color: $accent-red;
+ border-radius: none;
+ background: $white;
+}
+
+.btn-global:hover  {
+  background: $accent-darkred;
+  color: $white;
+}
+
+.header-tag {
+ font-weight:normal;
+ letter-spacing: 2px;
+ text-transform: uppercase;
+ display:inline-block;
+ color:white;
+ background: $accent-red;
+ padding:3px 5px;
+ margin-bottom:5px;
+}
+
+.sub-header {
+ margin-top:5px;
+ width:60%;
+}
+
+.sub-info {
+ font-style:italic;
+}
+
+input.form-control,
+select.form-control {
+  border-radius: 0;
+  appearance: none;
+}
+
+input.form-control:focus,
+select.form-control:focus {
+  border: 1px solid $input-gray;
+}
+
+.redirect {
+  padding-top: 10px;
+
+  a:hover {
+    color: $accent-red;
+  }
+}
