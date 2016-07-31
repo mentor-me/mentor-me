@@ -7,6 +7,14 @@ router.get('/learner', function(req, res){
   console.log("/learner");
 
 });
+router.get('/learner/search', function(req, res){
+  console.log("/learner/search");
+  var term = req.query.q ;
+  console.log(term);
+  Users.userSearchMentors(req, res, term);
+
+});
+
 router.get('/learner/mentors', function(req, res){
   console.log("/learner/mentors");
   Users.userFetchMentors(req, res);
@@ -26,20 +34,30 @@ router.post('/learner/users', function(req, res){
   Users.userCreate(req, res, newUser);
 });
 
-router.get('learner/users/:userId', function(req, res){
+router.get('/learner/users/:userId', function(req, res){
 
 
 });
 
 
 
-router.get('learner/users/:userId/mentors', function(req, res){
+router.get('/learner/users/:userId/mentors', function(req, res){
 
 
+});
+
+
+router.post('/learner/test', function(req, res){
+  var userInfo = req.email;
+  Users.checkUsersExistance(req, res, userInfo);
 });
 
 
 module.exports = router;
+
+
+
+
 
 // Study
 // // GET /search?q=tobi+ferret

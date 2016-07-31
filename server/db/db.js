@@ -219,21 +219,26 @@ var Appointment = sequelize.define('Appointment', {
 });
 
 
+User.hasMany(Skill, {foreignKey: 'mentorId'});
 
-Appointment.belongsTo(User, {foreignKey: 'learnerId'});
-Appointment.belongsTo(User, {foreignKey: 'mentorId'});
+User.hasMany(Review, {foreignKey: 'learnerId'});
+User.hasMany(Review, {foreignKey: 'mentorId'});
+
+User.hasMany(Conversation, {foreignKey: 'learnerId'});
+User.hasMany(Conversation, {foreignKey: 'mentorId'});
+
+User.hasMany(Review, {foreignKey: 'learnerId'});
+User.hasMany(Review, {foreignKey: 'mentorId'});
+
+
+User.hasMany(Appointment, {foreignKey: 'learnerId'});
+User.hasMany(Appointment, {foreignKey: 'mentorId'});
 
 Quality.belongsTo(User, {foreignKey: 'mentorId'});
 Preference.belongsTo(User, {foreignKey: 'learnerId'});
 
-Skill.belongsTo(SkillLevel, {foreignKey: 'skillLevelId'});
-Skill.belongsTo(User, {foreignKey: 'mentorId'});
 
-Review.belongsTo(User, {foreignKey: 'learnerId'});
-Review.belongsTo(User, {foreignKey: 'mentorId'});
-
-Conversation.belongsTo(User, {foreignKey: 'learnerId'});
-Conversation.belongsTo(User, {foreignKey: 'mentorId'});
+Conversation.hasMany(Message, {foreignKey: 'conversationId'});
 
 //
 // sequelize.sync().then(function(){
@@ -242,9 +247,9 @@ Conversation.belongsTo(User, {foreignKey: 'mentorId'});
 
 
 // will drop the tables and init them
-sequelize.sync({force:true}).then(function(){
-   console.log("Created tables in db.js");
-});
+// sequelize.sync({force:true}).then(function(){
+//    console.log("Created tables in db.js");
+// });
 
 /// Exports to models
 exports.User         = User;
