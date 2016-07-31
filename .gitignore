@@ -5,3 +5,4 @@ server/.DS_Store
 server/.env
 .config
 .env
+/css
