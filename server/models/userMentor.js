@@ -92,3 +92,16 @@ exports.mentorFetchAppointment = function(req, res, userId){
   })
 
 }
+
+exports.mentorUpdateAppointment = function(req, res, appointment, appId){
+    db.Appointment.update(appointment, {
+      where: { id: appId }
+    })
+    .then(function() {
+      res.status(200).send('Appointment '+ appId + ' update success');
+    })
+    .catch(function(err) {
+      res.status(500).send('Appointment '+ appId + ' update failed');
+    });
+
+}

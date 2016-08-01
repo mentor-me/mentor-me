@@ -52,6 +52,15 @@ router.post('/learner/users/:userId/appointment', function(req, res){
   Learners.learnerScheduleAppointment(req, res, appointment);
 });
 
+router.put('/learner/users/:userId/appointment/:appId', function(req, res){
+  var appId = req.params.appId;
+  var appointment = _.pick(req.body, 'notes', 'startTime', 'endTime',
+                    'location');
+  Learners.learnerUpdateAppointment(req, res, appointment, appId);
+});
+
+
+
 router.get('/learner/users/:userId/appointments', function(req, res){
   var userId = req.params.userId;
   Learners.learnerFetchAppointment(req, res, userId);
