@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form'
+import { fetchMentors } from '../actions/learners';
+
+/* Sub Components */
+import MentorCard from './MentorCard';
+
+/* Redux Form Fields */
 export const fields = [ 'learnerStyle', 'distance' ]
 
-
 class Learner extends Component {
+
+  componentWillMount() {
+    this.props.fetchMentors();
+  }
 
   renderPreferenceButtons() {
 
@@ -38,32 +47,11 @@ class Learner extends Component {
   }
 
   renderMentors() {
-    return (
-      <div>
-        <div className="row">
-          <div className="card">
-          <div className="card-block">
-          <h4 className="card-title">Card title</h4>
-          <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <button className="btn-global" type="submit">
-          See John's Profile
-          </button>
-          </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="card">
-          <div className="card-block">
-          <h4 className="card-title">Card title</h4>
-          <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <button className="btn-global" type="submit">
-          See John's Profile
-          </button>
-          </div>
-          </div>
-        </div>
-      </div>
-    )
+
+    let { mentors } = this.props;
+      return mentors.map((mentor, i) => {
+        return <MentorCard key={ i } mentor={ mentor } />
+      })
   }
 
 
@@ -95,7 +83,11 @@ class Learner extends Component {
 
 }
 
+function mapStateToProps(state){
+  return { mentors: state.learner.mentors }
+}
+
 export default reduxForm({
   form: 'preferences',
   fields
-})(Learner)
+}, mapStateToProps, { fetchMentors })(Learner)

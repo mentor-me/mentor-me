@@ -8,14 +8,17 @@ import {
 
  export function loginUser(loginProps) {
    const { role } = loginProps;
-   return function(dispatch) {
+   return dispatch => {
      // TODO: WIRE UP!
      axios.post('/api/users/login', loginProps)
        .then(response => {
          const data = {};
          data.name = 'Max';
          data.role = role;
-         dispatch({ type: AUTH_USER, payload: data })
+         dispatch({
+           type: AUTH_USER,
+           payload: data
+         })
          if (role === 'Learner'){
            browserHistory.push('/learner');
          } else {
@@ -30,7 +33,7 @@ import {
  }
 
  export function signupUser(loginProps) {
-   return function(dispatch) {
+   return dispatch => {
      axios.post('/api/users/signup', loginProps)
        .then(response => {
          const data = {};
