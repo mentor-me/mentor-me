@@ -92,3 +92,28 @@ exports.mentorFetchAppointment = function(req, res, userId){
   })
 
 }
+
+exports.mentorUpdateAppointment = function(req, res, appointment, appId){
+    db.Appointment.update(appointment, {
+      where: { id: appId }
+    })
+    .then(function() {
+      res.status(200).send('Appointment '+ appId + ' update successfully');
+    })
+    .catch(function(err) {
+      res.status(500).send('Appointment '+ appId + ' update failed');
+    });
+
+}
+
+exports.mentorDeleteAppointment = function(req, res, appId){
+    db.Appointment.findById(appId)
+    .then(function(appRecord) {
+      appRecord.destroy();
+      res.status(200).send('Appointment '+ appId + ' deleted successfully');
+    })
+    .catch(function(err) {
+      res.status(500).send('Appointment '+ appId + ' deleted failed');
+    });
+
+}
