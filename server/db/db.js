@@ -208,7 +208,7 @@ var Category = sequelize.define('Category', {
 ///////////////////////////////////////////////////
 
 var Appointment = sequelize.define('Appointment', {
-  type      : Sequelize.STRING,
+  notes     : Sequelize.TEXT,
   startTime : Sequelize.DATE,
   endTime   : Sequelize.DATE,
   location  : Sequelize.TEXT,
@@ -239,7 +239,6 @@ User.hasOne(Quality, {foreignKey: 'mentorId'});
 // Quality.belongsTo(User, {foreignKey: 'mentorId'});
 User.hasOne(Preference, {foreignKey: 'learnerId'});
 // Preference.belongsTo(User, {foreignKey: 'learnerId'});
-
 
 Conversation.hasMany(Message, {foreignKey: 'conversationId'});
 

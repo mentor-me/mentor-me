@@ -19,7 +19,7 @@ router.post('/mentor/users', function(req, res){
   var qualites = req.body.qualites
 
 
-  Users.mentorCreate(req, res, newUser, skills, qualites);
+  Mentors.mentorCreate(req, res, newUser, skills, qualites);
 });
 
 
@@ -28,7 +28,10 @@ router.get('/mentor/users/:userId', function(req, res){
   Mentors.mentorFetchedById(req, res, userId);
 });
 
-
+router.get('/mentor/users/:userId/appointments', function(req, res){
+  var userId = req.params.userId;
+  Mentors.mentorFetchAppointment(req, res, userId);
+});
 
 router.get('/mentor/users/:userId/qualities', function(req, res){
   var userId = req.params.userId;

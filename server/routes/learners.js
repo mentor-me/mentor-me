@@ -23,8 +23,6 @@ router.get('/learner/mentors', function(req, res){
 });
 
 
-
-
 router.post('/learner/users', function(req, res){
   console.log('learner/users');
   var newUser = _.pick(req.body, 'username', 'firstname',
@@ -36,10 +34,8 @@ router.post('/learner/users', function(req, res){
   var skills = req.body.skills
   var preferences = req.body.preferences
 
-
   Learners.learnerCreate(req, res, newUser, skills, preferences);
 });
-
 
 
 
@@ -47,6 +43,20 @@ router.get('/learner/users/:userId', function(req, res){
   var userId = req.params.userId;
   Learners.learnerFetchedById(req, res, userId);
 });
+
+
+router.post('/learner/users/:userId/appointment', function(req, res){
+  var appointment = _.pick(req.body, 'notes', 'startTime', 'endTime',
+                    'location', 'mentorId');
+  appointment.learnerId = req.params.userId;
+  Learners.learnerScheduleAppointment(req, res, appointment);
+});
+
+router.get('/learner/users/:userId/appointments', function(req, res){
+  var userId = req.params.userId;
+  Learners.learnerFetchAppointment(req, res, userId);
+});
+
 
 router.get('/learner/users/:userId/perferences', function(req, res){
   var userId = req.params.userId;
@@ -64,22 +74,3 @@ router.post('/learner/test', function(req, res){
 
 
 module.exports = router;
-
-
-
-
-
-// Study
-// // GET /search?q=tobi+ferret
-// req.query.q
-// // => "tobi ferret"
-//
-// // GET /shoes?order=desc&shoe[color]=blue&shoe[type]=converse
-// req.query.order
-// // => "desc"
-//
-// req.query.shoe.color
-// // => "blue"
-//
-// req.query.shoe.type
-// // => "converse"

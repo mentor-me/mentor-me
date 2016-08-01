@@ -77,3 +77,18 @@ exports.learnerFetchQualities = function(req, res, userId){
         });
 
 }
+
+exports.mentorFetchAppointment = function(req, res, userId){
+  console.log("inside learnerFetchAppointment")
+  db.Appointment.findAll({
+        where: {mentorId: userId}
+  })
+  .then(function(appointments){
+    res.status(200).send(appointments)
+  })
+  .catch(function(err){
+    console.error(err.message);
+    res.status(500).send(err.message);
+  })
+
+}

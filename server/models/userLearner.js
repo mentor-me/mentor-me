@@ -65,40 +65,14 @@ exports.learnerSearchMentors = function(req, res, term){
       where: {
         $or: [
 
-          {
-            username: {
-              $like: '%' + term + '%'
-            }
-          },
-          {
-            firstname: {
-              $like: '%' + term + '%'
-            }
-          },
-          {
-            lastname: {
-              $like: '%' + term + '%'
-            }
-          },
-          {
-            email: {
-              $like: '%' + term + '%'
-            }
-          },
-          {
-            phone: {
-              $like: '%' + term + '%'
-            }
-          },
-          {
-            description: {
-              $like: '%' + term + '%'
-            }
-          }
-
+          { username   : { $like: '%' + term + '%'}},
+          { firstname  : { $like: '%' + term + '%'}},
+          { lastname   : { $like: '%' + term + '%'}},
+          { email      : { $like: '%' + term + '%'}},
+          { phone      : { $like: '%' + term + '%'}},
+          { description: { $like: '%' + term + '%'}}
         ]
-      }
-      ,
+      },
       $or: [{
       include : [{
                    model : db.Skill,
@@ -141,5 +115,34 @@ exports.learnerFetchMentors = function(req, res){
     });
 
 
+
+}
+
+exports.learnerScheduleAppointment = function(req, res, appointment){
+  console.log("inside learnerScheduleAppointment", appointment)
+  db.Appointment.create(appointment)
+  .then(function(appointment){
+    res.status(200).send(appointment)
+  })
+  .catch(function(err){
+    console.error(err.message);
+    res.status(500).send(err.message);
+  })
+
+}
+
+
+exports.learnerFetchAppointment = function(req, res, userId){
+  console.log("inside learnerFetchAppointment")
+  db.Appointment.findAll({
+        where: {learnerId: userId}
+  })
+  .then(function(appointments){
+    res.status(200).send(appointments)
+  })
+  .catch(function(err){
+    console.error(err.message);
+    res.status(500).send(err.message);
+  })
 
 }
