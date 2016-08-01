@@ -59,7 +59,10 @@ router.put('/learner/users/:userId/appointment/:appId', function(req, res){
   Learners.learnerUpdateAppointment(req, res, appointment, appId);
 });
 
-
+router.delete('/learner/users/:userId/appointment/:appId', function(req, res){
+  var appId = req.params.appId;
+  Learners.learnerDeleteAppointment(req, res, appId);
+});
 
 router.get('/learner/users/:userId/appointments', function(req, res){
   var userId = req.params.userId;

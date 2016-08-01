@@ -158,3 +158,15 @@ exports.learnerUpdateAppointment = function(req, res, appointment, appId){
     });
 
 }
+
+exports.learnerDeleteAppointment = function(req, res, appId){
+    db.Appointment.findById(appId)
+    .then(function(appRecord) {
+      appRecord.destroy();
+      res.status(200).send('Appointment '+ appId + ' deleted successfully');
+    })
+    .catch(function(err) {
+      res.status(500).send('Appointment '+ appId + ' deleted failed');
+    });
+
+}

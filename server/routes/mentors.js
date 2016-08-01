@@ -51,4 +51,16 @@ router.put('/mentor/users/:userId/appointment/:appId', function(req, res){
                     'location');
   Mentors.mentorUpdateAppointment(req, res, appointment, appId);
 });
+
+router.delete('/mentor/users/:userId/appointment/:appId', function(req, res){
+  var appId = req.params.appId;
+  Mentors.mentorDeleteAppointment(req, res, appId);
+});
+
+
+
+
+
+
+//////////////////////////////////////////////////////////
 module.exports = router;
