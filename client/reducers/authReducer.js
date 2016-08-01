@@ -3,7 +3,7 @@ import {
   UNAUTH_USER
 } from '../actions/actionTypes';
 
-const INITIAL_STATE = { currentUser: null, authenticated: null, error: null };
+const INITIAL_STATE = { currentUser: {}, authenticated: false, error: null };
 
 export default function(state = INITIAL_STATE , action) {
   switch(action.type){

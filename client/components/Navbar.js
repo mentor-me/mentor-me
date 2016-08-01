@@ -8,23 +8,25 @@ import { signoutUser } from '../actions/auth';
 class Navbar extends Component {
 
   renderNavLinks() {
-    let { auth } = this.props;
-    if ( false ) {
+    const { auth, signoutUser } = this.props;
+    if ( auth.authenticated ) {
       return (
         <ul className="nav navbar-nav pull-xs-right">
-        <li className="nav-item">
-          <Link to={"/profile"} className="nav-link">
-            <i className="fa fa-cog" />
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link to={"/calendar"} className="nav-link">
-            <i className="fa fa-calendar" />
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link to={"/"} className="nav-link">Log Out</Link>
-        </li>
+          <li className="nav-item">
+            <Link to={`/learner/${auth.currentUser.username}/profile`} className="nav-link">
+              <i className="fa fa-cog" />
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to={`/learner/${auth.currentUser.username}/calendar`} className="nav-link">
+              <i className="fa fa-calendar" />
+            </Link>
+          </li>
+          <li className="nav-item">
+            <a href="#" className="nav-link" onClick={() => signoutUser()}>
+              Log Out
+            </a>
+          </li>
         </ul>
       )
     } else {
@@ -69,4 +71,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {signoutUser: signoutUser})(Navbar);
+export default connect(mapStateToProps, { signoutUser })(Navbar);

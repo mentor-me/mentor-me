@@ -18,3 +18,16 @@ export function fetchMentors() {
      })
    }
 }
+
+export function newSearchQuery(query) {
+  const endpoint = `/api/learner/search?q=${query}`;
+  return dispatch => {
+    axios.get(endpoint)
+     .then( response => {
+       dispatch({
+         type: MENTORS,
+         payload: response.data
+       });
+     })
+   }
+}

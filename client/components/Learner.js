@@ -4,6 +4,7 @@ import { fetchMentors } from '../actions/learners';
 
 /* Sub Components */
 import MentorCard from './MentorCard';
+import Search from './Search';
 
 /* Redux Form Fields */
 export const fields = [ 'learnerStyle', 'distance' ]
@@ -71,7 +72,7 @@ class Learner extends Component {
             </div>
             <div className="col-sm-8">
               <div className="row search">
-                  <input className="form-control" type="text" placeholder="Search for a mentor..." />
+                <Search />
               </div>
                 { this.renderMentors() }
             </div>
