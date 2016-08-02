@@ -2,44 +2,44 @@ var db    = require('../db/db.js');
 var async = require('async');
 
 
-exports.mentorCreate = function(req, res, newUser, skills, qualities) {
-    console.log("line 45: create mentor", newUser);
-    db.User.create(newUser)
-      .then(function(user){
-        var userRecord = user;
-        var skillsArr = [];
-        console.log("funtion ::::: ", user.setQuality);
-        console.log("the qULITES PARAMS", qualities)
-        user.createQuality(qualities, user.id)
-        .then(function(quality){
-            console.log("user quaities set", quality)
-
-            async.eachSeries(skills, function(skill, callback) {
-              db.Skill.findOrCreate({
-                  where: {
-                      title: skill
-                  }
-              })
-              .then(function(result) {
-                  skillsArr.push(result[0].dataValues.id);
-                  callback()
-              })
-              .then(function(){
-                  userRecord.setSkills(skillsArr, userRecord.id)
-              })
-              // console.log("after each", user)
-
-          })
-        })
-        .then(function(user){
-          res.status(200).send(user)
-        })
-      })
-      .catch(function(err){
-          console.error(err.message);
-          res.status(500).send(err.message);
-      });
-};
+// exports.mentorCreate = function(req, res, newUser, skills, qualities) {
+//     console.log("line 45: create mentor", newUser);
+//     db.User.create(newUser)
+//       .then(function(user){
+//         var userRecord = user;
+//         var skillsArr = [];
+//         console.log("funtion ::::: ", user.setQuality);
+//         console.log("the qULITES PARAMS", qualities)
+//         user.createQuality(qualities, user.id)
+//         .then(function(quality){
+//             console.log("user quaities set", quality)
+//
+//             async.eachSeries(skills, function(skill, callback) {
+//               db.Skill.findOrCreate({
+//                   where: {
+//                       title: skill
+//                   }
+//               })
+//               .then(function(result) {
+//                   skillsArr.push(result[0].dataValues.id);
+//                   callback()
+//               })
+//               .then(function(){
+//                   userRecord.setSkills(skillsArr, userRecord.id)
+//               })
+//               // console.log("after each", user)
+//
+//           })
+//         })
+//         .then(function(user){
+//           res.status(200).send(user)
+//         })
+//       })
+//       .catch(function(err){
+//           console.error(err.message);
+//           res.status(500).send(err.message);
+//       });
+// };
 
 
 exports.mentorFetchedById = function(req, res, userId){

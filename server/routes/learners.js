@@ -70,7 +70,7 @@ router.get('/learner/users/:userId/appointments', function(req, res){
 });
 
 
-router.get('/learner/users/:userId/perferences', function(req, res){
+router.get('/learner/users/:userId/preferences', function(req, res){
   var userId = req.params.userId;
   Learners.learnerFetchPreferences(req, res, userId);
 });

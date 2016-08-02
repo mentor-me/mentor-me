@@ -9,14 +9,25 @@ var http          = require('http');
 var formidable    = require('formidable');
 var mentorsRoutes = require("./routes/mentors");
 var learnerRoutes = require("./routes/learners");
+var authRoutes    = require('./routes/auth')
+
 var authRoutes    = require("./routes/auth");
 var db            = require('./db/db.js');
+var passport      = require('passport');
+var cookieParser  = require('cookie-parser');
+var session       = require('express-session');
+var config        = require('./config/config');
 
 
 // Utilities
+// require('./config/passport')(passport);
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(express.static('./'));
+// app.use(session({secret: config.sessionSecret,
+// 				 saveUninitialized: true,
+// 				 resave: true}));
 
 // Routing
 app.use('/api', mentorsRoutes);

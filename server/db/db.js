@@ -1,9 +1,10 @@
-var bcrypt    = require('bcrypt');
-var _         = require('lodash');
-var cryptojs  = require('crypto-js');
-var Sequelize = require('sequelize');
-var config    = require('../config/config.js');
-
+var bcrypt      = require('bcrypt');
+var _           = require('lodash');
+var cryptojs    = require('crypto-js');
+var Sequelize   = require('sequelize');
+var config      = require('../config/config');
+var configAuth  = require('../config/auth');
+var jwt         = require('jwt-simple');
 
 var sequelize = new Sequelize(config.pgUri);
 
@@ -101,7 +102,22 @@ var User = sequelize.define('User', {
                user.email = user.email.toLowerCase();
         }
       }
+    },
+    instanceMethods: {
+    generateToken: function(type){
+      if(!_.isString(type)){
+          return undefined;
+      }
+      try {
+        var timeStamp = new Date().getTime();
+        console.log("this is the sercertt ::::::",configAuth.tokenSecret )
+        var token = jwt.encode({id: this.get('id')}, configAuth.tokenSecret);
+        return token;
+      } catch(err){
+        return undefined;
+      }
     }
+  }
 });
 
 ///////////////////////////////////////////////////
