@@ -15,10 +15,10 @@ router.get('/test', requireAuth.jwtLogin, function(req, res){
   res.send({ hi: 'there' });
 });
 
-// router.post('/login', function(req, res, next) {
-//
-//
-// });
+router.get('/allMentors', function(req, res) {
+  Learners.allMentors(req, res)
+
+});
 router.post('/login', function(req, res){
   console.log("this is the req in /login ", req.body)
   var loginUser = _.pick(req.body, 'email', 'password');

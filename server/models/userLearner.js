@@ -1,5 +1,7 @@
-var db = require('../db/db.js');
+var db    = require('../db/db.js');
 var async = require('async');
+var _     = require('lodash');
+
 //
 // exports.learnerCreate = function(req, res, newUser, skills, preferences) {
 //     console.log("line 5: create learner", newUser);
@@ -83,14 +85,14 @@ exports.learnerSearchMentors = function(req, res, term){
           { lastname       : { $like: '%' + term + '%'}},
           { email          : { $like: '%' + term + '%'}},
           { phone          : { $like: '%' + term + '%'}},
-          { description    : { $like: '%' + term + '%'}}
-          // {'$skills.title$': { $like: '%' + term + '%'}}
+          { description    : { $like: '%' + term + '%'}},
+          {'$skills.title$': { $like: '%' + term + '%'}}
         ]
-      }
-      // include : [{
-      //              model : db.Skill, {through: 'UserSkills'},
-      //              as: 'skills'
-      //           }]
+      },
+      include : [{
+                   model : db.Skill,
+                   as: 'skills'
+                }]
     })
     .then(function(mentors){
         console.log("line 58: list of found mentors by term");
@@ -177,4 +179,40 @@ exports.learnerDeleteAppointment = function(req, res, appId){
       res.status(500).send('Appointment '+ appId + ' deleted failed');
     });
 
+}
+
+exports.allMentors = function(req, res){
+  db.User.findAll({
+      where: {
+        $or: [
+          {primary_role  : "1"},
+          {secondary_role: "1"}
+        ]
+      }
+    })
+    .then(function(mentors){
+      console.log("This is the mentors without skills", mentors)
+
+        async.eachSeries(mentors, function(mentor, callback) {
+          console.log("This is the mentor", JSON.stringify(mentor, null, 4))
+          mentor.getSkills()
+          .then(function(result) {
+             console.log("This is result", result)
+              //  mentor.skills = (result[0].dataValues.id))
+              //  skillsArr.push(result[0].dataValues.id);
+               callback()
+           })
+           .then(function(){
+             console.log("I am in the second call back ")
+              //  userRecord.setSkills(skillsArr, userRecord.id)
+           })
+           // console.log("after each", user)
+
+       })
+
+
+
+      // res.status(200).send("MENTORS::: ", JSON.stringify(allMentors, null, 4));
+
+    })
 }
