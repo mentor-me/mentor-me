@@ -14,7 +14,9 @@ import {
    const { role } = loginProps;
   //  browserHistory.push(`/learner/asdfsafdsfdf/profile`)
    return dispatch => {
+
      axios.post('/api/login', loginProps)
+
        .then(response => {
          console.log(response.data)
         //  localStorage.setItem('token', response.headers.auth);
