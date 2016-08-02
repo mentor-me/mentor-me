@@ -76,8 +76,12 @@ router.get('/learner/users/:userId/preferences', function(req, res){
 });
 
 
-
-
+router.put('/learner/users/:userId/preferences', function(req, res){
+  var userId     = req.params.userId;
+  var preferenceUpdate = _.pick(req.body, 'id','visual', 'academic',
+                          'remote', 'inPerson')
+  Learners.learnerUpdatePreferences(req, res, preferenceUpdate);
+});
 
 router.post('/learner/test', function(req, res){
   var userInfo = req.email;

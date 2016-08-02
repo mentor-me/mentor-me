@@ -1,6 +1,6 @@
 var db = require('../db/db.js');
 var async = require('async');
-// 
+//
 // exports.learnerCreate = function(req, res, newUser, skills, preferences) {
 //     console.log("line 5: create learner", newUser);
 //     db.User.create(newUser)
@@ -63,6 +63,15 @@ exports.learnerFetchPreferences = function(req, res, userId){
 
 }
 
+exports.learnerUpdatePreferences = function(req, res, preferenceUpdate){
+  var preId = preferenceUpdate.id
+  db.Preference.update(preferenceUpdate,{ where: { id: preId }, returning:true})
+    .then(function (result) {
+        console.log("line 69:  model", JSON.stringify(result[1]));
+        res.status(200).send(result[1]);
+      });
+
+}
 
 exports.learnerSearchMentors = function(req, res, term){
   db.User.findAll({

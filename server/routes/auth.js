@@ -95,13 +95,12 @@ router.post('/mentor/signup', function(req, res, next) {
 
 });
 
-
 router.get('/auth/linkedin',
-  passport.authenticate('linkedin', { scope: ['r_fullprofile',
+  passport.authenticate('linkedin', { scope: ['r_fullprofile', 'r_id',
                         'r_first-name','r_lastname','r_emailaddress',
                         'r_skills',
                         'r_educations'] })
-                      )
+)
 
 
 
