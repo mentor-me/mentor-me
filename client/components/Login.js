@@ -9,13 +9,6 @@ class Login extends Component {
      this.props.loginUser(formProps);
    }
 
-  generateOptions() {
-     const options = ['Learner', 'Mentor'];
-     return options.map( (option, i) => {
-       return <option key={ i }> { option } </option>
-     })
-  }
-
   render(){
 
     const { handleSubmit, fields: { role, email, password }} = this.props;
@@ -29,12 +22,6 @@ class Login extends Component {
                 <h2 className="header-tag">login</h2>
                 <h1 className="sub-header">Move your career <em>foward</em> today.</h1>
                 <div className="spacer30"></div>
-                  <div className="form-group">
-                    <select className="form-control" {...role} >
-                    <option>Login as...</option>
-                      { this.generateOptions() }
-                    </select>
-                  </div>
                   <div className="form-group">
                     <input type="text" className="form-control" placeholder="Email" {...email} />
                   </div>
@@ -56,5 +43,5 @@ class Login extends Component {
 
 export default reduxForm({
   form: 'login',
-  fields: ['role', 'email', 'password']
+  fields: ['email', 'password']
 }, null, { loginUser })(Login);
