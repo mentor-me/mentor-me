@@ -5,6 +5,7 @@ a, a:visited {
 
 a:hover {
   color: #eee;
+  text-decoration: none;
 }
 
 .wrapper {
@@ -139,4 +140,9 @@ select.form-control:focus {
 
 .learner label {
   display: block;
+}
+
+.mentor-img,
+.mentor-name {
+  display: inline-block;
 }
