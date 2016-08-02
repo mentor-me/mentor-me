@@ -1,23 +1,29 @@
 var db = require('../db/db.js');
 var async = require('async');
-
-exports.learnerCreate = function(req, res, newUser, skills, preferences) {
-    console.log("line 5: create learner", newUser);
-    db.User.create(newUser)
-      .then(function(user){
-        user.createPreference(preferences, user.id)
-        .then(function(preference){
-            console.log("user perferences set", preference)
-        })
-      })
-      .then(function(user){
-        res.status(200).send(user)
-      })
-      .catch(function(err){
-          console.error(err.message);
-          res.status(500).send(err.message);
-      });
-};
+// 
+// exports.learnerCreate = function(req, res, newUser, skills, preferences) {
+//     console.log("line 5: create learner", newUser);
+//     db.User.create(newUser)
+//       .then(function(user){
+//         user.createPreference(preferences, user.id)
+//         .then(function(preference){
+//             // console.log("user perferences set", preference)
+//           return user;
+//         })
+//         .then(function(user){
+//           var token = user.generateToken('auth');
+//           console.log("this after preferences :::::: ", token);
+//           res.status(200)
+//               .header('Auth', token)
+//               .header('currentUser', user.id)
+//               .send({token: token, currentUser: user.id})
+//         })
+//       })
+//       .catch(function(err){
+//           console.error(err.message);
+//           res.status(500).send(err.message + " Username and Email must be unique");
+//       });
+// };
 
 
 
@@ -58,29 +64,24 @@ exports.learnerFetchPreferences = function(req, res, userId){
 }
 
 
-
-
 exports.learnerSearchMentors = function(req, res, term){
   db.User.findAll({
       where: {
         $or: [
 
-          { username   : { $like: '%' + term + '%'}},
-          { firstname  : { $like: '%' + term + '%'}},
-          { lastname   : { $like: '%' + term + '%'}},
-          { email      : { $like: '%' + term + '%'}},
-          { phone      : { $like: '%' + term + '%'}},
-          { description: { $like: '%' + term + '%'}}
+          { username       : { $like: '%' + term + '%'}},
+          { firstname      : { $like: '%' + term + '%'}},
+          { lastname       : { $like: '%' + term + '%'}},
+          { email          : { $like: '%' + term + '%'}},
+          { phone          : { $like: '%' + term + '%'}},
+          { description    : { $like: '%' + term + '%'}}
+          // {'$skills.title$': { $like: '%' + term + '%'}}
         ]
-      },
-      $or: [{
-      include : [{
-                   model : db.Skill,
-                   where : { title : {
-                     $like: '%' + term + '%'}
-                     }
-                }]
-      }]
+      }
+      // include : [{
+      //              model : db.Skill, {through: 'UserSkills'},
+      //              as: 'skills'
+      //           }]
     })
     .then(function(mentors){
         console.log("line 58: list of found mentors by term");
@@ -90,8 +91,6 @@ exports.learnerSearchMentors = function(req, res, term){
         console.error(err.message);
         res.status(500).send(err.message);
     });
-
-
 }
 
 

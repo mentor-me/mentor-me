@@ -6,4 +6,5 @@ server/.env
 .config
 .env
 /css
-config.js
+
+config/*
