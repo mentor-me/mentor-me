@@ -9,16 +9,23 @@ class Signup extends Component {
     this.props.signupUser(formProps);
   }
 
-  generateOptions() {
-    const options = ['Learner', 'Mentor'];
-    return options.map((option, i) => {
-      return <option key={ i }> { option } </option>
-    })
+  createLearnerStylePreferences() {
+     const options = ['Visual', 'Academic'];
+     return options.map( (option, i) => {
+       return <option key={ i }> { option } </option>
+     })
+  }
+
+  createMeetingFormatPreferences() {
+     const options = ['Remote', 'In Person'];
+     return options.map( (option, i) => {
+       return <option key={ i }> { option } </option>
+     })
   }
 
   render() {
 
-    const { handleSubmit, fields: { firstName, lastName, phoneNum, zipCode, email, password }} = this.props;
+    const { handleSubmit, fields: { username, firstname, lastname, learnerStyle, meetingFormat, email, password }} = this.props;
 
     return (
         <div className="spacer50">
@@ -30,16 +37,25 @@ class Signup extends Component {
                 <h1 className="sub-header">Your ideal <em>mentor</em> is waiting for you.</h1>
                 <div className="spacer30"></div>
                   <div className="form-group">
-                    <input type="text" className="form-control" placeholder="First Name" {...firstName} />
+                    <input type="text" className="form-control" placeholder="First Name" {...username} />
                   </div>
                   <div className="form-group">
-                    <input type="text" className="form-control" placeholder="Last Name" {...lastName} />
+                    <input type="text" className="form-control" placeholder="First Name" {...firstname} />
                   </div>
                   <div className="form-group">
-                    <input type="text" className="form-control" placeholder="Phone Number" {...phoneNum} />
+                    <input type="text" className="form-control" placeholder="Last Name" {...lastname} />
                   </div>
                   <div className="form-group">
-                    <input type="text" className="form-control" placeholder="Zip Code" {...zipCode} />
+                    <select className="form-control" {...learnerStyle} >
+                    <option>Select your learner style...</option>
+                      { this.createLearnerStylePreferences() }
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <select className="form-control" {...meetingFormat} >
+                    <option>Select a preferred meeting format...</option>
+                      { this.createMeetingFormatPreferences() }
+                    </select>
                   </div>
                   <div className="form-group">
                     <input type="text" className="form-control" placeholder="Email" {...email} />
@@ -62,6 +78,6 @@ class Signup extends Component {
 }
 
 export default reduxForm({
-  form: 'login',
-  fields: ['firstName', 'lastName', 'phoneNum', 'zipCode', 'email', 'password']
+  form: 'signup',
+  fields: ['username', 'firstname', 'lastname', 'learnerStyle', 'meetingFormat', 'email', 'password']
 }, null, { signupUser })(Signup);
