@@ -17,7 +17,7 @@ exports.learnerCreate = function(req, res, newUser, skills, preferences) {
           res.status(200)
               .header('Auth', token)
               .header('currentUser', user.id)
-              .send(user)
+              .send({token: token, currentUser: user.id})
         })
       })
       .catch(function(err){
@@ -43,7 +43,7 @@ exports.learnerLogin = function(req, res, loginUser){
         res.status(200)
             .header('Auth', token)
             .header('currentUser', user.id)
-            .send(user)
+            .send({token: token, currentUser: user.id})
     }
     else
     {
@@ -61,28 +61,28 @@ exports.learnerLogin = function(req, res, loginUser){
 
 exports.mentorCreate = function(req, res, newUser, skills, qualities) {
     console.log("line 45: create mentor", newUser);
+    console.log("This is the skills coming in" , skills)
     db.User.create(newUser)
       .then(function(user){
         var userRecord = user;
         var skillsArr = [];
-        console.log("funtion ::::: ", user.setQuality);
-        console.log("the qULITES PARAMS", qualities)
+        // console.log("funtion ::::: ", user.setQuality);
+        // console.log("the qULITES PARAMS", qualities)
         user.createQuality(qualities, user.id)
         .then(function(quality){
-            console.log("user quaities set", quality)
-
+            // console.log("user quaities set", quality)
+            // user.setSkills().then(function(skill){
+            //   console.log("This is the skill thing", skill)
+            // })
             async.eachSeries(skills, function(skill, callback) {
-              db.Skill.findOrCreate({
-                  where: {
-                      title: skill
-                  }
-              })
+              console.log(skill)
+              var skillObj = {title: skill}
+              user.createSkill(skillObj, user.id)
               .then(function(result) {
-                  skillsArr.push(result[0].dataValues.id);
-                  callback()
+                callback()
               })
               .then(function(){
-                  userRecord.setSkills(skillsArr, userRecord.id)
+                  // userRecord.setSkills(skillsArr, userRecord.id)
               })
 
           })
@@ -94,7 +94,7 @@ exports.mentorCreate = function(req, res, newUser, skills, qualities) {
           res.status(200)
           .header('Auth', token)
           .header('currentUser', user.id)
-          .send(user)
+          .send({token: token, currentUser: user.id})
         })
       })
       .catch(function(err){
@@ -122,7 +122,7 @@ exports.mentorLogin = function(req, res, loginUser){
         res.status(200)
             .header('Auth', token)
             .header('currentUser', user.id)
-            .send(user)
+            .send({token: token, currentUser: user.id})
     }
     else
     {

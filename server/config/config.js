@@ -1,7 +1,7 @@
 var path = require('path');
 
 module.exports = {
-  database      : 'mentorme',
+  database      : 'mentor-me',
   user          : 'mentormeadmin',
   password      : '!password',
   server        : 'mentorme.marcoberardini.com',
