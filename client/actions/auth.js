@@ -10,22 +10,15 @@ import {
    const { role } = loginProps;
    return dispatch => {
      // TODO: WIRE UP!
-     axios.get('/api/learners/users/3') //add back login props for a post
+     axios.post('/api/login', loginProps) //add back login props for a post
        .then(response => {
-         const data = {};
-         data.name = 'Max';
-         data.username = "meinstein";
-         data.role = "Learner";
-         data.id = 1;
+         localStorage.setItem('token', response.headers.auth);
+         localStorage.setItem('currentUser', response.data.currentUser);
          dispatch({
            type: AUTH_USER,
            payload: data
          })
-         if (data.role === 'Learner'){
-           browserHistory.push(`/learner/${data.username}`);
-         } else {
-           browserHistory.push('/mentor');
-         }
+         browserHistory.push(`/learner/${data.username}`);
        })
        .catch((err) => {
          // dispatch AUTH_ERROR
@@ -52,15 +45,14 @@ import {
   }
 
    return dispatch => {
-     axios.post('/api/learner/users', data)
+     axios.post('/api/signup', data)
        .then(response => {
          console.log('sign up resp: ', response)
-         dispatch({ type: AUTH_USER, payload: data })
-         if (data.primary_role === 1){
-           browserHistory.push(`/learner/${data.username}`);
-         } else {
-           browserHistory.push('/mentor');
-         }
+         dispatch({
+           type: AUTH_USER,
+           payload: data
+         })
+         browserHistory.push(`/learner/${data.username}`);
        })
        .catch((err) => {
          // dispatch AUTH_ERROR
@@ -73,6 +65,7 @@ import {
    //remove token
    return dispatch => {
      dispatch({ type: UNAUTH_USER });
+     localStorage.removeItem('token');
      browserHistory.push('/');
    }
  }
