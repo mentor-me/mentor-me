@@ -1,4 +1,25 @@
-.mentor-img,
-.mentor-name {
-  display: inline-block;
+div.mentor-profile {
+
+  div.card-block {
+    display: table;
+    width: 100%;
+  }
+
+  img.mentor-img,
+  button.btn-global,
+  div.mentor-rating,
+  h4.mentor-name {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  h4.mentor-name {
+    width: 18%;
+  }
+
+  img.mentor-img {
+    width: 42px;
+  }
+
+
 }

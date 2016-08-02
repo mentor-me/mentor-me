@@ -6,26 +6,23 @@ import {
   UNAUTH_USER
 } from './actionTypes';
 
+////////////////////////////////////////////
+////////// LEARNER RELATED ACTIONS ////////
+//////////////////////////////////////////
+
  export function loginUser(loginProps) {
    const { role } = loginProps;
+  //  browserHistory.push(`/learner/asdfsafdsfdf/profile`)
    return dispatch => {
-     // TODO: WIRE UP!
-     axios.get('/api/learners/users/3') //add back login props for a post
+     axios.post('/api/login', loginProps)
        .then(response => {
-         const data = {};
-         data.name = 'Max';
-         data.username = "meinstein";
-         data.role = "Learner";
-         data.id = 1;
+         console.log(response.data)
+        //  localStorage.setItem('token', response.headers.auth);
          dispatch({
            type: AUTH_USER,
-           payload: data
+           payload: response.data
          })
-         if (data.role === 'Learner'){
-           browserHistory.push(`/learner/${data.username}`);
-         } else {
-           browserHistory.push('/mentor');
-         }
+         browserHistory.push(`/learner/${response.data.username}`);
        })
        .catch((err) => {
          // dispatch AUTH_ERROR
@@ -52,15 +49,14 @@ import {
   }
 
    return dispatch => {
-     axios.post('/api/learner/users', data)
+     axios.post('/api/signup', data)
        .then(response => {
          console.log('sign up resp: ', response)
-         dispatch({ type: AUTH_USER, payload: data })
-         if (data.primary_role === 1){
-           browserHistory.push(`/learner/${data.username}`);
-         } else {
-           browserHistory.push('/mentor');
-         }
+         dispatch({
+           type: AUTH_USER,
+           payload: data
+         })
+         browserHistory.push(`/learner/${data.username}`);
        })
        .catch((err) => {
          // dispatch AUTH_ERROR
@@ -73,6 +69,45 @@ import {
    //remove token
    return dispatch => {
      dispatch({ type: UNAUTH_USER });
+    //  localStorage.removeItem('token');
      browserHistory.push('/');
    }
  }
+
+////////////////////////////////////////////
+////////// MENTOR RELATED ACTIONS /////////
+//////////////////////////////////////////
+
+export function signupMentor(loginProps) {
+
+ let data = {
+   username: loginProps.username,
+   firstname: loginProps.firstname,
+   firstname: loginProps.lastname,
+   email: loginProps.email,
+   password: loginProps.password,
+   primary_role: 1,
+   preferences: {
+     visual: loginProps.learnerStyle == "Visual" ? 'true' : 'false',
+     academic: loginProps.learnerStyle == "Academic" ? 'true' : 'false',
+     remote: loginProps.meetingFormat == "Remote" ? 'true' : 'false',
+     inPerson: loginProps.meetingFormat == "In Person" ? 'true' : 'false'
+   }
+ }
+
+  return dispatch => {
+    axios.post('/api/mentor/login', data)
+      console.log(data)
+      .then(response => {
+        dispatch({
+          type: AUTH_USER,
+          payload: data
+        })
+        browserHistory.push(`/learner/${data.username}`);
+      })
+      .catch((err) => {
+        // dispatch AUTH_ERROR
+        console.log("Sign up bad", err);
+      });
+  }
+}

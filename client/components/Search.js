@@ -11,17 +11,16 @@ class Search extends Component {
     super(props);
 
     this.state = {
-      query: ''
+      query: '',
     };
 
     this.filterMentors = _.debounce(this.filterMentors, 600);
-
   }
 
   handleQueryChange(e) {
     this.setState({
-      query: e.target.value
-    })
+      query: e.target.value,
+    });
     this.filterMentors();
   }
 

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { reduxForm } from 'redux-form';
-import { signupUser } from '../actions/auth.js';
+import { signupMentor } from '../actions/auth.js';
 
-class Signup extends Component {
+class SignupMentor extends Component {
 
   handleFormSubmit(formProps) {
     this.props.signupUser(formProps);
@@ -77,6 +77,6 @@ class Signup extends Component {
 }
 
 export default reduxForm({
-  form: 'signup',
+  form: 'signupMentor',
   fields: ['username', 'firstname', 'lastname', 'learnerStyle', 'meetingFormat', 'email', 'password'],
-}, null, { signupUser })(Signup);
+}, null, { signupMentor })(SignupMentor);

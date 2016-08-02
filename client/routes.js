@@ -1,16 +1,21 @@
 import React from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-/* Import components */
+
+/* General Purpose Components */
 import App from './components/App';
 import Welcome from './components/Welcome';
+
+/* Learner Related Components */
 import Login from './components/Login';
 import Signup from './components/Signup';
 import LearnerDashboard from './components/LearnerDashboard';
 import Learner from './components/Learner';
 import Become from './components/Become';
 import Calendar from './components/Calendar';
-import LearnerProfile from './components/Calendar';
+import LearnerProfile from './components/LearnerProfile';
 import MentorProfile from './components/MentorProfile';
+/* Mentor Related Components */
+import MentorSignup from './components/SignupMentor';
 
 const routes = (
     <Route path="/" component={App} >
@@ -18,6 +23,7 @@ const routes = (
       <Route path="login" component={Login} />
       <Route path="signup" component={Signup} />
       <Route path="become" component={Become} />
+      <Route path="become/mentor" component={MentorSignup} />
       <Route component={Learner} >
         <Route path="learner/:username" component={LearnerDashboard} />
         <Route path="learner/:username/calendar" component={Calendar} />
@@ -28,3 +34,5 @@ const routes = (
 );
 
 export default routes;
+
+{/*<Route path="learner/:username/profile" component={LearnerProfile} />*/}

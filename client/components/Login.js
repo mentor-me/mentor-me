@@ -5,13 +5,12 @@ import { loginUser } from '../actions/auth.js';
 
 class Login extends Component {
 
-   handleFormSubmit(formProps) {
-     this.props.loginUser(formProps);
-   }
+  handleFormSubmit(formProps) {
+    this.props.loginUser(formProps);
+  }
 
-  render(){
-
-    const { handleSubmit, fields: { role, email, password }} = this.props;
+  render() {
+    const { handleSubmit, fields: { role, email, password } } = this.props;
 
     return (
         <div className="spacer50">
@@ -43,5 +42,5 @@ class Login extends Component {
 
 export default reduxForm({
   form: 'login',
-  fields: ['email', 'password']
+  fields: ['email', 'password'],
 }, null, { loginUser })(Login);
