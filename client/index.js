@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 import reduxThunk from 'redux-thunk';
+import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import { persistStore, autoRehydrate } from 'redux-persist';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 /* Routes */
 import routes from './routes';
@@ -12,7 +13,14 @@ import reducers from './reducers';
 import { AUTH_USER }  from './actions/actionTypes.js';
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
-const store = createStoreWithMiddleware(reducers, window.devToolsExtension ? window.devToolsExtension() : null)
+const store = createStoreWithMiddleware(reducers, window.devToolsExtension ? window.devToolsExtension() : f => f, autoRehydrate());
+persistStore(store);
+
+// const token = localStorage.getItem('token');
+//
+// if(token) {
+//   store.dispatch({type: AUTH_USER});
+// }
 
 const token = localStorage.getItem('token');
 
