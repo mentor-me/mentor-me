@@ -6,8 +6,8 @@ import learnersReducer from './learnersReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  form: form,
-  learner: learnersReducer
+  form,
+  learner: learnersReducer,
 });
 
 export default rootReducer;

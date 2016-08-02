@@ -15,18 +15,16 @@ class LearnerDashboard extends Component {
   }
 
   renderMentors() {
-
     let { mentors, auth } = this.props;
-      return mentors.map((mentor, i) => {
-        let mentorLink = `/learner/${auth}/mentor/${mentor.username}/profile`;
-        return <MentorCard key={ i } mentor={ mentor } link={ mentorLink } />
-      })
+    return mentors.map((mentor, i) => {
+      let mentorLink = `/learner/${auth}/mentor/${mentor.username}/profile`;
+      return <MentorCard key={i} mentor={mentor} link={mentorLink} />;
+    });
   }
 
 
   render() {
-
-    return(
+    return (
       <div className="spacer30">
         <div className="container-fluid learner">
           <div className="row">
@@ -37,21 +35,21 @@ class LearnerDashboard extends Component {
               <div className="row search">
                 <Search />
               </div>
-                { this.renderMentors() }
+                {this.renderMentors()}
             </div>
           </div>
         </div>
       </div>
-    )
+    );
   }
 
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
     mentors: state.learner.mentors,
-    auth: state.auth.currentUser.username
-  }
+    auth: state.auth.currentUser.username,
+  };
 }
 
 export default connect(mapStateToProps, { fetchMentors })(LearnerDashboard);

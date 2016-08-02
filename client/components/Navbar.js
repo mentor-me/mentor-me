@@ -9,7 +9,7 @@ class Navbar extends Component {
 
   renderNavLinks() {
     const { auth, signoutUser } = this.props;
-    if ( auth.authenticated ) {
+    if (auth.authenticated) {
       return (
         <ul className="nav navbar-nav pull-xs-right">
           <li className="nav-item">
@@ -28,7 +28,7 @@ class Navbar extends Component {
             </a>
           </li>
         </ul>
-      )
+      );
     } else {
       return (
         <ul className="nav navbar-nav pull-xs-right">
@@ -42,24 +42,23 @@ class Navbar extends Component {
             <Link to={"/login"} className="nav-link">Log In</Link>
           </li>
         </ul>
-      )
+      );
     }
   }
 
   render() {
-
-    return(
+    return (
       <div>
         <nav className="navbar navbar-default navbar-fixed-top ">
           <div className="container-fluid">
             <Link to={"/"} className="navbar-brand">
               <img src="./client/assets/images/logo.png" id="logo" />
             </Link>
-              { this.renderNavLinks() }
+              {this.renderNavLinks()}
           </div>
         </nav>
       </div>
-    )
+    );
   }
 
 }
@@ -67,8 +66,8 @@ class Navbar extends Component {
 
 function mapStateToProps(state) {
   return {
-    auth: state.auth
-  }
+    auth: state.auth,
+  };
 }
 
 export default connect(mapStateToProps, { signoutUser })(Navbar);

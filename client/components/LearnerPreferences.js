@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
-import { reduxForm } from 'redux-form'
+import { reduxForm } from 'redux-form';
 
 import { fetchPreferences } from '../actions/learners';
 
 /* Redux Form Fields */
-export const fields = [ 'learnerStyle', 'distance' ];
+export const fields = ['learnerStyle', 'distance'];
 
 class LearnerPreferences extends Component {
 
   componentWillMount() {
-    let { id } = this.props.auth.currentUser;
-    this.props.fetchPreferences(id);
+    const { userId } = this.props.auth.currentUser;
+    this.props.fetchPreferences(userId);
   }
 
   renderPreferenceButtons() {
-
     const { fields: { learnerStyle, distance }, prefs } = this.props;
 
     return (
@@ -42,31 +41,30 @@ class LearnerPreferences extends Component {
           </div>
         </li>
       </div>
-    )
+    );
   }
 
   render() {
-
     return (
       <div className="card">
         <div className="card-header">Preferences</div>
           <ul className="list-group list-group-flush">
-            { this.renderPreferenceButtons() }
+            {this.renderPreferenceButtons()}
           </ul>
       </div>
-    )
+    );
   }
 
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
     auth: state.auth,
-    prefs: state.learner.preferences
-  }
+    prefs: state.learner.preferences,
+  };
 }
 
 export default reduxForm({
   form: 'preferences',
-  fields
-}, mapStateToProps, { fetchPreferences })(LearnerPreferences)
+  fields,
+}, mapStateToProps, { fetchPreferences })(LearnerPreferences);
