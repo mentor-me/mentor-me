@@ -20,7 +20,7 @@ var config        = require('./config/config');
 
 
 // Utilities
-// require('./config/passport')(passport);
+require('./config/passport')(passport);
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(morgan('dev'));
