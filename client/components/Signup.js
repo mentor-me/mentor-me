@@ -37,7 +37,7 @@ class Signup extends Component {
                 <h1 className="sub-header">Your ideal <em>mentor</em> is waiting for you.</h1>
                 <div className="spacer30"></div>
                   <div className="form-group">
-                    <input type="text" className="form-control" placeholder="First Name" {...username} />
+                    <input type="text" className="form-control" placeholder="Username" {...username} />
                   </div>
                   <div className="form-group">
                     <input type="text" className="form-control" placeholder="First Name" {...firstname} />
