@@ -26,7 +26,7 @@ export function createAppointment(formProps, mentorId, userId) {
 
 export function fetchAppointments() {
 
-  const endpoint = '/api/learner/users/4/appointments';
+  const endpoint = '/api/learner/users/14/appointments';
 
   return dispatch => {
     axios.get(endpoint)
@@ -34,21 +34,21 @@ export function fetchAppointments() {
 
       console.log('response data from appt fetch', response.data);
 
-      let newData = response.data.map((appointment, i) => {
-
-          return
-              {
-                start: appointment.startTime,
-                end: appointment.endTime,
-                title: appointment.notes
-              }
-        });
-
-      console.log('newData', newData);
+      // let newData = response.data.map((appointment, i) => {
+      //
+      //     return
+      //         {
+      //           start: appointment.startTime,
+      //           end: appointment.endTime,
+      //           title: appointment.notes
+      //         }
+      //   });
+      //
+      // console.log('newData', newData);
 
             dispatch({
               type: FETCH_APPOINTMENTS,
-              payload: newData,
+              payload: response.data,
             });
       });
   };

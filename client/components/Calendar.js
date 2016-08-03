@@ -3,8 +3,7 @@ import BigCalendar from 'react-big-calendar';
 import events from '../events.js'
 import Moment from 'moment';
 import { reduxForm } from 'redux-form';
-import { createAppointment, fetchAppointments } from '../actions/calendar'; // temp for structure
-
+import { createAppointment, fetchAppointments } from '../actions/calendar';
 import Modal from 'react-modal';
 
 BigCalendar.setLocalizer(
@@ -32,7 +31,6 @@ export default class Calendar extends Component {
   componentWillMount() {
     this.props.fetchAppointments();
     //console.log('new DATE******', new Date(2016, 3, 12, 17, 30, 0, 0));
-
   }
 
   handleFormSubmit(formProps) {
@@ -55,13 +53,7 @@ export default class Calendar extends Component {
 
   open(slotInfo) {
 
-    const start = slotInfo.start;
-    const dateNow = Date.now('2015-04-15T23:00:00.000Z')
-
-    // console.log('inside open newDate!!!!!!!!!! ', new Date("2015-04-14T23:30:00.000Z"));
-
-    const timeTest = Moment('2015-04-15T23:00:00.000Z').toDate()
-    console.log('inside open slotinfo timeTest&&&&', timeTest);
+    //const start = slotInfo.start;
 
     this.setState({
       modalIsOpen: true,
@@ -74,12 +66,23 @@ export default class Calendar extends Component {
     });
   }
 
-  render() {
-    const { appointments, handleSubmit, fields: { date, startTime, endTime, location, notes } } = this.props;
+  appointmentFormat() {
 
-    if (appointments){
-      console.log(appointments, "appointments")
-    }
+    return this.props.appointments.map((appointment, i) => {
+
+        let obj =   {
+            start: new Date(appointment.startTime),
+            end: new Date(appointment.endTime),
+            title: appointment.notes
+          }
+          return obj;
+    });
+  }
+
+
+
+  render() {
+    const { handleSubmit, fields: { date, startTime, endTime, location, notes } } = this.props;
 
     return (
 
@@ -87,7 +90,7 @@ export default class Calendar extends Component {
 
         <BigCalendar
             	selectable
-            	events={appointments ? appointments : []}
+            	events={this.props.appointments ? this.appointmentFormat() : []}
             	onSelectEvent={event => this.open(event)}
             	defaultView="month"
             	scrollToTime={new Date(1970, 1, 1, 6)}
