@@ -68,3 +68,14 @@ export default [
     'end': new Date(2015, 3, 13, 10, 30, 0)
   }
 ]
+
+
+// "id": 3,
+// "notes": "I would like to talk about javascript",
+// "startTime": "2016-08-01T00:45:00.167Z",
+// "endTime": "2016-08-01T00:48:00.167Z",
+// "location": "in a coffee shop",
+// "createdAt": "2016-08-01T01:08:07.164Z",
+// "updatedAt": "2016-08-01T01:08:07.164Z",
+// "learnerId": 1,
+// "mentorId": 3
