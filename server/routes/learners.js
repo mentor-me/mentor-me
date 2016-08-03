@@ -23,25 +23,38 @@ router.get('/learner/mentors', function(req, res){
 });
 
 
-router.post('/learner/users', function(req, res){
-  console.log('learner/users');
-  var newUser = _.pick(req.body, 'username', 'firstname',
-                'lastname', 'email', 'password', 'phone',
-                'skype_name', 'city', 'zip', 'primary_role',
-                'secondary_role', 'rating', 'total_appointments',
-                'rate', 'description', 'availability'
-                );
-  var skills = req.body.skills
-  var preferences = req.body.preferences
+// router.post('/learner/users', function(req, res){
+//   console.log('learner/users');
+//   var newUser = _.pick(req.body, 'username', 'firstname',
+//                 'lastname', 'email', 'password', 'phone',
+//                 'skype_name', 'city', 'zip', 'primary_role',
+//                 'secondary_role', 'rating', 'total_appointments',
+//                 'rate', 'description', 'availability'
+//                 );
+//   var skills = req.body.skills
+//   var preferences = req.body.preferences
+//
+//   Learners.learnerCreate(req, res, newUser, skills, preferences);
+// });
 
-  Learners.learnerCreate(req, res, newUser, skills, preferences);
-});
+///////////////////////////////////////////////////
+///////////    LEARNER CRUD          //////////////
+///////////////////////////////////////////////////
 
 
-
-router.get('/learner/users/:userId', function(req, res){
+router.post('/learner/users/:userId', function(req, res){
   var userId = req.params.userId;
   Learners.learnerFetchedById(req, res, userId);
+});
+
+router.put('/learner/users/:userId', function(req, res){
+  var learnerId = req.params.userId;
+  var profileUpdate = _.pick(req.body, 'username', 'firstname',
+  'lastname', 'email', 'password', 'phone',
+  'skype_name', 'city', 'zip'
+  );
+  var preferences = req.body.preferences;
+  Learners.learnerUpdateProfile(req, res, profileUpdate, preferences, learnerId);
 });
 
 ///////////////////////////////////////////////////
@@ -87,7 +100,7 @@ router.get('/learner/users/:userId/appointments', function(req, res){
 });
 
 ///////////////////////////////////////////////////
-///////////        PERFERENCES       //////////////
+///////////        PREFERENCES       //////////////
 ///////////////////////////////////////////////////
 
 

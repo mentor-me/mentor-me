@@ -57,6 +57,27 @@ exports.mentorFetchedById = function(req, res, userId){
 
 }
 
+exports.mentorUpdateProfile = function(req, res, profileUpdate, qualities, mentorId){
+  db.User.update( profileUpdate,
+      { where: { id: mentorId }
+      , returning:true}
+    )
+    .then(function (result) {
+        console.log("This is the learner updated", JSON.stringify(result[1]));
+        db.Quality.update( qualities,
+            { where: { mentorId: mentorId }
+            , returning:true}
+          )
+      })
+      .then(function(result){
+        res.status(200).send("User and their preferences have been updated")
+      })
+}
+
+///////////////////////////////////////////////////
+///////////          REVIEWS         //////////////
+///////////////////////////////////////////////////
+
 exports.fetchMentorsReviews = function(req, res, userId) {
   db.Review.findAll({
       where: {
@@ -71,6 +92,11 @@ exports.fetchMentorsReviews = function(req, res, userId) {
       res.status(500).send(err.message);
     })
 }
+
+
+///////////////////////////////////////////////////
+///////////        QUALITIES         //////////////
+///////////////////////////////////////////////////
 
 exports.learnerFetchQualities = function(req, res, userId){
     db.User.findById(userId)
@@ -93,6 +119,10 @@ exports.learnerFetchQualities = function(req, res, userId){
         });
 
 }
+
+///////////////////////////////////////////////////
+///////////        APPOINTMENT       //////////////
+///////////////////////////////////////////////////
 
 exports.mentorFetchAppointment = function(req, res, userId){
   console.log("inside learnerFetchAppointment")

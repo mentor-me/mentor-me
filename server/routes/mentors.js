@@ -18,7 +18,6 @@ router.post('/mentor/users', function(req, res){
   var skills   = req.body.skills
   var qualites = req.body.qualites
 
-
   Mentors.mentorCreate(req, res, newUser, skills, qualites);
 });
 
@@ -26,6 +25,18 @@ router.post('/mentor/users', function(req, res){
 router.get('/mentor/users/:userId', function(req, res){
   var userId = req.params.userId;
   Mentors.mentorFetchedById(req, res, userId);
+});
+
+
+router.put('/mentor/users/:userId', function(req, res){
+  var mentorId = req.params.userId;
+  var profileUpdate = _.pick(req.body, 'username', 'firstname',
+  'lastname', 'email', 'password', 'phone',
+  'skype_name', 'city', 'zip',
+  'description'
+  );
+  var qualities = req.body.qualities
+  Mentors.mentorUpdateProfile(req, res, profileUpdate, qualities, mentorId);
 });
 
 router.get('/mentor/users/:userId/qualities', function(req, res){
