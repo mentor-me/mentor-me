@@ -28,6 +28,25 @@ router.get('/mentor/users/:userId', function(req, res){
   Mentors.mentorFetchedById(req, res, userId);
 });
 
+router.get('/mentor/users/:userId/qualities', function(req, res){
+  var userId = req.params.userId;
+  Mentors.learnerFetchQualities(req, res, userId);
+});
+
+
+
+///////////////////////////////////////////////////
+///////////          REVIEWS         //////////////
+///////////////////////////////////////////////////
+
+router.get('/mentor/users/:userId/reviews', function(req, res){
+  var userId = req.params.userId;
+  Mentors.fetchMentorsReviews(req, res, userId);
+});
+
+///////////////////////////////////////////////////
+///////////        APPOINTMENT       //////////////
+///////////////////////////////////////////////////
 
 
 router.get('/mentor/users/:userId/appointments', function(req, res){
@@ -35,15 +54,6 @@ router.get('/mentor/users/:userId/appointments', function(req, res){
   Mentors.mentorFetchAppointment(req, res, userId);
 });
 
-router.get('/mentor/users/:userId/qualities', function(req, res){
-  var userId = req.params.userId;
-  Mentors.learnerFetchQualities(req, res, userId);
-});
-
-router.get('/learner/users/:userId/mentors', function(req, res){
-
-
-});
 
 router.put('/mentor/users/:userId/appointment/:appId', function(req, res){
   var appId = req.params.appId;

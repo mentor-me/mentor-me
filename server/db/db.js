@@ -58,11 +58,12 @@ var User = sequelize.define('User', {
     },
     primary_role       : Sequelize.STRING,
     secondary_role     : Sequelize.STRING,
-    rating             : Sequelize.STRING,
+    rating             : Sequelize.INTEGER,
     total_appointments : Sequelize.INTEGER,
     rate               : Sequelize.REAL,
     description        : Sequelize.STRING,
     availability       : Sequelize.BOOLEAN,
+    lastLogIn          : Sequelize.DATE,
     email              : {
       type: Sequelize.STRING,
           allowNull: false,
@@ -126,7 +127,7 @@ var User = sequelize.define('User', {
 var Review = sequelize.define('Review', {
   content      : Sequelize.TEXT,
   description  : Sequelize.STRING,
-  rating       : Sequelize.STRING
+  rating       : Sequelize.INTEGER
   },{
     tableName :'Reviews', // this will define the table's name
     timestamps: true      // this will activate the timestamp columns
@@ -235,7 +236,7 @@ var Appointment = sequelize.define('Appointment', {
 
 
 User.hasMany(Skill, {foreignKey: 'mentorId'});
-Skill.belongsTo(User, {foreignKey: 'skillId'})
+// Skill.belongsTo(User, {foreignKey: 'skillId'})
 // Skill.belongsToMany(User, {through: 'UserSkills', foreignKey: 'skillId'});
 
 User.hasMany(Review, {foreignKey: 'learnerId'});
@@ -265,9 +266,9 @@ Conversation.hasMany(Message, {foreignKey: 'conversationId'});
 
 
 // will drop the tables and init them
-sequelize.sync({force:true}).then(function(){
-   console.log("Created tables in db.js");
-});
+// sequelize.sync({force:true}).then(function(){
+//    console.log("Created tables in db.js");
+// });
 
 /// Exports to models
 exports.User         = User;

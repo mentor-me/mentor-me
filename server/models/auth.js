@@ -2,6 +2,12 @@ var db     = require('../db/db.js');
 var bcrypt = require('bcrypt');
 var async  = require('async');
 
+
+
+///////////////////////////////////////////////////
+///////////        LEARNER           //////////////
+///////////////////////////////////////////////////
+
 exports.learnerCreate = function(req, res, newUser, skills, preferences) {
     console.log("line 5: create learner", newUser);
     db.User.create(newUser)
@@ -17,7 +23,7 @@ exports.learnerCreate = function(req, res, newUser, skills, preferences) {
           res.status(200)
               .header('Auth', token)
               .header('currentUser', user.id)
-              .send({token: token, currentUser: user.id})
+              .send(user)
         })
       })
       .catch(function(err){
@@ -43,7 +49,7 @@ exports.learnerLogin = function(req, res, loginUser){
         res.status(200)
             .header('Auth', token)
             .header('currentUser', user.id)
-            .send({token: token, currentUser: user.id})
+            .send(user)
     }
     else
     {
@@ -58,6 +64,10 @@ exports.learnerLogin = function(req, res, loginUser){
 
 
 }
+
+///////////////////////////////////////////////////
+///////////        MENTOR            //////////////
+///////////////////////////////////////////////////
 
 exports.mentorCreate = function(req, res, newUser, skills, qualities) {
     console.log("line 45: create mentor", newUser);
@@ -94,7 +104,7 @@ exports.mentorCreate = function(req, res, newUser, skills, qualities) {
           res.status(200)
           .header('Auth', token)
           .header('currentUser', user.id)
-          .send({token: token, currentUser: user.id})
+          .send(user)
         })
       })
       .catch(function(err){
@@ -122,7 +132,7 @@ exports.mentorLogin = function(req, res, loginUser){
         res.status(200)
             .header('Auth', token)
             .header('currentUser', user.id)
-            .send({token: token, currentUser: user.id})
+            .send(user)
     }
     else
     {
