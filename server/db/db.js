@@ -263,6 +263,7 @@ Conversation.hasMany(Message, {foreignKey: 'conversationId'});
 //    console.log("Created tables in db.js");
 // });
 
+
 // will drop the tables and init them
 // sequelize.sync({force:true}).then(function(){
 //    console.log("Created tables in db.js");
