@@ -71,3 +71,30 @@ export default [
   //   'end': 'Wed Apr 15 2015 16:30:00 GMT-0700 (PDT)'
   // }
 ]
+
+
+// "id": 3,
+// "notes": "I would like to talk about javascript",
+// "startTime": "2016-08-01T00:45:00.167Z",
+// "endTime": "2016-08-01T00:48:00.167Z",
+// "location": "in a coffee shop",
+// "createdAt": "2016-08-01T01:08:07.164Z",
+// "updatedAt": "2016-08-01T01:08:07.164Z",
+// "learnerId": 1,
+// "mentorId": 3
+
+
+
+// [
+//   {
+//     "id": 1,
+//     "notes": "some notes",
+//     "startTime": "2015-04-14T23:00:00.000Z",
+//     "endTime": "2015-04-14T23:30:00.000Z",
+//     "location": "in a coffee shop right now",
+//     "createdAt": "2016-08-02T18:40:05.799Z",
+//     "updatedAt": "2016-08-02T18:40:05.799Z",
+//     "learnerId": 5,
+//     "mentorId": 6
+//   }
+// ]
