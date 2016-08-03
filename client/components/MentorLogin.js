@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { reduxForm } from 'redux-form';
-import { loginUser } from '../actions/auth.js';
+import { loginMentor } from '../actions/auth.js';
 
-class Login extends Component {
+class MentorLogin extends Component {
 
   handleFormSubmit(formProps) {
-    this.props.loginUser(formProps);
+    this.props.loginMentor(formProps);
   }
 
   render() {
@@ -19,7 +19,7 @@ class Login extends Component {
     			  	<div className="col-xs-12 col-sm-12 offset-md-1 col-md-10 offset-lg-2 col-lg-8">
                 <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} >
                 <h2 className="header-tag">login</h2>
-                <h1 className="sub-header">Move your career <em>foward</em> today.</h1>
+                <h1 className="sub-header">Pass your knowledge <em>foward</em>.</h1>
                 <div className="spacer30"></div>
                   <div className="form-group">
                     <input type="text" className="form-control" placeholder="Email" {...email} />
@@ -44,4 +44,4 @@ class Login extends Component {
 export default reduxForm({
   form: 'login',
   fields: ['email', 'password'],
-}, null, { loginUser })(Login);
+}, null, { loginMentor })(MentorLogin);

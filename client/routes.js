@@ -15,7 +15,9 @@ import Calendar from './components/Calendar';
 import LearnerProfile from './components/LearnerProfile';
 import MentorProfile from './components/MentorProfile';
 /* Mentor Related Components */
-import MentorSignup from './components/SignupMentor';
+import MentorSignup from './components/MentorSignup';
+import MentorLogin from './components/MentorLogin';
+import Mentor from './components/Mentor';
 
 const routes = (
     <Route path="/" component={App} >
@@ -24,11 +26,15 @@ const routes = (
       <Route path="signup" component={Signup} />
       <Route path="become" component={Become} />
       <Route path="become/mentor" component={MentorSignup} />
+      <Route path="become/login" component={MentorLogin} />
       <Route component={Learner} >
         <Route path="learner/:username" component={LearnerDashboard} />
         <Route path="learner/:username/calendar" component={Calendar} />
         <Route path="learner/:username/profile" component={LearnerProfile} />
         <Route path="learner/:username/mentor/:mentorUsername/profile" component={MentorProfile} />
+      </Route>
+      <Route component={Mentor} >
+        <Route path="mentor/:username" component={MentorProfile} />
       </Route>
     </Route>
 );

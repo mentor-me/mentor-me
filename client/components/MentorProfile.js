@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchCurrentMentor } from '../actions/learners';
+import SkillPill from './SkillPill';
 
 class MentorProfile extends Component {
 
@@ -10,32 +11,41 @@ class MentorProfile extends Component {
   }
 
   renderTopCard() {
-    const { currentMentor } = this.props;
-    return (
-      <div className="card mentor-profile">
-        <div className="card-block">
-          <img className="img-circle mentor-img" src="http://www.m1m.com/wp-content/uploads/2015/06/default-user-avatar.png" />
-          <h4 className="card-title mentor-name"> {currentMentor.firstname} {currentMentor.lastname} </h4>
-          <div className="mentor-rating">
-            <i className="fa fa-star" />
-            <i className="fa fa-star" />
-            <i className="fa fa-star" />
-            <i className="fa fa-star" />
-          </div>
-          <button className="btn-global pull-right" type="submit"> Schedule Meeting </button>
+
+    const { currentMentor, auth } = this.props;
+    /* Check to see whether USER is a MENTOR (1) or LEARNER (2) */
+    if( auth.primary_role == "2" ) {
+      return (
+        <div className="card mentor-profile">
+          <div className="card-block">
+            <img className="img-circle mentor-img" src="http://www.asthmamd.org/images/icon_user_1.png" />
+            <h4 className="card-title mentor-name"> {currentMentor.firstname} {currentMentor.lastname} </h4>
+            <button className="btn-global pull-right" type="submit"> Schedule a Meeting </button>
+            <button className="btn-global pull-right" type="submit"> Submit a Review </button>
+            <button className="btn-global pull-right" type="submit"> Send a Message </button>
+        </div>
       </div>
-    </div>
-    );
+      );
+    } else {
+      return (
+        <div className="card mentor-profile">
+          <div className="card-block">
+            <img className="img-circle mentor-img" src="http://www.asthmamd.org/images/icon_user_1.png" />
+            <h4 className="card-title mentor-name"> {currentMentor.firstname} {currentMentor.lastname} </h4>
+        </div>
+      </div>
+      )
+    }
   }
 
   renderAboutCard() {
-    const { currentMentor } = this.props;
+    let { currentMentor } = this.props;
     return (
-      <div className="card mentor-profile">
+      <div className="card fixed-height">
         <div className="card-block">
           <h4 className="card-title"> About Me </h4>
           <div className="card-text">
-            Here is a longer description about what I do, what I can offer, and why you should try and schedule an appointment with me as soon as possible.
+            { currentMentor.description }
           </div>
         </div>
       </div>
@@ -43,13 +53,19 @@ class MentorProfile extends Component {
   }
 
   renderExpertiseCard() {
-    const { currentMentor } = this.props;
+    let { currentMentor } = this.props;
+    console.log(currentMentor)
+    let pills = currentMentor.Skills.map((skill, i) => {
+      return <SkillPill skill={ skill.title } key={ i } />
+    })
     return (
-      <div className="card mentor-profile">
+      <div className="card fixed-height">
         <div className="card-block">
-          <h4 className="card-title"> Areas of Expertise </h4>
+          <h4 className="card-title">
+            Areas of Expertise
+          </h4>
           <div className="card-text">
-            List stuff here.
+            {pills}
           </div>
         </div>
       </div>
@@ -61,7 +77,9 @@ class MentorProfile extends Component {
     return (
       <div className="card">
         <div className="card-header">
-          Review ###
+          <span className="reviewer-name"> Stan Smith </span>
+          <span className="review-date"> 11/29/2015 </span>
+          <span className="review-by pull-right"> <i className="fa fa-star" /><i className="fa fa-star" /><i className="fa fa-star" /> </span>
         </div>
         <div className="card-block">
           <blockquote className="card-blockquote">
@@ -73,10 +91,9 @@ class MentorProfile extends Component {
   }
 
   render() {
-    console.log('inside mentor profile: ', this.props.mentor);
 
     return (
-      <div className="spacer30">
+      <div className="spacer30 mentor-profile">
         <div className="row">
           <div className="col-sm-12">
             {this.renderTopCard()}
@@ -106,6 +123,7 @@ class MentorProfile extends Component {
 function mapStateToProps(state) {
   return {
     currentMentor: state.learner.currentMentor,
+    auth: state.auth.currentUser
   };
 }
 

@@ -17,11 +17,12 @@ class LearnerDashboard extends Component {
   renderMentors() {
     let { mentors, auth } = this.props;
     return mentors.map((mentor, i) => {
-      let mentorLink = `/learner/${auth}/mentor/${mentor.username}/profile`;
-      return <MentorCard key={i} mentor={mentor} link={mentorLink} />;
+      if (mentor) {
+        let mentorLink = `/learner/${auth}/mentor/${mentor.username}/profile`;
+        return <MentorCard key={i} mentor={mentor} link={mentorLink} />;
+      }
     });
   }
-
 
   render() {
     return (

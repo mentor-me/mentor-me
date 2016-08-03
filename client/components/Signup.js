@@ -60,7 +60,7 @@ class Signup extends Component {
                     <input type="text" className="form-control" placeholder="Email" {...email} />
                   </div>
                   <div className="form-group">
-                    <input type="text" className="form-control" placeholder="Password" {...password} />
+                    <input type="text" className="form-control" type="password" placeholder="Password" {...password} />
                   </div>
                   <button className="btn-global" type="submit"> Sign Up </button>
                 </form>
@@ -70,6 +70,7 @@ class Signup extends Component {
             </div>
           </div>
         </div>
+        <div className="spacer-bottom"></div>
       </div>
     );
   }
