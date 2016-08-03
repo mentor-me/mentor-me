@@ -9,7 +9,7 @@ import {
 export function createAppointment(formProps, mentorId, userId) {
   // const endpoint = `api/learner/users/${userid}/appointment`
 
-  const endpoint = 'api/learner/users/userid/appointment';
+  const endpoint = '/api/learner/users/userid/appointment';
 
   return function (dispatch) {
     axios.post(endpoint, formProps)
@@ -24,17 +24,32 @@ export function createAppointment(formProps, mentorId, userId) {
   };
 }
 
-
 export function fetchAppointments() {
-  const endpoint = 'api/learner/users/userid/appointments';
-  // const endpoint = `api/learner/users/${userid}/appointments`;
+
+  const endpoint = '/api/learner/users/4/appointments';
+
   return dispatch => {
     axios.get(endpoint)
       .then(response => {
-        dispatch({
-          type: FETCH_APPOINTMENTS,
-          payload: response.data,
+
+      console.log('response data from appt fetch', response.data);
+
+      let newData = response.data.map((appointment, i) => {
+
+          return
+              {
+                start: appointment.startTime,
+                end: appointment.endTime,
+                title: appointment.notes
+              }
         });
+
+      console.log('newData', newData);
+
+            dispatch({
+              type: FETCH_APPOINTMENTS,
+              payload: newData,
+            });
       });
   };
 }
