@@ -3,7 +3,6 @@ import BigCalendar from 'react-big-calendar';
 import events from '../events.js'
 import Moment from 'moment';
 import { reduxForm } from 'redux-form';
-
 import { createAppointment, fetchAppointments } from '../actions/calendar';
 
 import Modal from 'react-modal';
@@ -31,11 +30,15 @@ const customStyles = {
 export default class Calendar extends Component {
 
   componentWillMount() {
-    this.props.fetchAppointments();
-
+    if(this.props.auth.currentUser.id){
+    this.props.fetchAppointments(this.props.auth.currentUser.id);
+    }
   }
 
   handleFormSubmit(formProps) {
+    let userId = this.props.auth.currentUser.id
+    let mentorId = this.props.mentor.id
+
     this.props.createAppointment(formProps, userId, mentorId);
   }
 
@@ -44,8 +47,11 @@ export default class Calendar extends Component {
 
     this.state = {
       events: [],
-      current: '',
+      date: '',
+      startTime: '',
+      endTime: '',
       modalIsOpen: false,
+
     };
 
     this.open = this.open.bind(this);
@@ -53,12 +59,11 @@ export default class Calendar extends Component {
 
   open(slotInfo) {
 
-
-    const start = slotInfo.start;
-
-
     this.setState({
       modalIsOpen: true,
+      date: Moment(slotInfo.start).format("YYYY-MM-DD"),
+      startTime: Moment(slotInfo.start).format("HH:mm"),
+      endTime: Moment(slotInfo.end).format("HH:mm")
     });
   }
 
@@ -82,13 +87,9 @@ export default class Calendar extends Component {
   }
 
 
-
   render() {
-    const { appointments, handleSubmit, fields: { date, startTime, endTime, location, notes } } = this.props;
+    const { appointments, auth, mentor, handleSubmit, fields: { date, startTime, endTime, location, notes } } = this.props;
 
-    if (appointments){
-      console.log(appointments, "appointments")
-    }
 
     return (
 
@@ -96,38 +97,38 @@ export default class Calendar extends Component {
 
         <BigCalendar
             	selectable
-
             	events={appointments ? appointments : []}
             	events={this.props.appointments ? this.appointmentFormat() : []}
 
             	onSelectEvent={event => this.open(event)}
             	defaultView="month"
             	scrollToTime={new Date(1970, 1, 1, 6)}
-            	defaultDate={new Date(2015, 3, 12)}
+            	defaultDate={new Date(2016, 8, 8)}
             	onSelectSlot={(slotInfo) => this.open({ start: slotInfo.start, end: slotInfo.end,
           }
 
           )}
         />
 
-        <Modal
+          <Modal
         	isOpen={this.state.modalIsOpen}
       	  style={customStyles}
               >
 
+
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 
-          <div className="spacer30">            </div>
+          <div className="spacer30"> </div>
             <div className="form-group">
-              <input type="date" className="form-control" placeholder="Date" {...date} />
+              <input type="date" className="form-control" placeholder="Date" {...date} value={this.state.date}/>
             </div>
 
             <div className="form-group">
-              <input type="time" className="form-control" placeholder="Start time" {...startTime} />
+              <input type="time" className="form-control" placeholder="Start time" {...startTime} value={this.state.startTime}/>
             </div>
 
             <div className="form-group">
-              <input type="time" className="form-control" placeholder="End time" {...endTime} />
+              <input type="time" className="form-control" placeholder="End time" {...endTime} value={this.state.endTime}/>
             </div>
 
             <div className="form-group">
@@ -159,6 +160,8 @@ export default class Calendar extends Component {
 function mapStateToProps(state) {
   return {
     appointments: state.learner.appointments,
+    auth: state.auth,
+    mentor: state.learner.currentMentor
   };
 }
 
