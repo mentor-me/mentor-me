@@ -2,9 +2,11 @@ import {
   MENTORS,
   LEARNER_PREFERENCES,
   CURRENT_MENTOR,
+  FETCH_APPOINTMENTS
+
 } from '../actions/actionTypes';
 
-const INITIAL_STATE = { mentors: [], preferences: {}, currentMentor: {} };
+const INITIAL_STATE = { appointments: [],  mentors: [], preferences: {}, currentMentor: {} };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -14,6 +16,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, preferences: action.payload };
     case CURRENT_MENTOR:
       return { ...state, currentMentor: action.payload[0] };
+    case FETCH_APPOINTMENTS:
+      return { ...state, appointments: action.payload };
     default:
       return state;
   }

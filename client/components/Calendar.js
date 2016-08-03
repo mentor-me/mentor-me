@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import BigCalendar from 'react-big-calendar';
-import events from '../events';
+import events from '../events.js'
 import Moment from 'moment';
-import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-
 import { createAppointment, fetchAppointments } from '../actions/calendar'; // temp for structure
 
 import Modal from 'react-modal';
@@ -33,12 +31,13 @@ export default class Calendar extends Component {
 
   componentWillMount() {
     this.props.fetchAppointments();
+    //console.log('new DATE******', new Date(2016, 3, 12, 17, 30, 0, 0));
+
   }
 
   handleFormSubmit(formProps) {
   // const mentorId = this.props.params.mentorId;
   // const userId  = this.props.params.userId;
-
     this.props.createAppointment(formProps, userId, mentorId);
   }
 
@@ -55,8 +54,15 @@ export default class Calendar extends Component {
   }
 
   open(slotInfo) {
+
     const start = slotInfo.start;
-    console.log('inside open slotinfo updated', slotInfo);
+    const dateNow = Date.now('2015-04-15T23:00:00.000Z')
+
+    // console.log('inside open newDate!!!!!!!!!! ', new Date("2015-04-14T23:30:00.000Z"));
+
+    const timeTest = Moment('2015-04-15T23:00:00.000Z').toDate()
+    console.log('inside open slotinfo timeTest&&&&', timeTest);
+
     this.setState({
       modalIsOpen: true,
     });
@@ -69,30 +75,34 @@ export default class Calendar extends Component {
   }
 
   render() {
-    const { handleSubmit, fields: { date, startTime, endTime, location, notes } } = this.props;
+    const { appointments, handleSubmit, fields: { date, startTime, endTime, location, notes } } = this.props;
+
+    if (appointments){
+      console.log(appointments, "appointments")
+    }
 
     return (
 
-      <div style={{ height: 640 }}>
+      <div className="spacer30" style={{ height: 640 }}>
 
         <BigCalendar
-	selectable
-	events={events}
-	onSelectEvent={event => this.open(event)}
-	defaultView="month"
-	scrollToTime={new Date(1970, 1, 1, 6)}
-	defaultDate={new Date(2015, 3, 12)}
-	onSelectSlot={(slotInfo) => this.open({ start: slotInfo.start, end:
-              slotInfo.end,
+            	selectable
+            	events={appointments ? appointments : []}
+            	onSelectEvent={event => this.open(event)}
+            	defaultView="month"
+            	scrollToTime={new Date(1970, 1, 1, 6)}
+            	defaultDate={new Date(2015, 3, 12)}
+            	onSelectSlot={(slotInfo) => this.open({ start: slotInfo.start, end: slotInfo.end,
           }
 
           )}
         />
 
         <Modal
-	isOpen={this.state.modalIsOpen}
-	style={customStyles}
-        >
+        	isOpen={this.state.modalIsOpen}
+      	  style={customStyles}
+              >
+
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 
           <div className="spacer30">            </div>
@@ -134,7 +144,13 @@ export default class Calendar extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    appointments: state.learner.appointments,
+  };
+}
+
 export default reduxForm({
   form: 'appointment',
   fields: ['date', 'startTime', 'endTime', 'location', 'notes'],
-}, null, { createAppointment, fetchAppointments })(Calendar);
+}, mapStateToProps, { createAppointment, fetchAppointments })(Calendar);

@@ -1,3 +1,5 @@
+import Moment from 'moment';
+
 export default [
   {
     'title': 'All Day Event',
@@ -61,12 +63,13 @@ export default [
     'title': 'Dinner',
     'start':new Date(2015, 3, 12, 20, 0, 0, 0),
     'end': new Date(2015, 3, 12, 21, 0, 0, 0)
-  },
-  {
-    'title': 'Birthday Party',
-    'start':new Date(2015, 3, 13, 7, 0, 0),
-    'end': new Date(2015, 3, 13, 10, 30, 0)
   }
+  //
+  // {
+  //   'title': 'Birthday Party',
+  //   'start': 'Wed Apr 15 2015 16:00:00 GMT-0700 (PDT)',
+  //   'end': 'Wed Apr 15 2015 16:30:00 GMT-0700 (PDT)'
+  // }
 ]
 
 
@@ -79,3 +82,20 @@ export default [
 // "updatedAt": "2016-08-01T01:08:07.164Z",
 // "learnerId": 1,
 // "mentorId": 3
+
+
+
+// [
+//   {
+//     "id": 1,
+//     "notes": "some notes",
+//     "startTime": "2015-04-14T23:00:00.000Z",
+//     "endTime": "2015-04-14T23:30:00.000Z",
+//     "location": "in a coffee shop right now",
+//     "createdAt": "2016-08-02T18:40:05.799Z",
+//     "updatedAt": "2016-08-02T18:40:05.799Z",
+//     "learnerId": 5,
+//     "mentorId": 6
+//   }
+// ]
+>>>>>>> calendar2
