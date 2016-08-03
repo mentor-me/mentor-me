@@ -25,6 +25,10 @@ a:hover {
   margin-top: 80px;
 }
 
+.spacer-bottom {
+  margin-bottom: 100px;
+}
+
 .inner-btn {
   padding: 10px 15px;
   letter-spacing: 2px;
@@ -76,6 +80,7 @@ a:hover {
   font-style: italic;
 }
 
+textarea.form-control,
 input.form-control,
 select.form-control {
   border-radius: 0;
@@ -84,6 +89,7 @@ select.form-control {
           appearance: none;
 }
 
+textarea.form-control:focus,
 input.form-control:focus,
 select.form-control:focus {
   border: 1px solid #55595c;
@@ -95,6 +101,19 @@ select.form-control:focus {
 
 .redirect a:hover {
   color: #d94744;
+}
+
+span.expertise {
+  padding: 5px;
+  border: 1px solid #999;
+  border-radius: 4px;
+  margin: 5px;
+  font-size: 12px;
+  float: left;
+}
+
+span.expertise:nth-child(1) {
+  margin-left: 0;
 }
 
 .navbar {
@@ -143,6 +162,28 @@ select.form-control:focus {
   display: block;
 }
 
+div.mentor-card span.mentor-card-name {
+  font-size: 1.2em;
+  margin-right: 15px;
+}
+
+div.mentor-card span.online-status {
+  font-style: italic;
+}
+
+div.mentor-card span.online-status > span {
+  color: #b3b3b3;
+}
+
+div.mentor-card i.fa {
+  font-size: 1.2em;
+  margin-right: 3px;
+}
+
+div.mentor-profile div.fixed-height {
+  height: 200px;
+}
+
 div.mentor-profile div.card-block {
   display: table;
   width: 100%;
@@ -150,18 +191,22 @@ div.mentor-profile div.card-block {
 
 div.mentor-profile img.mentor-img,
 div.mentor-profile button.btn-global,
-div.mentor-profile div.mentor-rating,
 div.mentor-profile h4.mentor-name {
   display: table-cell;
   vertical-align: middle;
 }
 
-div.mentor-profile h4.mentor-name {
-  width: 18%;
+div.mentor-profile button:nth-of-type(n + 1) {
+  margin-left: 15px;
 }
 
 div.mentor-profile img.mentor-img {
   width: 42px;
+}
+
+div.mentor-profile span.review-date {
+  color: #999;
+  margin-left: 15px;
 }
 
 .rbc-btn {

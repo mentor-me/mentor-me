@@ -23,10 +23,12 @@ export function fetchMentors() {
 }
 
 export function newSearchQuery(query) {
+  console.log('query: ', query)
   const endpoint = `/api/learner/search?q=${query}`;
   return dispatch => {
     axios.get(endpoint)
       .then(response => {
+        console.log('response: ', response)
         dispatch({
           type: MENTORS,
           payload: response.data,
@@ -36,7 +38,7 @@ export function newSearchQuery(query) {
 }
 
 export function fetchPreferences(userId) {
-  const endpoint = `/api/learner/users/${userId}/preferences`;
+  const endpoint = `ROOT_URL/api/learner/users/${userId}/perferences`;
   return dispatch => {
     axios.get(endpoint)
       .then(response => {
@@ -52,9 +54,6 @@ export function fetchCurrentMentor(currentMentor) {
   return (dispatch, getState) => {
     const state = getState();
     const mentorObj = state.learner.mentors.filter(mentor => {
-      console.log('mentor: ', mentor);
-      console.log('currentMentor: ', currentMentor);
-
       return currentMentor === mentor.username;
     });
     console.log(mentorObj);

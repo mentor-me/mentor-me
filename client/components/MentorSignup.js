@@ -6,7 +6,7 @@ import { signupMentor } from '../actions/auth.js';
 class SignupMentor extends Component {
 
   handleFormSubmit(formProps) {
-    this.props.signupUser(formProps);
+    this.props.signupMentor(formProps);
   }
 
   createLearnerStylePreferences() {
@@ -24,7 +24,7 @@ class SignupMentor extends Component {
   }
 
   render() {
-    const { handleSubmit, fields: { username, firstname, lastname, learnerStyle, meetingFormat, email, password } } = this.props;
+    const { handleSubmit, fields: { username, firstname, lastname, skills, learnerStyle, meetingFormat, description, email, password } } = this.props;
 
     return (
         <div className="spacer50">
@@ -45,6 +45,9 @@ class SignupMentor extends Component {
                     <input type="text" className="form-control" placeholder="Last Name" {...lastname} />
                   </div>
                   <div className="form-group">
+                    <input type="text" className="form-control" placeholder="Your Skills" {...skills} />
+                  </div>
+                  <div className="form-group">
                     <select className="form-control" {...learnerStyle} >
                     <option>Select your learner style...</option>
                       {this.createLearnerStylePreferences()}
@@ -57,19 +60,23 @@ class SignupMentor extends Component {
                     </select>
                   </div>
                   <div className="form-group">
+                    <textarea style={{"width": "100%"}} className="form-control" placeholder="Describe yourself here..." {...description} />
+                  </div>
+                  <div className="form-group">
                     <input type="text" className="form-control" placeholder="Email" {...email} />
                   </div>
                   <div className="form-group">
-                    <input type="text" className="form-control" placeholder="Password" {...password} />
+                    <input type="text" className="form-control" type="password" placeholder="Password" {...password} />
                   </div>
                   <button className="btn-global" type="submit"> Sign Up </button>
                 </form>
                 <div className="redirect">
-                  Already have an account? <Link to={"/login"}>LOG IN</Link>
+                  Already have a mentoring account? <Link to={"/become/login"}>LOG IN</Link>
                 </div>
             </div>
           </div>
         </div>
+        <div className="spacer-bottom"></div>
       </div>
     );
   }
@@ -78,5 +85,5 @@ class SignupMentor extends Component {
 
 export default reduxForm({
   form: 'signupMentor',
-  fields: ['username', 'firstname', 'lastname', 'learnerStyle', 'meetingFormat', 'email', 'password'],
+  fields: ['username', 'firstname', 'lastname', 'skills', 'learnerStyle', 'meetingFormat', 'description', 'email', 'password'],
 }, null, { signupMentor })(SignupMentor);
