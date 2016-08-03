@@ -1,5 +1,9 @@
 div.mentor-profile {
 
+  div.fixed-height {
+    height: 200px;
+  }
+
   div.card-block {
     display: table;
     width: 100%;
@@ -7,19 +11,20 @@ div.mentor-profile {
 
   img.mentor-img,
   button.btn-global,
-  div.mentor-rating,
   h4.mentor-name {
     display: table-cell;
     vertical-align: middle;
   }
 
-  h4.mentor-name {
-    width: 18%;
+  button:nth-of-type(n + 1) {
+    margin-left: 15px;
   }
 
-  img.mentor-img {
-    width: 42px;
-  }
+  img.mentor-img { width: 42px; }
 
+  span.review-date {
+    color: #999;
+    margin-left: 15px;
+  }
 
 }

@@ -52,7 +52,7 @@ class Navbar extends Component {
         <nav className="navbar navbar-default navbar-fixed-top ">
           <div className="container-fluid">
             <Link to={"/"} className="navbar-brand">
-              <img src="./client/assets/images/logo.png" id="logo" />
+              <img src="/client/assets/images/logo.png" id="logo" />
             </Link>
               {this.renderNavLinks()}
           </div>

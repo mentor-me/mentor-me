@@ -25,6 +25,10 @@ a:hover {
   margin-top:80px;
 }
 
+.spacer-bottom {
+  margin-bottom: 100px;
+}
+
 .inner-btn {
   padding: 10px 15px;
   letter-spacing: 2px;
@@ -76,12 +80,14 @@ a:hover {
  font-style:italic;
 }
 
+textarea.form-control,
 input.form-control,
 select.form-control {
   border-radius: 0;
   appearance: none;
 }
 
+textarea.form-control:focus,
 input.form-control:focus,
 select.form-control:focus {
   border: 1px solid $input-gray;
@@ -93,4 +99,17 @@ select.form-control:focus {
   a:hover {
     color: $accent-red;
   }
+}
+
+span.expertise {
+  padding: 5px;
+  border: 1px solid #999;
+  border-radius: 4px;
+  margin: 5px;
+  font-size: 12px;
+  float: left;
+}
+
+span.expertise:nth-child(1) {
+  margin-left: 0;
 }

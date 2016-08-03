@@ -11,7 +11,6 @@ import {
 //////////////////////////////////////////
 
  export function loginUser(loginProps) {
-   const { role } = loginProps;
   //  browserHistory.push(`/learner/asdfsafdsfdf/profile`)
    return dispatch => {
      axios.post('/api/login', loginProps)
@@ -39,7 +38,7 @@ import {
     firstname: loginProps.lastname,
     email: loginProps.email,
     password: loginProps.password,
-    primary_role: 1,
+    role: 2,
     preferences: {
       visual: loginProps.learnerStyle == "Visual" ? 'true' : 'false',
       academic: loginProps.learnerStyle == "Academic" ? 'true' : 'false',
@@ -83,10 +82,12 @@ export function signupMentor(loginProps) {
  let data = {
    username: loginProps.username,
    firstname: loginProps.firstname,
-   firstname: loginProps.lastname,
+   lastname: loginProps.lastname,
    email: loginProps.email,
    password: loginProps.password,
-   primary_role: 1,
+   description: loginProps.description,
+   skills: loginProps.skills.split(' '),
+   role: 1,
    preferences: {
      visual: loginProps.learnerStyle == "Visual" ? 'true' : 'false',
      academic: loginProps.learnerStyle == "Academic" ? 'true' : 'false',
@@ -96,18 +97,37 @@ export function signupMentor(loginProps) {
  }
 
   return dispatch => {
-    axios.post('/api/mentor/login', data)
-      console.log(data)
+    axios.post('/api/mentor/signup', data)
       .then(response => {
         dispatch({
           type: AUTH_USER,
           payload: data
         })
-        browserHistory.push(`/learner/${data.username}`);
+        browserHistory.push(`/mentor/${data.username}`);
       })
       .catch((err) => {
         // dispatch AUTH_ERROR
-        console.log("Sign up bad", err);
+        console.log("Mentor sign up bad", err);
+      });
+  }
+}
+
+export function loginMentor(loginProps) {
+ //  browserHistory.push(`/learner/asdfsafdsfdf/profile`)
+  return dispatch => {
+    axios.post('/api/mentor/login', loginProps)
+      .then(response => {
+        console.log(response.data)
+       //  localStorage.setItem('token', response.headers.auth);
+        dispatch({
+          type: AUTH_USER,
+          payload: response.data
+        })
+        browserHistory.push(`/mentor/${response.data.username}`);
+      })
+      .catch((err) => {
+        // dispatch AUTH_ERROR
+        console.log("Login bad", err);
       });
   }
 }

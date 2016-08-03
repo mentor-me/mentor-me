@@ -1,0 +1,21 @@
+div.mentor-card {
+
+  span.mentor-card-name {
+    font-size: 1.2em;
+    margin-right: 15px;
+  }
+
+  span.online-status {
+    font-style: italic;
+  }
+
+  span.online-status > span {
+    color: #b3b3b3;
+  }
+
+  i.fa {
+    font-size: 1.2em;
+    margin-right: 3px;
+  }
+
+}

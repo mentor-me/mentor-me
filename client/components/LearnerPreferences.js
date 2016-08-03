@@ -9,8 +9,8 @@ export const fields = ['learnerStyle', 'distance'];
 class LearnerPreferences extends Component {
 
   componentWillMount() {
-    const { userId } = this.props.auth.currentUser;
-    this.props.fetchPreferences(userId);
+    let { id } = this.props.auth.currentUser;
+    this.props.fetchPreferences(id);
   }
 
   renderPreferenceButtons() {
@@ -45,6 +45,7 @@ class LearnerPreferences extends Component {
   }
 
   render() {
+
     return (
       <div className="card">
         <div className="card-header">Preferences</div>
