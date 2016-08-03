@@ -7,48 +7,44 @@ import {
 } from './actionTypes';
 
 export function createAppointment(formProps, mentorId, userId) {
-  // const endpoint = `api/learner/users/${userid}/appointment`
 
-  const endpoint = '/api/learner/users/userid/appointment';
+  const endpoint = `/api/learner/users/${userId}/appointment`;
+
+  let appointment = {
+      notes          : formProps.notes,
+      startTime      : formProps.date + " " + formProps.startTime,
+      endTime        : formProps.date + " " + formProps.endTime,
+      location       : formProps.location,
+      mentorId       : mentorId
+  }
+
 
   return function (dispatch) {
-    axios.post(endpoint, formProps)
+    axios.post(endpoint, appointment)
       .then(response => {
         dispatch({ type: CREATE_APPOINTMENT });
-        browserHistory.push('somewhere');
+        // browserHistory.push('somewhere');
       })
       .catch(() => {
-        // Fix catch
+
         console.log('in catch err ');
       });
   };
 }
 
-export function fetchAppointments() {
+export function fetchAppointments(userId) {
 
-  const endpoint = '/api/learner/users/4/appointments';
+  const endpoint = `/api/learner/users/${userId}/appointments`;
 
   return dispatch => {
     axios.get(endpoint)
       .then(response => {
 
-      console.log('response data from appt fetch', response.data);
-
-      let newData = response.data.map((appointment, i) => {
-
-          return
-              {
-                start: appointment.startTime,
-                end: appointment.endTime,
-                title: appointment.notes
-              }
-        });
-
-      console.log('newData', newData);
-
             dispatch({
               type: FETCH_APPOINTMENTS,
-              payload: newData,
+              payload: response.data,
+
+
             });
       });
   };
