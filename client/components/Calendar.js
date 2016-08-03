@@ -3,7 +3,9 @@ import BigCalendar from 'react-big-calendar';
 import events from '../events.js'
 import Moment from 'moment';
 import { reduxForm } from 'redux-form';
-import { createAppointment, fetchAppointments } from '../actions/calendar'; // temp for structure
+
+import { createAppointment, fetchAppointments } from '../actions/calendar';
+
 
 import Modal from 'react-modal';
 
@@ -31,13 +33,11 @@ export default class Calendar extends Component {
 
   componentWillMount() {
     this.props.fetchAppointments();
-    //console.log('new DATE******', new Date(2016, 3, 12, 17, 30, 0, 0));
+
 
   }
 
   handleFormSubmit(formProps) {
-  // const mentorId = this.props.params.mentorId;
-  // const userId  = this.props.params.userId;
     this.props.createAppointment(formProps, userId, mentorId);
   }
 
@@ -87,7 +87,10 @@ export default class Calendar extends Component {
 
         <BigCalendar
             	selectable
-            	events={appointments ? appointments : []}
+
+            	events={this.props.appointments ? this.appointmentFormat() : []}
+
+
             	onSelectEvent={event => this.open(event)}
             	defaultView="month"
             	scrollToTime={new Date(1970, 1, 1, 6)}
