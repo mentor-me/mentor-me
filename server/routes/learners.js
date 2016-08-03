@@ -44,6 +44,23 @@ router.get('/learner/users/:userId', function(req, res){
   Learners.learnerFetchedById(req, res, userId);
 });
 
+///////////////////////////////////////////////////
+///////////          REVIEWS         //////////////
+///////////////////////////////////////////////////
+
+router.post('/learner/users/:userId/review', function(req, res){
+  var review = _.pick(req.body, 'content', 'description',
+                'rating', 'mentorId');
+  review.learnerId = req.params.userId;
+  console.log("This the review onj", review)
+  Learners.learnerReviewMentor(req, res, review);
+});
+
+
+
+///////////////////////////////////////////////////
+///////////        APPOINTMENT       //////////////
+///////////////////////////////////////////////////
 
 router.post('/learner/users/:userId/appointment', function(req, res){
   var appointment = _.pick(req.body, 'notes', 'startTime', 'endTime',
@@ -69,6 +86,10 @@ router.get('/learner/users/:userId/appointments', function(req, res){
   Learners.learnerFetchAppointment(req, res, userId);
 });
 
+///////////////////////////////////////////////////
+///////////        PERFERENCES       //////////////
+///////////////////////////////////////////////////
+
 
 router.get('/learner/users/:userId/preferences', function(req, res){
   var userId = req.params.userId;
@@ -83,6 +104,14 @@ router.put('/learner/users/:userId/preferences', function(req, res){
   Learners.learnerUpdatePreferences(req, res, preferenceUpdate);
 });
 
+
+
+
+
+
+
+
+////////////////////////////////////////////////////
 router.post('/learner/test', function(req, res){
   var userInfo = req.email;
   Users.checkUsersExistance(req, res, userInfo);

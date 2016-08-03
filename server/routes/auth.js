@@ -16,9 +16,12 @@ router.get('/test', requireAuth.jwtLogin, function(req, res){
 });
 
 router.get('/allMentors', function(req, res) {
-  Learners.allMentors(req, res)
-
+  var MentorsALL = Learners.allMentors(req, res);
+  console.log(MentorsALL)
 });
+
+
+
 router.post('/login', function(req, res){
   console.log("this is the req in /login ", req.body)
   var loginUser = _.pick(req.body, 'email', 'password');
@@ -34,11 +37,12 @@ router.post('/signup', function(req, res, next) {
                 'lastname', 'email', 'password', 'phone',
                 'skype_name', 'city', 'zip',
                 'rating', 'total_appointments',
-                'rate', 'description', 'availability'
+                'rate', 'description', 'availability',
+                'lastLogIn'
                 );
   var skills       = req.body.skills;
   var preferences  = req.body.preferences;
-  var primary_role = req.body.role;
+  newUser.primary_role = req.body.role;
 
   db.User.findOne({
     where:
@@ -72,11 +76,12 @@ router.post('/mentor/signup', function(req, res, next) {
                 'lastname', 'email', 'password', 'phone',
                 'skype_name', 'city', 'zip',
                 'rating', 'total_appointments',
-                'rate', 'description', 'availability'
+                'rate', 'description', 'availability',
+                'lastLogIn'
                 );
   var skills         = req.body.skills;
   var preferences    = req.body.preferences;
-  var secondary_role = req.body.role;
+  newUser.secondary_role = req.body.role;
 
   db.User.findOne({
     where:

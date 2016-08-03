@@ -58,11 +58,12 @@ var User = sequelize.define('User', {
     },
     primary_role       : Sequelize.STRING,
     secondary_role     : Sequelize.STRING,
-    rating             : Sequelize.STRING,
+    rating             : Sequelize.INTEGER,
     total_appointments : Sequelize.INTEGER,
     rate               : Sequelize.REAL,
     description        : Sequelize.STRING,
     availability       : Sequelize.BOOLEAN,
+    lastLogIn          : Sequelize.DATE,
     email              : {
       type: Sequelize.STRING,
           allowNull: false,
@@ -126,7 +127,7 @@ var User = sequelize.define('User', {
 var Review = sequelize.define('Review', {
   content      : Sequelize.TEXT,
   description  : Sequelize.STRING,
-  rating       : Sequelize.STRING
+  rating       : Sequelize.INTEGER
   },{
     tableName :'Reviews', // this will define the table's name
     timestamps: true      // this will activate the timestamp columns
@@ -259,9 +260,9 @@ User.hasOne(Preference, {foreignKey: 'learnerId'});
 Conversation.hasMany(Message, {foreignKey: 'conversationId'});
 
 //
-sequelize.sync().then(function(){
-   console.log("Created tables in db.js");
-});
+// sequelize.sync().then(function(){
+//    console.log("Created tables in db.js");
+// });
 
 
 // will drop the tables and init them

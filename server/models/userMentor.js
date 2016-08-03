@@ -30,6 +30,7 @@ var async = require('async');
 //               // console.log("after each", user)
 //
 //           })
+
 //         })
 //         .then(function(user){
 //           res.status(200).send(user)
@@ -54,6 +55,21 @@ exports.mentorFetchedById = function(req, res, userId){
 
         });
 
+}
+
+exports.fetchMentorsReviews = function(req, res, userId) {
+  db.Review.findAll({
+      where: {
+        mentorId: userId
+      },
+    })
+    .then(function(reviews){
+      res.status(200).send(reviews)
+    })
+    .catch(function(err){
+      console.error(err.message);
+      res.status(500).send(err.message);
+    })
 }
 
 exports.learnerFetchQualities = function(req, res, userId){
