@@ -54,11 +54,23 @@ a:hover {
  border-radius: none;
  background: $white;
 }
-
 .btn-global:hover  {
   background: $accent-darkred;
   color: $white;
 }
+.btn-accent {
+ padding: 8px 20px;
+ display: block;
+ color: $white;
+ border-radius: none;
+ background: $accent-red;
+}
+.btn-accent:hover {
+ color: $accent-red;
+ border-radius: none;
+ background: $white;
+}
+
 
 .header-tag {
  font-weight:normal;

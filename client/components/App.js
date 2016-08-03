@@ -6,9 +6,7 @@ export default class App extends Component {
     return (
       <div>
         <Navbar />
-        <div className="container" style={{
-          'paddingTop': '70px',
-        }}>
+        <div className="main-wrapper" >
           {this.props.children}
         </div>
       </div>
