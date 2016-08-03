@@ -59,7 +59,11 @@ exports.learnerSearchMentors = function(req, res, term){
         return mentor;
       }
     })
-    res.status(200).send(filterMentor)
+    if(!filterMentor[0]) {
+      res.status(200).send([]) }
+    else {
+      res.status(200).send(filterMentor)
+    }
     // _.each(filterMentor, function(mentor) {
     //   console.log("This is the filtered mentors ::", mentor.dataValues);
     // })
