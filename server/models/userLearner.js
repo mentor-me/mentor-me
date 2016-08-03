@@ -1,13 +1,14 @@
-var db    = require('../db/db.js');
-var Sequelize   = require('sequelize');
-var async = require('async');
-var _     = require('lodash');
+var db        = require('../db/db.js');
+var Sequelize = require('sequelize');
+var async     = require('async');
+var _         = require('lodash');
 
 ///////////////////////////////////////////////////
 ///////////    GETTING MENTORS       //////////////
 ///////////////////////////////////////////////////
 
 exports.learnerSearchMentors = function(req, res, term){
+  term = term.toLowerCase();
   db.User.findAll({
     where: {
       $or: [
@@ -26,40 +27,42 @@ exports.learnerSearchMentors = function(req, res, term){
   .then(function(mentors){
     // console.log("line 58: list of found mentors by term", mentors);
     console.log("this is term", term);
-    var filterMentor = _.map(mentors, function(mentor){
+    var filterMentor = _.filter(mentors, function(mentor){
       var found = false;
-      if(_.includes(mentor.username, term)){
-        return mentor;
+      if(mentor.username &&_.includes(mentor.username.toLowerCase(), term)){
+        return true;
       }
-      if(_.includes(mentor.firstnam, term)){
-        return mentor;
+      if(mentor.firstname &&_.includes(mentor.firstname.toLowerCase(), term)){
+        return true;
       }
-      if(_.includes(mentor.lastname, term)){
-        return mentor;
+      if(mentor.lastname &&_.includes(mentor.lastname.toLowerCase(), term)){
+        return true;
       }
-      if(_.includes(mentor.email   , term)){
-        return mentor;
+      if(mentor.email &&_.includes(mentor.email.toLowerCase(), term)){
+        return true;
       }
-      if(_.includes(mentor.phone   , term)){
-        return mentor;
+      if(mentor.phone &&_.includes(mentor.phone.toLowerCase(), term)){
+        return true;
       }
-      if(_.includes(mentor.descript, term)){
-        return mentor;
+      if(mentor.description &&_.includes(mentor.description.toLowerCase(), term)){
+        return true;
       }
 
       _.each(mentor.Skills, function(skill){
         console.log('skill.tite: ', skill.title);
-        if(_.includes(skill.title, term)){
+        if(_.includes(skill.title.toLowerCase(), term)){
           found = true;
         }
       })
 
       console.log('found: ', found);
       if(found){
-        return mentor;
+        return true;
       }
     })
-    res.status(200).send(filterMentor)
+
+      res.status(200).send(filterMentor)
+
     // _.each(filterMentor, function(mentor) {
     //   console.log("This is the filtered mentors ::", mentor.dataValues);
     // })
@@ -119,6 +122,26 @@ exports.learnerFetchedById = function(req, res, userId){
         });
 
 }
+
+exports.learnerUpdateProfile = function(req, res, profileUpdate, preference, learnerId){
+  db.User.update(profileUpdate,
+      { where: { id: learnerId },
+      returning:true}
+    )
+    .then(function (result) {
+        console.log("This is the learner updated", JSON.stringify(preference));
+        db.Preference.update( preference,
+            {
+              where: { learnerId: learnerId }
+            }
+          )
+      })
+      .then(function(result){
+        res.status(200).send("User and their preferences have been updated");
+      })
+
+}
+
 
 ///////////////////////////////////////////////////
 ///////////        PERFERENCES       //////////////
@@ -218,17 +241,6 @@ exports.learnerDeleteAppointment = function(req, res, appId){
 }
 
 
-exports.learnerDeleteAppointment = function(req, res, appId){
-    db.Appointment.findById(appId)
-    .then(function(appRecord) {
-      appRecord.destroy();
-      res.status(200).send('Appointment '+ appId + ' deleted successfully');
-    })
-    .catch(function(err) {
-      res.status(500).send('Appointment '+ appId + ' deleted failed');
-    });
-
-}
 
 
 ///////////////////////////////////////////////////
@@ -236,10 +248,32 @@ exports.learnerDeleteAppointment = function(req, res, appId){
 ///////////////////////////////////////////////////
 
 exports.learnerReviewMentor = function(req, res, review){
-
+  var mentorId = review.mentorId;
   db.Review.create(review)
   .then(function(review){
-    res.status(200).send(review)
+    console.log("Review has been created ", review)
+    db.Review.findAll({
+      where: {mentorId: mentorId}
+    })
+    .then(function(reviews){
+      var length = reviews.length;
+      console.log("this is the length of the reviews ", length);
+      var totalRatings = _.reduce(reviews, function(sum, review) {
+        return sum + review.rating;
+      }, 0);
+      var averageRating = totalRatings/ length;
+      return averageRating
+    }).then(function(averageRating){
+      console.log("this is the review total in promise :::", averageRating);
+      db.User.update({rating: averageRating }, {
+        where: { id: mentorId }
+      })
+      .then(function() {
+        console.log("this is the last THEN :: ", mentorId)
+        res.status(200).send('Mentor Rating '+ mentorId + ' update success');
+      })
+    })
+
   })
   .catch(function(err){
     console.error(err.message);
@@ -333,7 +367,7 @@ exports.allMentors = function(req, res){
 //       .then(function(user){
 //         user.createPreference(preferences, user.id)
 //         .then(function(preference){
-//             // console.log("user perferences set", preference)
+//             // console.log("user preferences set", preference)
 //           return user;
 //         })
 //         .then(function(user){
