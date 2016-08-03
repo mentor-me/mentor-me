@@ -60,6 +60,20 @@ a:hover {
   color: #fff;
 }
 
+.btn-accent {
+  padding: 8px 20px;
+  display: block;
+  color: #fff;
+  border-radius: none;
+  background: #d94744;
+}
+
+.btn-accent:hover {
+  color: #d94744;
+  border-radius: none;
+  background: #fff;
+}
+
 .header-tag {
   font-weight: normal;
   letter-spacing: 2px;
@@ -146,8 +160,148 @@ span.expertise:nth-child(1) {
   font-size: 1.4em;
 }
 
-.welcome p {
+.test {
+  display: none;
+}
+
+#banner {
+  background-image: url("../images/office-team.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  min-height: 500px;
+  display: table;
+}
+
+#banner .banner_content {
   text-align: center;
+  padding-top: 350px;
+  height: 200px;
+}
+
+#banner .banner_content h2.header-tag {
+  weight: 700;
+  color: white;
+  font-size: 3.5em;
+  margin: 0;
+}
+
+#banner .banner_content p {
+  text-align: center;
+  font-weight: 600;
+  font-size: 3em;
+  color: white;
+  margin-bottom: 5px;
+}
+
+#banner .banner_content button.btn-global {
+  margin: auto;
+  background: transparent;
+}
+
+#banner .banner_content button.btn-global:hover {
+  border: 1px solid white;
+}
+
+.callouts-header {
+  margin: 50px 0 30px 0;
+  text-align: center;
+}
+
+#callouts {
+  width: 100%;
+  min-height: 350px;
+}
+
+#callouts .callout {
+  text-align: center;
+  padding: 1.5rem 2.5%;
+  float: left;
+}
+
+#callouts .callout i {
+  font-size: 2.5em;
+  padding-bottom: 10px;
+  color: #ddd;
+}
+
+#callouts .callout h2 {
+  weight: 700;
+  color: black;
+  margin-bottom: 0;
+}
+
+#callouts .callout p {
+  color: black;
+}
+
+#become_mentor {
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url("../images/img-PairProgramming-700x400.jpg");
+  background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url("../images/img-PairProgramming-700x400.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
+  min-height: 400px;
+}
+
+#become_mentor h1 {
+  padding-top: 100px;
+  color: white;
+  text-align: center;
+}
+
+#become_mentor button.btn-accent {
+  margin: 10px auto 0 auto;
+  border: none;
+}
+
+#become {
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url("../images/MentoringAdmin.jpg");
+  background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url("../images/MentoringAdmin.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
+  min-height: 500px;
+  margin-top: 60px;
+}
+
+#become .become-sub {
+  width: 70%;
+  padding-top: 100px;
+}
+
+#become .sub-header {
+  color: black;
+  font-size: 3em;
+}
+
+#become .become-p {
+  color: black;
+  font-size: 1.2em;
+}
+
+#become button.btn-global {
+  background: transparent;
+}
+
+#become button.btn-global:hover {
+  border: 1px solid white;
+}
+
+footer {
+  background: #3d3c3c;
+  width: 100%;
+  padding: 2rem 0;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+footer p {
+  margin: 0;
+  font-size: .65rem;
 }
 
 .learner .search {
