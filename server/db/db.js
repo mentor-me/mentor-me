@@ -59,11 +59,13 @@ var User = sequelize.define('User', {
     primary_role       : Sequelize.STRING,
     secondary_role     : Sequelize.STRING,
     rating             : Sequelize.INTEGER,
+    reviewCount        : Sequelize.INTEGER,
     total_appointments : Sequelize.INTEGER,
     rate               : Sequelize.REAL,
     description        : Sequelize.STRING,
     availability       : Sequelize.BOOLEAN,
     lastLogIn          : Sequelize.DATE,
+    totalVisit         : Sequelize.INTEGER,
     email              : {
       type: Sequelize.STRING,
           allowNull: false,
@@ -126,7 +128,6 @@ var User = sequelize.define('User', {
 
 var Review = sequelize.define('Review', {
   content      : Sequelize.TEXT,
-  description  : Sequelize.STRING,
   rating       : Sequelize.INTEGER
   },{
     tableName :'Reviews', // this will define the table's name
@@ -185,10 +186,23 @@ var SkillLevel = sequelize.define('SkillLevel', {
 ///////////////////////////////////////////////////
 
 var Preference = sequelize.define('Preference', {
-  visual     : Sequelize.BOOLEAN,
-  academic   : Sequelize.BOOLEAN,
-  remote     : Sequelize.BOOLEAN,
-  inPerson   : Sequelize.BOOLEAN
+  visual     : {
+                type:Sequelize.BOOLEAN,
+                defaultValue: false
+              },
+  academic   : {
+                type:Sequelize.BOOLEAN,
+                defaultValue: false
+              },
+  remote     : {
+                type:Sequelize.BOOLEAN,
+                defaultValue: false
+              },
+  inPerson   : {
+                type:Sequelize.BOOLEAN,
+                defaultValue: false
+              },
+  radiusZip  : Sequelize.STRING,
   },{
     tableName: 'Preferences', // this will define the table's name
     timestamps: true      // this will activate the timestamp columns
@@ -224,10 +238,11 @@ var Category = sequelize.define('Category', {
 ///////////////////////////////////////////////////
 
 var Appointment = sequelize.define('Appointment', {
-  notes     : Sequelize.TEXT,
-  startTime : Sequelize.DATE,
-  endTime   : Sequelize.DATE,
-  location  : Sequelize.TEXT,
+  subject    : Sequelize.STRING,
+  notes      : Sequelize.TEXT,
+  startTime  : Sequelize.DATE,
+  endTime    : Sequelize.DATE,
+  location   : Sequelize.TEXT,
 
   },{
     tableName: 'Appointments', // this will define the table's name

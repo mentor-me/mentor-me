@@ -41,6 +41,10 @@ var async = require('async');
 //           res.status(500).send(err.message);
 //       });
 // };
+exports.mentorFetchedAndFiltered = function(req, res, zip) {
+
+
+}
 
 
 exports.mentorFetchedById = function(req, res, userId){
