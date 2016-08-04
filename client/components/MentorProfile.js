@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
-import { fetchCurrentMentor } from '../actions/learners';
+import { fetchCurrentMentor, fetchCurrentMentorReviews } from '../actions/learners';
 import SkillPill from './SkillPill';
+import ReviewEntry from './ReviewEntry';
 
 class MentorProfile extends Component {
 
   componentWillMount() {
     this.props.fetchCurrentMentor(this.props.params.mentorUsername);
+    this.props.fetchCurrentMentorReviews(this.props.currentMentor.id);
   }
 
   renderTopCard() {
@@ -20,9 +23,11 @@ class MentorProfile extends Component {
           <div className="card-block">
             <img className="img-circle mentor-img" src="http://www.asthmamd.org/images/icon_user_1.png" />
             <h4 className="card-title mentor-name"> {currentMentor.firstname} {currentMentor.lastname} </h4>
-            <button className="btn-global pull-right" type="submit"> Schedule a Meeting </button>
-            <button className="btn-global pull-right" type="submit"> Submit a Review </button>
-            <button className="btn-global pull-right" type="submit"> Send a Message </button>
+            <button className="btn-global pull-right"> Schedule a Meeting </button>
+            <Link to={`/learner/${auth.username}/mentor/${currentMentor.username}/review`} >
+              <button className="btn-global pull-right"> Submit a Review </button>
+            </Link>
+            <button className="btn-global pull-right"> Send a Message </button>
         </div>
       </div>
       );
@@ -54,7 +59,6 @@ class MentorProfile extends Component {
 
   renderExpertiseCard() {
     let { currentMentor } = this.props;
-    console.log(currentMentor)
     let pills = currentMentor.Skills.map((skill, i) => {
       return <SkillPill skill={ skill.title } key={ i } />
     })
@@ -73,21 +77,11 @@ class MentorProfile extends Component {
   }
 
   renderReview() {
-    const { currentMentor } = this.props;
-    return (
-      <div className="card">
-        <div className="card-header">
-          <span className="reviewer-name"> Stan Smith </span>
-          <span className="review-date"> 11/29/2015 </span>
-          <span className="review-by pull-right"> <i className="fa fa-star" /><i className="fa fa-star" /><i className="fa fa-star" /> </span>
-        </div>
-        <div className="card-block">
-          <blockquote className="card-blockquote">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-          </blockquote>
-        </div>
-      </div>
-    );
+    let { currentMentorReviews } = this.props;
+    let { currentMentor } = this.props;
+    return currentMentorReviews.map((review, i) => {
+      return <ReviewEntry mentor={currentMentor} review={review} key={i} />
+    })
   }
 
   render() {
@@ -108,13 +102,9 @@ class MentorProfile extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-12">
-            {this.renderReview()}
-          </div>
-          <div className="col-sm-12">
-            {this.renderReview()}
-          </div>
+          {this.renderReview()}
         </div>
+        <div className="spacer-bottom" />
       </div>
     );
   }
@@ -123,8 +113,9 @@ class MentorProfile extends Component {
 function mapStateToProps(state) {
   return {
     currentMentor: state.learner.currentMentor,
+    currentMentorReviews: state.learner.currentMentorReviews,
     auth: state.auth.currentUser
   };
 }
 
-export default connect(mapStateToProps, { fetchCurrentMentor })(MentorProfile);
+export default connect(mapStateToProps, { fetchCurrentMentor, fetchCurrentMentorReviews })(MentorProfile);

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
+import TimeAgo from 'react-timeago';
+import StarRatingComponent from 'react-star-rating-component';
+
 import MentorProfile from './MentorProfile';
 import SkillPill from './SkillPill';
 
@@ -23,15 +26,21 @@ export default class MentorCard extends Component {
                 {mentor.firstname} {mentor.lastname}
               </span>
               <span className="online-status">
-                <span>Last seen 32m ago</span>
+                <span>
+                  <TimeAgo date={ mentor.lastLogIn } />
+                </span>
               </span>
               <span className="mentor-card-rating pull-right">
-                <i className="fa fa-star" />
-                <i className="fa fa-star" />
-                <i className="fa fa-star" />
+                <StarRatingComponent
+                  name="rate1"
+                  value={ mentor.rating }
+                  starCount={5}
+                  starColor={"#d94744"}
+                  editing={false}
+                />
               </span>
             </div>
-            <div className="card-text" style={{"display": "table", "margin-bottom": "10px"}}>
+            <div className="card-text" style={{"display": "table", "marginBottom": "10px"}}>
               { pills }
             </div>
             <p className="card-text">

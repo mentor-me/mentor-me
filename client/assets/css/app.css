@@ -1,11 +1,15 @@
 @charset "UTF-8";
+html, body {
+  background-color: #fbfbfb;
+}
+
 a, a:visited {
   color: #d94744;
   font-style: none;
 }
 
 a:hover {
-  color: #eee;
+  color: #fbfbfb;
   text-decoration: none;
 }
 
@@ -103,16 +107,17 @@ select.form-control:focus {
   color: #d94744;
 }
 
-span.expertise {
-  padding: 5px;
-  border: 1px solid #999;
-  border-radius: 4px;
+span.pills {
+  padding: 3px 6px;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  background-color: #f5f5f5;
   margin: 5px;
+  border-radius: 0px;
   font-size: 12px;
   float: left;
 }
 
-span.expertise:nth-child(1) {
+span.pills:nth-child(1) {
   margin-left: 0;
 }
 
@@ -152,6 +157,13 @@ span.expertise:nth-child(1) {
 
 .learner .search {
   padding-bottom: 15px;
+}
+
+.learner input {
+  background-image: url("../images/search.png");
+  background-size: 20px auto;
+  background-repeat: no-repeat;
+  background-position: right 10px bottom 10px;
 }
 
 .learner .list-group-item {
@@ -876,4 +888,12 @@ button.rbc-input::-moz-focus-inner {
 
 .rbc-time-content > .rbc-day-slot {
   width: 100%;
+}
+
+.dv-star-rating label {
+  margin-bottom: 0;
+}
+
+.review-form .dv-star-rating i {
+  font-size: 1.5em;
 }

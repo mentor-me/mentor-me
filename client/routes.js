@@ -12,6 +12,7 @@ import LearnerDashboard from './components/LearnerDashboard';
 import Learner from './components/Learner';
 import Become from './components/Become';
 import Calendar from './components/Calendar';
+import Review from './components/Review';
 import LearnerProfile from './components/LearnerProfile';
 import MentorProfile from './components/MentorProfile';
 /* Mentor Related Components */
@@ -32,6 +33,7 @@ const routes = (
         <Route path="learner/:username/calendar" component={Calendar} />
         <Route path="learner/:username/profile" component={LearnerProfile} />
         <Route path="learner/:username/mentor/:mentorUsername/profile" component={MentorProfile} />
+        <Route path="learner/:username/mentor/:mentorUsername/review" component={Review} />
       </Route>
       <Route component={Mentor} >
         <Route path="mentor/:username" component={MentorProfile} />
