@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/mentor-me/mentor-me"
   },
-  "homepage": "https://github.com/justinpchen94/toiletz#readme",
+  "homepage": "https://github.com/mentor-me/mentor-me",
   "dependencies": {
     "async": "^2.0.1",
     "axios": "^0.12.0",
