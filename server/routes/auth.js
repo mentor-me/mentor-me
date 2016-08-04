@@ -24,7 +24,7 @@ router.get('/allMentors', function(req, res) {
 
 router.post('/login', function(req, res){
   console.log("this is the req in /login ", req.body)
-  var loginUser = _.pick(req.body, 'email', 'password');
+  var loginUser = _.pick(req.body, 'email', 'password', 'lastLogIn');
   // if(typeof loginUser.email !== 'string' || typeof loginUser.password  !== 'string') {
   //     return res.status(500).send();
   // }
@@ -63,7 +63,7 @@ router.post('/signup', function(req, res, next) {
 
 router.post('/mentor/login', function(req, res){
   console.log("this is the req in /login ", req.body);
-  var loginUser = _.pick(req.body, 'email', 'password');
+  var loginUser = _.pick(req.body, 'email', 'password', 'lastLogIn');
   // if(typeof loginUser.email !== 'string' || typeof loginUser.password  !== 'string') {
   //     return res.status(500).send();
   // }

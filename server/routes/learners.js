@@ -77,7 +77,7 @@ router.post('/learner/users/:userId/review', function(req, res){
 
 router.post('/learner/users/:userId/appointment', function(req, res){
   var appointment = _.pick(req.body, 'notes', 'startTime', 'endTime',
-                    'location', 'mentorId');
+                    'location', 'mentorId', 'subject');
   appointment.learnerId = req.params.userId;
   Learners.learnerScheduleAppointment(req, res, appointment);
 });
@@ -85,7 +85,7 @@ router.post('/learner/users/:userId/appointment', function(req, res){
 router.put('/learner/users/:userId/appointment/:appId', function(req, res){
   var appId = req.params.appId;
   var appointment = _.pick(req.body, 'notes', 'startTime', 'endTime',
-                    'location');
+                    'location', 'subject');
   Learners.learnerUpdateAppointment(req, res, appointment, appId);
 });
 

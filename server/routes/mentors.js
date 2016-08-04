@@ -69,7 +69,7 @@ router.get('/mentor/users/:userId/appointments', function(req, res){
 router.put('/mentor/users/:userId/appointment/:appId', function(req, res){
   var appId = req.params.appId;
   var appointment = _.pick(req.body, 'notes', 'startTime', 'endTime',
-                    'location');
+                    'location', 'subject');
   Mentors.mentorUpdateAppointment(req, res, appointment, appId);
 });
 

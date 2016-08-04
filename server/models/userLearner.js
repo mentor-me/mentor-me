@@ -242,7 +242,6 @@ exports.learnerDeleteAppointment = function(req, res, appId){
 
 
 
-
 ///////////////////////////////////////////////////
 ///////////          REVIEWS         //////////////
 ///////////////////////////////////////////////////
@@ -262,10 +261,13 @@ exports.learnerReviewMentor = function(req, res, review){
         return sum + review.rating;
       }, 0);
       var averageRating = totalRatings/ length;
-      return averageRating
-    }).then(function(averageRating){
-      console.log("this is the review total in promise :::", averageRating);
-      db.User.update({rating: averageRating }, {
+      var reviewsInfo   = { averageRating:averageRating , length: length}
+      console.log("this is review info inside ", reviewsInfo)
+      return reviewsInfo
+    }).then(function(reviewsInfo){
+      console.log("this is review info ", reviewsInfo)
+
+      db.User.update({rating: reviewsInfo.averageRating, reviewCount: reviewsInfo.length }, {
         where: { id: mentorId }
       })
       .then(function() {
@@ -384,3 +386,35 @@ exports.allMentors = function(req, res){
 //           res.status(500).send(err.message + " Username and Email must be unique");
 //       });
 // };
+function testsort(preferences, mentors) {
+
+  var sortedList = [];
+  _.forEach(mentors, function(mentor){
+    var score = 0;
+    if(preferences.visual === mentor.qualities.visual){
+      score += 10;
+    }
+    if(preferences.acadmeic === mentor.qualities.acadmeic){
+      score += 10;
+    }
+    var reviewScore = getScore(mentor.reviewCount, mentor.rating);
+    var appointmentScore = mentor.reviewCount / mentor.total_appointments;
+    score = reviewScore + appointmentScore;
+
+
+
+
+  })
+}
+
+function getScore(reviewCount, rating) {
+  var scoreReviewCount = 9;
+  var maxReviewCount   = 10000;
+  var maxReviewScore   = 5;
+	if (reviewCount > maxReviewCount) {
+		throw new Error('too many reviews');
+	}
+
+	return ( scoreReviewCount * 0.4 * (reviewCount / maxReviewCount) ) +
+		     ( scoreReviewCount * 0.6 * (rating / maxReviewScore));
+}
