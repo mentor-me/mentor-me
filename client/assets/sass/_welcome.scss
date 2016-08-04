@@ -2,8 +2,11 @@
   display: none;
 }
 
-.main-wrapper {
-  padding-top: 80px;
+.welcome-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 //
 // .welcome {
@@ -53,11 +56,11 @@
 			margin: 0;
 		}
 		p {
+      margin: 5px auto;
       text-align: center;
       font-weight: 600;
 			font-size: 3em;
 			color: white;
-      margin-bottom: 5px;
 		}
     button.btn-global {
       margin: auto;
@@ -122,39 +125,6 @@
   }
 
 }
-
-#become {
-  background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
-                url("../images/MentoringAdmin.jpg");
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-position: top center;
-  min-height: 500px;
-  margin-top:60px;
-  .become-sub {
-    width: 70%;
-    padding-top:100px;
-  }
-  .sub-header{
-    color:black;
-    font-size:3em;
-  }
-  .become-p {
-    color:black;
-    font-size:1.2em;
-
-  }
-  button.btn-global {
-    background: transparent;
-    &:hover {
-      border: 1px solid white;;
-    }
-  }
-
-}
-
-
-
 
 footer {
   background: $secondary-gray;

@@ -21,16 +21,10 @@ persistStore(store);
 // if(token) {
 //   store.dispatch({type: AUTH_USER});
 // }
-// 
-// const token = localStorage.getItem('token');
-//
-// if(token) {
-//   store.dispatch({type: AUTH_USER})
-// }
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={browserHistory}>
+    <Router history={browserHistory} onUpdate={() => window.scrollTo(0, 0)}>
       {routes}
     </Router>
   </Provider>
