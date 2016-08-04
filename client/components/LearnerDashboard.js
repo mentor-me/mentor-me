@@ -29,10 +29,10 @@ class LearnerDashboard extends Component {
       <div className="spacer30">
         <div className="container-fluid learner">
           <div className="row">
-            <div className="col-sm-4">
+            <div className="col-sm-3">
               <LearnerPreferences />
             </div>
-            <div className="col-sm-8">
+            <div className="col-sm-9">
               <div className="row search">
                 <Search />
               </div>
@@ -40,6 +40,7 @@ class LearnerDashboard extends Component {
             </div>
           </div>
         </div>
+      <div className="spacer-bottom" />
       </div>
     );
   }

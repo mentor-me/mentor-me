@@ -1,0 +1,13 @@
+.dv-star-rating {
+  label {
+    margin-bottom: 0;
+  }
+}
+
+.review-form {
+  .dv-star-rating {
+    i {
+      font-size: 1.5em;
+    }
+  }
+}
