@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import BigCalendar from 'react-big-calendar';
-import events from '../events.js'
 import Moment from 'moment';
 import { reduxForm } from 'redux-form';
 import { createAppointment, fetchAppointments } from '../actions/calendar';
