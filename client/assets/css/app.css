@@ -13,10 +13,6 @@ a:hover {
   text-decoration: none;
 }
 
-.wrapper {
-  min-height: 4000px;
-}
-
 .spacer30 {
   margin-top: 30px;
 }
@@ -169,8 +165,11 @@ span.pills:nth-child(1) {
   display: none;
 }
 
-.main-wrapper {
-  padding-top: 80px;
+.welcome-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 #banner {
@@ -197,11 +196,11 @@ span.pills:nth-child(1) {
 }
 
 #banner .banner_content p {
+  margin: 5px auto;
   text-align: center;
   font-weight: 600;
   font-size: 3em;
   color: white;
-  margin-bottom: 5px;
 }
 
 #banner .banner_content button.btn-global {
@@ -263,39 +262,6 @@ span.pills:nth-child(1) {
 #become_mentor button.btn-accent {
   margin: 10px auto 0 auto;
   border: none;
-}
-
-#become {
-  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url("../images/MentoringAdmin.jpg");
-  background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url("../images/MentoringAdmin.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: top center;
-  min-height: 500px;
-  margin-top: 60px;
-}
-
-#become .become-sub {
-  width: 70%;
-  padding-top: 100px;
-}
-
-#become .sub-header {
-  color: black;
-  font-size: 3em;
-}
-
-#become .become-p {
-  color: black;
-  font-size: 1.2em;
-}
-
-#become button.btn-global {
-  background: transparent;
-}
-
-#become button.btn-global:hover {
-  border: 1px solid white;
 }
 
 footer {
@@ -1055,4 +1021,43 @@ button.rbc-input::-moz-focus-inner {
 
 .review-form .dv-star-rating i {
   font-size: 1.5em;
+}
+
+#become {
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url("../images/MentoringAdmin.jpg");
+  background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url("../images/MentoringAdmin.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
+  min-height: 500px;
+  margin-top: 60px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#become .become-sub {
+  margin: 0 auto;
+  width: 60%;
+  padding-top: 100px;
+}
+
+#become .sub-header {
+  color: black;
+  font-size: 3em;
+}
+
+#become .become-p {
+  color: black;
+  font-size: 1.2em;
+}
+
+#become button.btn-global {
+  background: transparent;
+}
+
+#become button.btn-global:hover {
+  border: 1px solid white;
 }

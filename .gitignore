@@ -7,6 +7,5 @@ server/.env
 .env
 /.idea
 /client/assets/css
-
-
+/client/assets/video
 config/*

@@ -6,7 +6,7 @@ export default class App extends Component {
     return (
       <div>
         <Navbar />
-        <div className="main-wrapper" >
+        <div className="container" style={{"marginTop": "85px"}} >
           {this.props.children}
         </div>
       </div>

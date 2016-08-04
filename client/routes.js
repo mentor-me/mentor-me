@@ -42,5 +42,3 @@ const routes = (
 );
 
 export default routes;
-
-{/*<Route path="learner/:username/profile" component={LearnerProfile} />*/}
