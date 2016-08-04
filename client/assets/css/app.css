@@ -164,6 +164,10 @@ span.expertise:nth-child(1) {
   display: none;
 }
 
+.main-wrapper {
+  padding-top: 80px;
+}
+
 #banner {
   background-image: url("../images/office-team.jpg");
   background-size: cover;

@@ -18,7 +18,6 @@ export function createAppointment(formProps, mentorId, userId) {
       mentorId       : mentorId
   }
 
-
   return function (dispatch) {
     axios.post(endpoint, appointment)
       .then(response => {
@@ -43,7 +42,6 @@ export function fetchAppointments(userId) {
             dispatch({
               type: FETCH_APPOINTMENTS,
               payload: response.data,
-
 
             });
       });

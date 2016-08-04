@@ -29,10 +29,9 @@ const customStyles = {
 export default class Calendar extends Component {
 
   componentWillMount() {
-  if(this.props.auth.currentUser.id){
-    this.props.fetchAppointments();
+    if(this.props.auth.currentUser.id){
+    this.props.fetchAppointments(this.props.auth.currentUser.id);
     }
-
   }
 
   handleFormSubmit(formProps) {
@@ -88,7 +87,6 @@ export default class Calendar extends Component {
 
 
   render() {
-
     const { appointments, auth, mentor, handleSubmit, fields: { date, startTime, endTime, location, notes } } = this.props;
 
 
@@ -97,23 +95,23 @@ export default class Calendar extends Component {
       <div className="spacer30" style={{ height: 640 }}>
 
         <BigCalendar
-            	selectable
-            	events={this.props.appointments ? this.appointmentFormat() : []}
-            	onSelectEvent={event => this.open(event)}
-            	defaultView="month"
-            	scrollToTime={new Date(1970, 1, 1, 6)}
-            	defaultDate={new Date(2016, 8, 8)}
-            	onSelectSlot={(slotInfo) => this.open({ start: slotInfo.start, end: slotInfo.end,
+              selectable
+              events={appointments ? appointments : []}
+              events={this.props.appointments ? this.appointmentFormat() : []}
+
+              onSelectEvent={event => this.open(event)}
+              defaultView="month"
+              scrollToTime={new Date(1970, 1, 1, 6)}
+              defaultDate={new Date(2016, 8, 8)}
+              onSelectSlot={(slotInfo) => this.open({ start: slotInfo.start, end: slotInfo.end,
           }
 
           )}
         />
 
-
           <Modal
-
-        	isOpen={this.state.modalIsOpen}
-      	  style={customStyles}
+          isOpen={this.state.modalIsOpen}
+          style={customStyles}
               >
 
 
@@ -163,7 +161,6 @@ function mapStateToProps(state) {
     appointments: state.learner.appointments,
     auth: state.auth,
     mentor: state.learner.currentMentor
-
   };
 }
 
