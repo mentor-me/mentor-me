@@ -9,8 +9,9 @@ import ReviewEntry from './ReviewEntry';
 class MentorProfile extends Component {
 
   componentWillMount() {
+    //FIGURE OUT PROPER TIME TO CALLA CTIONS!
     this.props.fetchCurrentMentor(this.props.params.mentorUsername);
-    this.props.fetchCurrentMentorReviews(this.props.currentMentor.id);
+    // this.props.fetchCurrentMentorReviews(this.props.currentMentor.id);
   }
 
   renderTopCard() {
@@ -94,10 +95,10 @@ class MentorProfile extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-6">
+          <div className="col-sm-6 left-card">
             {this.renderAboutCard()}
           </div>
-          <div className="col-sm-6">
+          <div className="col-sm-6 right-card">
             {this.renderExpertiseCard()}
           </div>
         </div>

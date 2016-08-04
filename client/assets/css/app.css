@@ -345,6 +345,14 @@ div.mentor-profile span.review-date {
   margin-left: 15px;
 }
 
+div.mentor-profile .left-card {
+  padding-right: 7.5px;
+}
+
+div.mentor-profile .right-card {
+  padding-left: 7.5px;
+}
+
 .rbc-btn {
   color: inherit;
   font: inherit;

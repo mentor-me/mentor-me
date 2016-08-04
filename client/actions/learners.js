@@ -57,13 +57,19 @@ export function fetchCurrentMentor(currentMentor) {
     let mentorObj = state.learner.mentors.filter(mentor => {
       return currentMentor === mentor.username;
     });
-    dispatch({
-      type: CURRENT_MENTOR,
-      payload: mentorObj,
-    });
-  };
+    let endpoint = `/api/mentor/users/${mentorObj.id}/reviews`;
+    axios.get(endpoint)
+    .then(response => {
+      dispatch([{
+          type: CURRENT_MENTOR_REVIEWS,
+          payload: response.data
+        }, {
+          type: CURRENT_MENTOR,
+          payload: mentorObj,
+        }])
+    })
+  }
 }
-
 
 /* TODO: BELOW ACTION CREATOR NOT ACTUALLY DISPATCHING ANYTHING!!! */
 export function submitReview(data) {
@@ -75,19 +81,6 @@ export function submitReview(data) {
       dispatch({
         type: SUBMIT_REVIEW,
         payload: data
-      });
-    })
-  };
-}
-
-export function fetchCurrentMentorReviews(mentorId) {
-  const endpoint = `/api/mentor/users/${mentorId}/reviews`
-  return (dispatch) => {
-    axios.get(endpoint)
-    .then(response => {
-      dispatch({
-        type: CURRENT_MENTOR_REVIEWS,
-        payload: response.data
       });
     })
   };
