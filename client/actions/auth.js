@@ -11,13 +11,11 @@ import {
 //////////////////////////////////////////
 
  export function loginUser(loginProps) {
-  //  browserHistory.push(`/learner/asdfsafdsfdf/profile`)
+   var date = { lastLogIn: new Date() };
+   var obj = {...loginProps, ...date};
    return dispatch => {
-
-     axios.post('/api/login', loginProps)
-
+     axios.post('/api/login', obj)
        .then(response => {
-         console.log(response.data)
         //  localStorage.setItem('token', response.headers.auth);
          dispatch({
            type: AUTH_USER,
@@ -41,6 +39,7 @@ import {
     email: loginProps.email,
     password: loginProps.password,
     role: 2,
+    lastLogIn: new Date(),
     preferences: {
       visual: loginProps.learnerStyle == "Visual" ? 'true' : 'false',
       academic: loginProps.learnerStyle == "Academic" ? 'true' : 'false',
@@ -90,6 +89,7 @@ export function signupMentor(loginProps) {
    description: loginProps.description,
    skills: loginProps.skills.split(' '),
    role: 1,
+   lastLogIn: new Date(),
    preferences: {
      visual: loginProps.learnerStyle == "Visual" ? 'true' : 'false',
      academic: loginProps.learnerStyle == "Academic" ? 'true' : 'false',
@@ -115,7 +115,8 @@ export function signupMentor(loginProps) {
 }
 
 export function loginMentor(loginProps) {
- //  browserHistory.push(`/learner/asdfsafdsfdf/profile`)
+  var date = { lastLogIn: new Date() };
+  var obj = {...loginProps, ...date};
   return dispatch => {
     axios.post('/api/mentor/login', loginProps)
       .then(response => {
