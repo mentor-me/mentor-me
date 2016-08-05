@@ -2,6 +2,7 @@ var db        = require('../db/db.js');
 var Sequelize = require('sequelize');
 var async     = require('async');
 var _         = require('lodash');
+var zipcodes  = require('zipcodes');
 
 ///////////////////////////////////////////////////
 ///////////    GETTING MENTORS       //////////////
@@ -73,6 +74,55 @@ exports.learnerSearchMentors = function(req, res, term){
     res.status(500).send(err.message);
   });
 }
+
+exports.LearnerFetchedAndFilteredMentor = function(req, res, preferences, radius) {
+  if(preferences.radiusZip){
+    var radius = radius || 10;
+    var zipMatchArr = zipcodes.radius(preferences.radiusZip, 10);
+    console.log("This is the ZIP CODE ARRAY ", zipMatchArr, "this is the zip from the user", preferences.radiusZip);
+  }
+  db.User.findAll({
+    where: {
+      $or: [
+        {primary_role  : "1"},
+        {secondary_role: "1"}
+      ]
+    },
+    include : [{
+      model : db.Skill
+    },
+    {
+      model: db.Quality
+    }]
+
+  })
+  .then(function(mentors){
+    if(!zipMatchArr){
+      res.status(200).send(mentors)
+    } else {
+      var filterMentors = _.filter(mentors, function(mentor){
+        console.log("this is the mentors zip", mentor.zip)
+        console.log("this the index valei sis the ", _.indexOf(zipMatchArr , mentor.zip))
+        if(_.indexOf(zipMatchArr , mentor.zip) !== -1 )
+        return mentor;
+      })
+      res.status(200).send(filterMentors)
+    }
+
+
+  })
+  .catch(function(err){
+    console.error('err', err.message);
+    res.status(500).send(err.message);
+  });
+}
+
+
+
+
+
+
+
 
 
 exports.learnerFetchMentors = function(req, res){
@@ -386,9 +436,15 @@ exports.allMentors = function(req, res){
 //           res.status(500).send(err.message + " Username and Email must be unique");
 //       });
 // };
+
+
+
 function testsort(preferences, mentors) {
 
+
   var sortedList = [];
+  var keyArr = [];
+  var mentorBySortScore = []
   _.forEach(mentors, function(mentor){
     var score = 0;
     if(preferences.visual === mentor.qualities.visual){
@@ -399,13 +455,36 @@ function testsort(preferences, mentors) {
     }
     var reviewScore = getScore(mentor.reviewCount, mentor.rating);
     var appointmentScore = mentor.reviewCount / mentor.total_appointments;
-    score = reviewScore + appointmentScore;
+    score = Math.floor((reviewScore + appointmentScore) * 1000);
 
+    var exist = false;
+    _.forEach(sortedList, function(scoreObj){
+     if(_.hasIn(scoreObj, score)){
+        exists = true;
+        scoreObj[score].push(mentor);
+     }
+    })
+    if(!exists){
+      sortedList.push({score: [mentor]});
+      keyArr.push(score);
+    }
+  })
+  var keySortArr = _.sortedUniq(keyArr);
+  _.forEach(keySortArr, function(key){
+    _.forEach(sortedList, function(scoreObj){
+      if(scoreObj[key]){
+        _.concat(mentorBySortScore, scoreObj[key]);
 
-
+      }
+    })
 
   })
+
+  return mentorBySortScore;
+
+
 }
+
 
 function getScore(reviewCount, rating) {
   var scoreReviewCount = 9;

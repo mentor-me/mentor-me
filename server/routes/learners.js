@@ -22,6 +22,14 @@ router.get('/learner/mentors', function(req, res){
 
 });
 
+router.put('/learner/users/:userId/updatePref', function(req, res){
+  console.log("inside PREF update:: ");
+  var updatePref = _.pick(req.body, 'visual', 'academic',
+                        'remote', 'inPerson','radiusZip')
+
+  Learners.LearnerFetchedAndFilteredMentor(req, res, updatePref);
+})
+
 
 // router.post('/learner/users', function(req, res){
 //   console.log('learner/users');
