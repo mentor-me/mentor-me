@@ -11,7 +11,7 @@ export default class Welcome extends Component {
          </div>
         </div>
         <div className="container-fluid welcome">
-          <div class="row">
+          <div className="row">
             <div className="callouts-header">
               <h1 className="header-tag">How It Works</h1>
             </div>

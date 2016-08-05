@@ -30,7 +30,7 @@ class Search extends Component {
 
   render() {
     return (
-        <input className="form-control" type="text" onChange={this.handleQueryChange.bind(this)} placeholder="Search for a mentor..." />
+        <input className="form-control search-input" type="text" onChange={this.handleQueryChange.bind(this)} placeholder="Search for a mentor..." />
     );
   }
 }
