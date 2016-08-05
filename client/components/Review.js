@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import { submitReview } from '../actions/learners';
+import { submitReview, fetchCurrentMentor } from '../actions/learners';
 import StarRatingComponent from 'react-star-rating-component';
 
 class Review extends Component {
+
+  componentWillUnmount(){
+    this.props.fetchCurrentMentor(this.props.mentor);
+  }
 
   constructor() {
     super();
@@ -13,7 +17,6 @@ class Review extends Component {
       reviewText: '',
       rating: 0
     }
-
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleReviewChange = this.handleReviewChange.bind(this);
     this.onStarClick = this.onStarClick.bind(this);
@@ -83,4 +86,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { submitReview })(Review);
+export default connect(mapStateToProps, { submitReview, fetchCurrentMentor })(Review);

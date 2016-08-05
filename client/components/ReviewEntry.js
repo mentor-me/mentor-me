@@ -4,9 +4,7 @@ import dateFormat from 'dateformat';
 
 export default class ReviewEntry extends Component {
   render() {
-
     let { mentor, review } = this.props;
-    console.log(mentor.rating)
     return (
       <div className="col-sm-12">
         <div className="card">
@@ -24,9 +22,7 @@ export default class ReviewEntry extends Component {
             </span>
           </div>
           <div className="card-block">
-            <blockquote className="card-blockquote">
-              <p>{ review.content }</p>
-            </blockquote>
+            <div className="card-text">{ review.content }</div>
           </div>
         </div>
       </div>
