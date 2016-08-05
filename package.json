@@ -73,7 +73,8 @@
     "underscore": "^1.8.3",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-dev-server": "^1.14.0"
+    "webpack-dev-server": "^1.14.0",
+    "zipcodes": "^2.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^6.1.2",
