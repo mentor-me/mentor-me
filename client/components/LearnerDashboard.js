@@ -18,7 +18,7 @@ class LearnerDashboard extends Component {
     let { mentors, auth } = this.props;
     return mentors.map((mentor, i) => {
       if (mentor) {
-        let mentorLink = `/learner/${auth}/mentor/${mentor.username}/profile`;
+        let mentorLink = `/learner/${auth.username}/mentor/${mentor.username}/profile`;
         return <MentorCard key={i} mentor={mentor} link={mentorLink} />;
       }
     });
@@ -30,7 +30,7 @@ class LearnerDashboard extends Component {
         <div className="container-fluid learner">
           <div className="row">
             <div className="col-sm-3">
-              <LearnerPreferences />
+              <LearnerPreferences id={this.props.auth.id} />
             </div>
             <div className="col-sm-9">
               <div className="row search">
@@ -50,7 +50,7 @@ class LearnerDashboard extends Component {
 function mapStateToProps(state) {
   return {
     mentors: state.learner.mentors,
-    auth: state.auth.currentUser.username,
+    auth: state.auth.currentUser,
   };
 }
 

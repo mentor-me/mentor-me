@@ -13,6 +13,10 @@ a:hover {
   text-decoration: none;
 }
 
+.hide {
+  display: none;
+}
+
 .spacer30 {
   margin-top: 30px;
 }
@@ -129,6 +133,10 @@ span.pills {
 
 span.pills:nth-child(1) {
   margin-left: 0;
+}
+
+button.input-group-btn-custom {
+  border-radius: 0;
 }
 
 .navbar {
@@ -283,7 +291,7 @@ footer p {
   padding-bottom: 15px;
 }
 
-.learner input {
+.learner input.search-input {
   background-image: url("../images/search.png");
   background-size: 20px auto;
   background-repeat: no-repeat;
@@ -343,6 +351,14 @@ div.mentor-profile img.mentor-img {
 div.mentor-profile span.review-date {
   color: #999;
   margin-left: 15px;
+}
+
+div.mentor-profile .left-card {
+  padding-right: 7.5px;
+}
+
+div.mentor-profile .right-card {
+  padding-left: 7.5px;
 }
 
 .rbc-btn {

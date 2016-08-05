@@ -6,8 +6,11 @@ import {
   MENTORS,
   LEARNER_PREFERENCES,
   CURRENT_MENTOR,
+  CURRENT_MENTOR_REVIEWS,
+  CLEAR_MENTOR_REVIEWS,
+  CLEAR_MENTOR,
   SUBMIT_REVIEW,
-  CURRENT_MENTOR_REVIEWS
+  CHANGE_PREFS
 } from './actionTypes';
 
 export function fetchMentors() {
@@ -19,7 +22,9 @@ export function fetchMentors() {
           type: MENTORS,
           payload: response.data,
         });
-      });
+      }).catch((err) => {
+        console.log('fetchMentors: ', err);
+    })
   };
 }
 
@@ -34,12 +39,14 @@ export function newSearchQuery(query) {
           type: MENTORS,
           payload: response.data,
         });
-      });
+      }).catch((err) => {
+        console.log('newSearchQuery: ', err);
+    })
   };
 }
 
 export function fetchPreferences(userId) {
-  const endpoint = `ROOT_URL/api/learner/users/${userId}/perferences`;
+  const endpoint = `/api/learner/users/${userId}/preferences`;
   return dispatch => {
     axios.get(endpoint)
       .then(response => {
@@ -47,23 +54,36 @@ export function fetchPreferences(userId) {
           type: LEARNER_PREFERENCES,
           payload: response.data,
         });
-      });
+      }).catch((err) => {
+        console.log('fetchPreferences: ', err);
+    })
   };
 }
 
-export function fetchCurrentMentor(currentMentor) {
-  return (dispatch, getState) => {
-    let state = getState();
-    let mentorObj = state.learner.mentors.filter(mentor => {
-      return currentMentor === mentor.username;
+export function fetchCurrentMentor(mentorObj) {
+  return (dispatch) => {
+    dispatch({
+      type: CLEAR_MENTOR_REVIEWS
     });
     dispatch({
-      type: CURRENT_MENTOR,
-      payload: mentorObj,
+      type: CLEAR_MENTOR
     });
-  };
+    let endpoint = `/api/mentor/users/${mentorObj.id}/reviews`;
+    axios.get(endpoint)
+    .then(response => {
+      dispatch({
+          type: CURRENT_MENTOR_REVIEWS,
+          payload: response.data
+        })
+      dispatch({
+          type: CURRENT_MENTOR,
+          payload: mentorObj
+        })
+    }).catch((err) => {
+      console.log('fetchCurrentMentor: ', err);
+    })
+  }
 }
-
 
 /* TODO: BELOW ACTION CREATOR NOT ACTUALLY DISPATCHING ANYTHING!!! */
 export function submitReview(data) {
@@ -76,19 +96,39 @@ export function submitReview(data) {
         type: SUBMIT_REVIEW,
         payload: data
       });
+    }).catch((err) => {
+      console.log('submitReview: ', err);
     })
   };
 }
 
-export function fetchCurrentMentorReviews(mentorId) {
-  const endpoint = `/api/mentor/users/${mentorId}/reviews`
+export function putPreferences(formProps) {
+  const endpoint = `/api/learner/users/${1}/preferences`
   return (dispatch) => {
-    axios.get(endpoint)
+    axios.put(endpoint, formProps)
     .then(response => {
+      console.log(response)
       dispatch({
-        type: CURRENT_MENTOR_REVIEWS,
-        payload: response.data
+        type: 'yo',
+        payload: response
       });
-    })
-  };
+    }).catch((err) => {
+      console.log('putPreferences Error: ', err);
+    });
+  }
+}
+
+export function changePreferences() {
+  return (dispatch, getState) => {
+    /* Grab current Pref state and compare with form state */
+    let state = getState();
+    let oldPrefs = state.preferences;
+    let newPrefs = state.form.preferences;
+    /* Do a little dig */
+    console.log(state)
+    dispatch({
+      type: CHANGE_PREFS,
+      payload: 'yo'
+    });
+  }
 }

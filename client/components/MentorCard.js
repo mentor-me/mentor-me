@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import TimeAgo from 'react-timeago';
@@ -7,11 +8,18 @@ import StarRatingComponent from 'react-star-rating-component';
 import MentorProfile from './MentorProfile';
 import SkillPill from './SkillPill';
 
-export default class MentorCard extends Component {
+import { fetchCurrentMentor } from '../actions/learners';
+
+class MentorCard extends Component {
+
+
+  fetchMentor() {
+    this.props.fetchCurrentMentor(this.props.mentor)
+  }
 
   render() {
-    const imgPath = 'client/assets/images/user.jpg';
-    const { mentor } = this.props;
+    let imgPath = 'client/assets/images/user.jpg';
+    let { mentor } = this.props;
 
     let pills = mentor.Skills.map((skill, i) => {
       return <SkillPill skill={ skill.title } key={ i } />
@@ -47,7 +55,7 @@ export default class MentorCard extends Component {
               { mentor.description }
             </p>
             <Link to={this.props.link} >
-              <button className="btn-global" >
+              <button onClick={ () => this.fetchMentor() } className="btn-global" >
                 See {mentor.firstname}'s Profile
               </button>
             </Link>
@@ -56,6 +64,6 @@ export default class MentorCard extends Component {
       </div>
     );
   }
-
-
 }
+
+export default connect(null, { fetchCurrentMentor })(MentorCard);

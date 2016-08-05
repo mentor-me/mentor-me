@@ -22,28 +22,23 @@ export function createAppointment(formProps, mentorId, userId) {
     axios.post(endpoint, appointment)
       .then(response => {
         dispatch({ type: CREATE_APPOINTMENT });
-        // browserHistory.push('somewhere');
-      })
-      .catch(() => {
-
-        console.log('in catch err ');
-      });
+      }).catch((err) => {
+        console.log('createAppointment: ', err);
+    });
   };
 }
 
 export function fetchAppointments(userId) {
-
   const endpoint = `/api/learner/users/${userId}/appointments`;
-
   return dispatch => {
     axios.get(endpoint)
       .then(response => {
-
-            dispatch({
-              type: FETCH_APPOINTMENTS,
-              payload: response.data,
-
-            });
-      });
+        dispatch({
+          type: FETCH_APPOINTMENTS,
+          payload: response.data,
+        });
+      }).catch((err) => {
+        console.log('fetchAppointments: ', err);
+    });
   };
 }
