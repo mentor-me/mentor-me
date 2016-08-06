@@ -1,5 +1,7 @@
 import axios from 'axios';
+import _  from 'lodash' ;
 import { browserHistory } from 'react-router';
+import { mentorSortPrefs, mentorSearchByTerm } from '../utils/utils';
 
 import {
   ROOT_URL,
@@ -10,7 +12,9 @@ import {
   CLEAR_MENTOR_REVIEWS,
   CLEAR_MENTOR,
   SUBMIT_REVIEW,
-  CHANGE_PREFS
+  CHANGE_PREFS,
+  MODIFIED_MENTORS,
+  SEACHABLE_MENTORS
 } from './actionTypes';
 
 export function fetchMentors() {
@@ -28,33 +32,47 @@ export function fetchMentors() {
   };
 }
 
+
 export function newSearchQuery(query) {
-  console.log('query: ', query)
-  const endpoint = `/api/learner/search?q=${query}`;
-  return dispatch => {
-    axios.get(endpoint)
-      .then(response => {
-        console.log('response: ', response)
+
+  return (dispatch, getState) => {
+
+    console.log('query: ', query)
+    let state = getState();
+    let modifiedMentors = state.learner.modifiedMentors;
+    console.log("THIS SI THE MODIFIED " ,modifiedMentors)
+
+    var mentorsList = mentorSearchByTerm(modifiedMentors, query)
+    console.log(mentorsList)
         dispatch({
-          type: MENTORS,
-          payload: response.data,
+          type: SEACHABLE_MENTORS,
+          payload: mentorsList
         });
-      }).catch((err) => {
-        console.log('newSearchQuery: ', err);
-    })
   };
 }
 
-export function fetchPreferences(userId) {
-  const endpoint = `/api/learner/users/${userId}/preferences`;
+
+
+
+
+
+export function fetchPreferences(uid) {
+  console.log("fetchPreferences(userId) :: ", uid)
+  const endpoint = `/api/learner/users/${uid}/preferences`;
   return dispatch => {
     axios.get(endpoint)
       .then(response => {
+        let preferences = _.pick(response.data, 'id', 'academic', 'inPerson', 'visual', 'remote', 'radiusZip', 'radius');
+        preferences.radius = preferences.radius || 25;
+        return preferences;
+      })
+      .then( preferences => {
         dispatch({
           type: LEARNER_PREFERENCES,
-          payload: response.data,
+          payload: preferences,
         });
-      }).catch((err) => {
+      })
+      .catch((err) => {
         console.log('fetchPreferences: ', err);
     })
   };
@@ -102,33 +120,48 @@ export function submitReview(data) {
   };
 }
 
-export function putPreferences(formProps) {
-  const endpoint = `/api/learner/users/${1}/preferences`
+
+
+
+export function fetchModifiedMentors(formProps) {
+
+  console.log('FORM PROPS ----',formProps);
+
+
+  const endpoint = `/api/learner/users/${2}/mentorsReq`;
   return (dispatch) => {
     axios.put(endpoint, formProps)
     .then(response => {
-      console.log(response)
-      dispatch({
-        type: 'yo',
-        payload: response
-      });
-    }).catch((err) => {
+      console.log("this is the response ::: ", response.data)
+      return mentorSortPrefs(formProps, response.data);
+    })
+    .then(modifiedResp => {
+      console.log("in Modified", modifiedResp)
+            dispatch({
+              type: MODIFIED_MENTORS,
+              payload: modifiedResp
+            });
+    })
+    .catch((err) => {
       console.log('putPreferences Error: ', err);
     });
   }
 }
 
-export function changePreferences() {
-  return (dispatch, getState) => {
-    /* Grab current Pref state and compare with form state */
-    let state = getState();
-    let oldPrefs = state.preferences;
-    let newPrefs = state.form.preferences;
-    /* Do a little dig */
-    console.log(state)
+export function changePreferences(uid, formProps) {
+  console.log('formProps--', formProps)
+  const endpoint = `http://localhost:8080/api/learner/users/${uid}/preferences`
+  return (dispatch) => {
     dispatch({
-      type: CHANGE_PREFS,
-      payload: 'yo'
+      type: LEARNER_PREFERENCES,
+      payload: formProps
+    })
+    axios.put(endpoint, formProps)
+    .then(() => {
+      console.log('success')
+    })
+    .catch((err) => {
+      console.log('changePreferences Error: ', err);
     });
   }
 }

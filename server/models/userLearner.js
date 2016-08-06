@@ -8,6 +8,7 @@ var zipcodes  = require('zipcodes');
 ///////////    GETTING MENTORS       //////////////
 ///////////////////////////////////////////////////
 
+
 exports.learnerSearchMentors = function(req, res, term){
   term = term.toLowerCase();
   db.User.findAll({
@@ -76,6 +77,7 @@ exports.learnerSearchMentors = function(req, res, term){
 }
 
 exports.LearnerFetchedAndFilteredMentor = function(req, res, preferences, radius) {
+  console.log("this is preferences", preferences)
   if(preferences.radiusZip){
     var radius = radius || 10;
     var zipMatchArr = zipcodes.radius(preferences.radiusZip, 10);
@@ -116,12 +118,6 @@ exports.LearnerFetchedAndFilteredMentor = function(req, res, preferences, radius
     res.status(500).send(err.message);
   });
 }
-
-
-
-
-
-
 
 
 
@@ -221,9 +217,11 @@ exports.learnerFetchPreferences = function(req, res, userId){
 }
 
 exports.learnerUpdatePreferences = function(req, res, preferenceUpdate){
+  console.log('preferenceUpdate---', preferenceUpdate);
   var preId = preferenceUpdate.id
-  db.Preference.update(preferenceUpdate,{ where: { id: preId }, returning:true})
+  db.Preference.update(preferenceUpdate,{ where: { id: preId }})
     .then(function (result) {
+      console.log("this is result on the backend ::", result)
         console.log("line 69:  model", JSON.stringify(result[1]));
         res.status(200).send(result[1]);
       });
@@ -436,64 +434,3 @@ exports.allMentors = function(req, res){
 //           res.status(500).send(err.message + " Username and Email must be unique");
 //       });
 // };
-
-
-
-function testsort(preferences, mentors) {
-
-
-  var sortedList = [];
-  var keyArr = [];
-  var mentorBySortScore = []
-  _.forEach(mentors, function(mentor){
-    var score = 0;
-    if(preferences.visual === mentor.qualities.visual){
-      score += 10;
-    }
-    if(preferences.acadmeic === mentor.qualities.acadmeic){
-      score += 10;
-    }
-    var reviewScore = getScore(mentor.reviewCount, mentor.rating);
-    var appointmentScore = mentor.reviewCount / mentor.total_appointments;
-    score = Math.floor((reviewScore + appointmentScore) * 1000);
-
-    var exist = false;
-    _.forEach(sortedList, function(scoreObj){
-     if(_.hasIn(scoreObj, score)){
-        exists = true;
-        scoreObj[score].push(mentor);
-     }
-    })
-    if(!exists){
-      sortedList.push({score: [mentor]});
-      keyArr.push(score);
-    }
-  })
-  var keySortArr = _.sortedUniq(keyArr);
-  _.forEach(keySortArr, function(key){
-    _.forEach(sortedList, function(scoreObj){
-      if(scoreObj[key]){
-        _.concat(mentorBySortScore, scoreObj[key]);
-
-      }
-    })
-
-  })
-
-  return mentorBySortScore;
-
-
-}
-
-
-function getScore(reviewCount, rating) {
-  var scoreReviewCount = 9;
-  var maxReviewCount   = 10000;
-  var maxReviewScore   = 5;
-	if (reviewCount > maxReviewCount) {
-		throw new Error('too many reviews');
-	}
-
-	return ( scoreReviewCount * 0.4 * (reviewCount / maxReviewCount) ) +
-		     ( scoreReviewCount * 0.6 * (rating / maxReviewScore));
-}

@@ -20,9 +20,8 @@ class Search extends Component {
   handleQueryChange(e) {
     this.setState({
       query: e.target.value,
-    });
-    this.filterMentors();
-  }
+    }, () => {this.filterMentors()}
+  )}
 
   filterMentors() {
     this.props.newSearchQuery(this.state.query);
