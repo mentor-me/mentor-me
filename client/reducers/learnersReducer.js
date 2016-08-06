@@ -6,10 +6,14 @@ import {
   CURRENT_MENTOR_REVIEWS,
   CLEAR_MENTOR,
   CLEAR_MENTOR_REVIEWS,
-  CHANGE_PREFS
+  CHANGE_PREFS,
+  MODIFIED_MENTORS,
+  SEACHABLE_MENTORS
 } from '../actions/actionTypes';
 
-const INITIAL_STATE = { mentors: [], preferences: {}, currentMentor: {}, currentMentorReviews: [] };
+const INITIAL_STATE = { mentors: [], preferences: {},
+                    currentMentor: {}, currentMentorReviews: [],
+                     modifiedMentors : [] };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -30,6 +34,10 @@ export default (state = INITIAL_STATE, action) => {
     case CHANGE_PREFS:
       return { ...state };
       // return { ...state, preferences: action.payload };
+    case MODIFIED_MENTORS:
+      return { ...state, modifiedMentors: action.payload };
+    case SEACHABLE_MENTORS:
+      return { ...state, modifiedMentors: action.payload };
     default:
       return state;
   }
