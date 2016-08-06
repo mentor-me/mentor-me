@@ -18,3 +18,5 @@ export const CURRENT_MENTOR_REVIEWS = 'current_mentor_reviews';
 export const CLEAR_MENTOR_REVIEWS = 'current_mentor_reviews';
 
 export const CHANGE_PREFS = 'change_prefs';
+export const MODIFIED_MENTORS = 'filtered_mentors_list';
+export const SEACHABLE_MENTORS = 'searchable_mentors_list';

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchMentors } from '../actions/learners';
+import { fetchMentors, fetchModifiedMentors } from '../actions/learners';
+import { mentorSortPrefs } from '../utils/utils';
 
 /* Sub Components */
 import MentorCard from './MentorCard';
@@ -11,7 +12,8 @@ import LearnerPreferences from './LearnerPreferences';
 class LearnerDashboard extends Component {
 
   componentWillMount() {
-    this.props.fetchMentors();
+
+    // this.props.fetchModifiedMentors();
   }
 
   renderMentors() {
@@ -49,9 +51,9 @@ class LearnerDashboard extends Component {
 
 function mapStateToProps(state) {
   return {
-    mentors: state.learner.mentors,
+    mentors: state.learner.modifiedMentors,
     auth: state.auth.currentUser,
   };
 }
 
-export default connect(mapStateToProps, { fetchMentors })(LearnerDashboard);
+export default connect(mapStateToProps, { fetchMentors, fetchModifiedMentors })(LearnerDashboard);
