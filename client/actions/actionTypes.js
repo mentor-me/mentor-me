@@ -27,3 +27,6 @@ export const LOADING_MENTOR_COMPLETE = 'loading_mentor_complete';
 export const LOADING_MENTOR = 'loading_mentor';
 export const LOADING_LEARNER_DASHBOARD = 'loading_learner_dashboad';
 export const LOADING_LEARNER_DASHBOARD_COMPLETE = 'loading_learner_dashboad_complete';
+
+/* VIDEO CHAT  */
+export const GET_VIDEO_TOKEN = 'get_video_token';

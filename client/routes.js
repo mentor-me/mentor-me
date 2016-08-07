@@ -19,6 +19,7 @@ import MentorProfile from './components/MentorProfile';
 import MentorSignup from './components/MentorSignup';
 import MentorLogin from './components/MentorLogin';
 import Mentor from './components/Mentor';
+import Mentor from './components/Mentor';
 
 const routes = (
     <Route path="/" component={App} >
@@ -34,7 +35,7 @@ const routes = (
         <Route path="learner/:username/profile" component={LearnerProfile} />
         <Route path="learner/:username/mentor/:mentorUsername/profile" component={MentorProfile} />
         <Route path="learner/:username/mentor/:mentorUsername/review" component={Review} />
-      </Route>
+        </Route>
       <Route component={Mentor} >
         <Route path="mentor/:username" component={MentorProfile} />
       </Route>
