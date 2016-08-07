@@ -95,21 +95,21 @@ function conversationStarted(conversation) {
     });
 }
 
-//  Local video preview
-document.getElementById('button-preview').onclick = function () {
-    if (!previewMedia) {
-        previewMedia = new Twilio.Conversations.LocalMedia();
-        Twilio.Conversations.getUserMedia().then(
-        function (mediaStream) {
-            previewMedia.addStream(mediaStream);
-            previewMedia.attach('#local-conversation');
-        },
-        function (error) {
-            console.error('Unable to access local media', error);
-            log('Unable to access Camera and Microphone');
-        });
-    };
-};
+// //  Local video preview
+// document.getElementById('button-preview').onclick = function () {
+//     if (!previewMedia) {
+//         previewMedia = new Twilio.Conversations.LocalMedia();
+//         Twilio.Conversations.getUserMedia().then(
+//         function (mediaStream) {
+//             previewMedia.addStream(mediaStream);
+//             previewMedia.attach('#local-conversation');
+//         },
+//         function (error) {
+//             console.error('Unable to access local media', error);
+//             log('Unable to access Camera and Microphone');
+//         });
+//     };
+// };
 
 // Activity log
 // function log(message) {
