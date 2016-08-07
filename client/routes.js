@@ -33,6 +33,7 @@ const routes = (
       <Route component={Learner} >
         <Route path="learner/:username" component={LearnerDashboard} />
         <Route path="learner/:username/calendar" component={Calendar} />
+          <Route path="mentor/:username/videochat" component={VideoChatPage} />
         <Route path="learner/:username/videochat" component={VideoChatPage} />
         <Route path="learner/:username/profile" component={LearnerProfile} />
         <Route path="learner/:username/mentor/:mentorUsername/profile" component={MentorProfile} />
