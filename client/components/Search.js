@@ -9,12 +9,10 @@ import _ from 'underscore';
 class Search extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       query: '',
     };
-
-    this.filterMentors = _.debounce(this.filterMentors, 600);
+    this.filterMentors = _.debounce(this.filterMentors, 500);
   }
 
   handleQueryChange(e) {

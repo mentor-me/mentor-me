@@ -1,6 +1,7 @@
 @charset "UTF-8";
 html, body {
   background-color: #fbfbfb;
+  overflow-y: scroll;
 }
 
 a, a:visited {
@@ -333,7 +334,6 @@ div.mentor-profile div.card-block {
   width: 100%;
 }
 
-div.mentor-profile img.mentor-img,
 div.mentor-profile button.btn-global,
 div.mentor-profile h4.mentor-name {
   display: table-cell;
@@ -342,10 +342,6 @@ div.mentor-profile h4.mentor-name {
 
 div.mentor-profile button:nth-of-type(n + 1) {
   margin-left: 15px;
-}
-
-div.mentor-profile img.mentor-img {
-  width: 42px;
 }
 
 div.mentor-profile span.review-date {
@@ -1076,4 +1072,12 @@ button.rbc-input::-moz-focus-inner {
 
 #become button.btn-global:hover {
   border: 1px solid white;
+}
+
+div.loader {
+  text-align: center;
+}
+
+div.loader i.fa {
+  margin-top: 20%;
 }

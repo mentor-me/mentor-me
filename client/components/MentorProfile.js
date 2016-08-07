@@ -1,23 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import Gravatar from 'react-gravatar';
 
 import SkillPill from './SkillPill';
 import ReviewEntry from './ReviewEntry';
-import EmptyReviewEntry from './EmptyReviewEntry';
+import Loader from './Loader';
 
 class MentorProfile extends Component {
 
 renderTopCard() {
 
+    let GravatarStyles = {
+      'display': 'table',
+      'verticalAlign': 'middle',
+      'width': '42px',
+      'height': '42px',
+      'borderRadius': '100%'
+    }
+
     const { currentMentor, auth } = this.props;
-    /* Check to see whether USER is a MENTOR (1) or LEARNER (2) */
+    /* If the person loggin in is a mentor (primary role 1) */
     if (currentMentor) {
-      if( auth.primary_role == 2 ) {
+      if (auth.primary_role == 2) {
         return (
           <div className="card mentor-profile">
             <div className="card-block">
-              <img className="img-circle mentor-img" src="http://www.asthmamd.org/images/icon_user_1.png" />
+              {/*<img className="img-circle mentor-img" src="http://www.asthmamd.org/images/icon_user_1.png" />*/}
+              <Gravatar style={GravatarStyles} email={currentMentor.email} https />
               <h4 className="card-title mentor-name"> {currentMentor.firstname} {currentMentor.lastname} </h4>
               {/*<Link to={`/learner/${auth.username}/mentor/${currentMentor.username}/schedule`} >*/}
               <button className="btn-global pull-right"> Schedule a Meeting </button>
@@ -29,12 +39,14 @@ renderTopCard() {
             </div>
           </div>
         );
+      /* If the person loggin in is a mentor (primary role 1) */
       } else {
         return (
           <div className="card mentor-profile">
             <div className="card-block">
-              <img className="img-circle mentor-img" src="http://www.asthmamd.org/images/icon_user_1.png" />
+              <Gravatar style={GravatarStyles} email={currentMentor.email} https />
               <h4 className="card-title mentor-name"> {currentMentor.firstname} {currentMentor.lastname} </h4>
+              <div className="btn-global pull-right">Your Avg. Rating: {currentMentor.rating ? currentMentor.rating : 'N/A'}</div>
             </div>
           </div>
         )
@@ -60,7 +72,6 @@ renderTopCard() {
 
   renderExpertiseCard() {
     let { Skills } = this.props.currentMentor;
-    if (Skills) {
       let pills = Skills.map((skill, i) => {
         return <SkillPill skill={ skill.title } key={ i } />
       })
@@ -76,45 +87,42 @@ renderTopCard() {
           </div>
         </div>
       );
-    }
   }
 
   renderReview() {
-    let { currentMentorReviews } = this.props;
-    let { currentMentor } = this.props;
-    if (currentMentorReviews){
+    let { currentMentorReviews, currentMentor } = this.props;
       return currentMentorReviews.map((review, i) => {
         return <ReviewEntry mentor={currentMentor} review={review} key={i} />
       })
-    }
-    // else {
-    //   return <EmptyReviewEntry />
-    // }
   }
 
   render() {
-
-    return (
-      <div className="spacer30 mentor-profile">
-        <div className="row">
-          <div className="col-sm-12">
-            {this.renderTopCard()}
+    let { loading } = this.props;
+    if (loading) {
+      return (<Loader />)
+    } else {
+      return (
+        <div className="spacer30 mentor-profile">
+          <div className="row">
+            <div className="col-sm-12">
+              { this.renderTopCard() }
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-6 left-card">
-            {this.renderAboutCard()}
+          <div className="row">
+            <div className="col-sm-6 left-card">
+              { this.renderAboutCard() }
+            </div>
+            <div className="col-sm-6 right-card">
+              { this.renderExpertiseCard() }
+            </div>
           </div>
-          <div className="col-sm-6 right-card">
-            {this.renderExpertiseCard()}
+          <div className="row">
+            { this.renderReview() }
           </div>
+          <div className="spacer-bottom" />
         </div>
-        <div className="row">
-          {this.renderReview()}
-        </div>
-        <div className="spacer-bottom" />
-      </div>
-    );
+      );
+    }
   }
 }
 
@@ -122,7 +130,8 @@ function mapStateToProps(state) {
   return {
     currentMentor: state.learner.currentMentor,
     currentMentorReviews: state.learner.currentMentorReviews,
-    auth: state.auth.currentUser
+    auth: state.auth.currentUser,
+    loading: state.learner.loadingMentor
   };
 }
 
