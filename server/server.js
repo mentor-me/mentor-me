@@ -10,13 +10,15 @@ var formidable    = require('formidable');
 var mentorsRoutes = require("./routes/mentors");
 var learnerRoutes = require("./routes/learners");
 var authRoutes    = require('./routes/auth')
-
-var authRoutes    = require("./routes/auth");
 var db            = require('./db/db.js');
 var passport      = require('passport');
 var cookieParser  = require('cookie-parser');
 var session       = require('express-session');
 var config        = require('./config/config');
+// sockets
+var socketIo      = require('socket.io');
+var server        = http.createServer(app);
+var io            = socketIo(server);
 
 
 // Utilities
@@ -42,8 +44,7 @@ app.get('*', function (request, response){
 
 
 app.set('port', 3000);
-
-app.listen(app.get('port'), function() {
+server.listen(app.get('port'), function() {
   // db.ensureSchema();
   console.log(moment().format('h:mm:ss a') + ': Express Server listening on port', app.get('port'));
 });

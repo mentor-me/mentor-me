@@ -139,7 +139,8 @@ var Review = sequelize.define('Review', {
  ///////////////////////////////////////////////////
 
  var Conversation = sequelize.define('Conversation', {
-    name: Sequelize.TEXT,
+    name   : Sequelize.TEXT,
+    private: Sequelize.BOOLEAN
   },{
     tableName: 'Conversations', // this will define the table's name
     timestamps: true      // this will activate the timestamp columns
@@ -151,6 +152,7 @@ var Review = sequelize.define('Review', {
 
 var Message = sequelize.define('Message', {
   content: Sequelize.TEXT,
+  read   : Sequelize.BOOLEAN
   },{
     tableName: 'Messages', // this will define the table's name
     timestamps: true      // this will activate the timestamp columns
@@ -263,7 +265,6 @@ User.hasMany(Conversation, {foreignKey: 'mentorId'});
 User.hasMany(Review, {foreignKey: 'learnerId'});
 User.hasMany(Review, {foreignKey: 'mentorId'});
 
-
 User.hasMany(Appointment, {foreignKey: 'learnerId'});
 User.hasMany(Appointment, {foreignKey: 'mentorId'});
 
@@ -273,6 +274,7 @@ User.hasOne(Preference, {foreignKey: 'learnerId'});
 // Preference.belongsTo(User, {foreignKey: 'learnerId'});
 
 Conversation.hasMany(Message, {foreignKey: 'conversationId'});
+User.hasMany(Message, {foreignKey: 'userId'});
 
 // sequelize.sync().then(function(){
 //    console.log("Created tables in db.js");

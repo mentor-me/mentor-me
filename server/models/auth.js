@@ -76,9 +76,10 @@ exports.mentorCreate = function(req, res, newUser, skills, qualities) {
         var userRecord = user;
         var skillsArr = [];
         // console.log("funtion ::::: ", user.setQuality);
-        // console.log("the qULITES PARAMS", qualities)
+        console.log("the qULITES PARAMS", qualities)
         user.createQuality(qualities, user.id)
         .then(function(quality){
+        console.log("the qULITES PARAMS  ::::::: ", quality)
             // console.log("user quaities set", quality)
             // user.setSkills().then(function(skill){
             //   console.log("This is the skill thing", skill)
