@@ -30,7 +30,7 @@ const routes = (
       <Route path="become/login" component={MentorLogin} />
       <Route component={Learner} >
         <Route path="learner/:username" component={LearnerDashboard} />
-        <Route path="learner/:username/calendar" component={Calendar} />
+        {/*<Route path="learner/:username/calendar" component={Calendar} />*/}
         <Route path="learner/:username/profile" component={LearnerProfile} />
         <Route path="learner/:username/mentor/:mentorUsername/profile" component={MentorProfile} />
         <Route path="learner/:username/mentor/:mentorUsername/review" component={Review} />

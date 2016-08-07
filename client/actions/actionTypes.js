@@ -17,6 +17,13 @@ export const SUBMIT_REVIEW = 'submit_review';
 export const CURRENT_MENTOR_REVIEWS = 'current_mentor_reviews';
 export const CLEAR_MENTOR_REVIEWS = 'current_mentor_reviews';
 
+/* API/FILTER */
 export const CHANGE_PREFS = 'change_prefs';
 export const MODIFIED_MENTORS = 'filtered_mentors_list';
-export const SEACHABLE_MENTORS = 'searchable_mentors_list';
+export const SEARCHABLE_MENTORS = 'searchable_mentors_list';
+
+/* LOADERS  */
+export const LOADING_MENTOR_COMPLETE = 'loading_mentor_complete';
+export const LOADING_MENTOR = 'loading_mentor';
+export const LOADING_LEARNER_DASHBOARD = 'loading_learner_dashboad';
+export const LOADING_LEARNER_DASHBOARD_COMPLETE = 'loading_learner_dashboad_complete';
