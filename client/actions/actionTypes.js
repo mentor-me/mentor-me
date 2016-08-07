@@ -20,3 +20,7 @@ export const CLEAR_MENTOR_REVIEWS = 'current_mentor_reviews';
 export const CHANGE_PREFS = 'change_prefs';
 export const MODIFIED_MENTORS = 'filtered_mentors_list';
 export const SEACHABLE_MENTORS = 'searchable_mentors_list';
+
+/* API/CALENDAR*/
+export const SELECTED_APPOINTMENT = 'selected_appointment';
+export const SELECTED_SLOT = 'selected_slot';

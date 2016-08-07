@@ -20,7 +20,11 @@ renderTopCard() {
               <img className="img-circle mentor-img" src="http://www.asthmamd.org/images/icon_user_1.png" />
               <h4 className="card-title mentor-name"> {currentMentor.firstname} {currentMentor.lastname} </h4>
               {/*<Link to={`/learner/${auth.username}/mentor/${currentMentor.username}/schedule`} >*/}
+
+              <Link to={`learner/${auth.username}/calendar`}>
               <button className="btn-global pull-right"> Schedule a Meeting </button>
+              </Link>
+
               {/*</Link>*/}
               <Link to={`/learner/${auth.username}/mentor/${currentMentor.username}/review`} >
                 <button className="btn-global pull-right"> Submit a Review </button>
