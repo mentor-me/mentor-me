@@ -4,12 +4,9 @@
   "description": "Mentors on demand",
   "main": "server.js",
   "scripts": {
-    "lint": "eslint client/components client/reducers client/actions --fix",
-    "webpack": "./node_modules/webpack/bin/webpack.js",
-    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "sass": "gulp run",
-    "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
-    "start": "node server/server.js"
+    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "prod": "NODE_ENV=production node server.js",
+    "postinstall": "webpack -p"
   },
   "precommit": [
     "lint"
