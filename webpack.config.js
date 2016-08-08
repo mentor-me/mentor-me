@@ -5,6 +5,7 @@ var path = require('path');
 module.exports = {
   devtool: 'source-map',
   entry: [
+
     './client/index.js'
   ],
   output: {
@@ -16,7 +17,7 @@ module.exports = {
     loaders: [
       {
         query: {
-          presets: ['es2015', 'react', 'stage-1']
+          presets: ['react', 'es2015', 'stage-1']
         },
         test: /\.js$/,
         loader: [
