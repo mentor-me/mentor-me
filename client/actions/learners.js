@@ -36,7 +36,7 @@ export function newSearchQuery(query) {
 }
 
 export function fetchPreferences(uid, zip) {
-  const endpoint = `/api/learner/users/${10}/preferences`;
+  const endpoint = `/api/learner/users/${1}/preferences`;
   return dispatch => {
     dispatch({
       type: LOADING_LEARNER_DASHBOARD

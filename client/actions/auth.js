@@ -38,6 +38,7 @@ import {
     firstname: loginProps.lastname,
     email: loginProps.email,
     password: loginProps.password,
+    zip: loginProps.zipCode,
     role: 2,
     lastLogIn: new Date(),
     preferences: {
@@ -88,6 +89,7 @@ export function signupMentor(loginProps) {
    password: loginProps.password,
    description: loginProps.description,
    skills: loginProps.skills.split(' '),
+   zip: loginProps.zipCode,
    role: 1,
    lastLogIn: new Date(),
    preferences: {
