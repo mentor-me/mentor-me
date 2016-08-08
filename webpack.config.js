@@ -9,7 +9,7 @@ module.exports = {
     './client/index.js'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, './'),
     filename: 'bundle.js',
     headers: { 'Access-Control-Allow-Origin': '*' }
   },
