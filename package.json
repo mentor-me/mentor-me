@@ -81,8 +81,7 @@
     "react": "^15.1.0",
     "redux-promise": "^0.5.3",
     "react-redux-form": "^0.14.1",
-    "react-router": "^2.0.0-rc5",
-
+    "react-router": "^2.0.0-rc5"
   },
   "devDependencies": {
     "babel-eslint": "^6.1.2",
