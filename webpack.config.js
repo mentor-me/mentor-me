@@ -1,15 +1,15 @@
 var webpack = require('webpack');
 var path = require('path');
 
-
 module.exports = {
   devtool: 'source-map',
   entry: [
-
+    'webpack/hot/dev-server',
+    'webpack-dev-server/client?http://localhost:8080/',
     './client/index.js'
   ],
   output: {
-    path: path.join(__dirname, './'),
+    path: __dirname,
     filename: 'bundle.js',
     headers: { 'Access-Control-Allow-Origin': '*' }
   },
@@ -17,7 +17,7 @@ module.exports = {
     loaders: [
       {
         query: {
-          presets: ['react', 'es2015']
+          presets: ['es2015', 'react', 'stage-1']
         },
         test: /\.js$/,
         loader: [

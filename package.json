@@ -5,10 +5,11 @@
   "main": "./server/server.js",
   "scripts": {
 
-     "start": "node ./server/server.js",
-     "dist": "webpack -p",
-     "postinstall": "npm run dist"
-
+    "lint": "eslint client/components client/reducers client/actions --fix",
+    "webpack": "./node_modules/webpack/bin/webpack.js",
+    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "sass": "gulp run",
+    "start": "nodemon ./server/server.js"
   },
 
   "precommit": [
