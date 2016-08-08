@@ -1,6 +1,6 @@
 var router         = require("express").Router();
 var _              = require('lodash');
-var Conversations  = require('../models/conversations');
+var Conversations  = require('../models/conversation');
 
 
 // get all conversations
@@ -18,7 +18,9 @@ router.post('/conversations/:userId', function(req, res) {
 
 
 // this route returns all channels including private channels for that user
-router.get('/conversations/:learnerId', function(req, res) {
-  var userId = req.params.learnerId;
-  Conversations.fetchPublicAndPrivateConvos(req, res, learnerId);
+router.get('/conversations/:userId', function(req, res) {
+  var userId = req.params.userId;
+  Conversations.fetchPublicAndPrivateConvos(req, res, userId);
 })
+
+module.exports = router;
