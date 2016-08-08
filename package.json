@@ -5,8 +5,8 @@
   "main": "./server/server.js",
   "scripts": {
 
-     "build": "webpack",
-     "start": "node ./server/server.js"
+     "start": "node ./server/server.js",
+     "postinstall": "webpack"
 
   },
 
