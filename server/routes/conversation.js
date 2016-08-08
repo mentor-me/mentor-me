@@ -12,7 +12,7 @@ router.get('/conversations', function(req, res) {
 router.post('/conversations/:userId', function(req, res) {
   var conversation = _.pick(req.body, 'name', 'private',
                         'mentorId');
-  conversation.learnerId = req.params.learnerId;
+  conversation.learnerId = req.params.userId;
   Conversations.startConversation(req, res, conversation)
 });
 

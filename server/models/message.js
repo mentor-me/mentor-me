@@ -1,9 +1,6 @@
 var db    = require('../db/db.js');
 var async = require('async');
 
-
-
-
 exports.fetchMessages = function(req, res, conversationId) {
   db.Message.findAll({
     where: {conversationId: conversationId}
@@ -16,7 +13,6 @@ exports.fetchMessages = function(req, res, conversationId) {
       res.status(500).send(err.message);
     });
 }
-
 
 exports.createMessage = function(req, res, message) {
   console.log("inside create message", message)
