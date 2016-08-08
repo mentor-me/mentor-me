@@ -1087,3 +1087,17 @@ div.loader {
 div.loader i.fa {
   margin-top: 20%;
 }
+
+div.learner-profile h4.activate-account {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+div.learner-profile i {
+  font-size: 1.8em;
+}
+
+div.learner-profile p.card-text span {
+  font-weight: 700;
+}

@@ -17,7 +17,7 @@ router.post('/conversations/:userId', function(req, res) {
 });
 
 
-// this route returns all channels including private channels for that user
+// this route returns all channels includaing private channels for that user
 router.get('/conversations/:userId', function(req, res) {
   var userId = req.params.userId;
   Conversations.fetchPublicAndPrivateConvos(req, res, userId);
