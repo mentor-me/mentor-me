@@ -31,3 +31,6 @@ export const LOADING_LEARNER_DASHBOARD_COMPLETE = 'loading_learner_dashboad_comp
 /* API/CALENDAR*/
 export const SELECTED_APPOINTMENT = 'selected_appointment';
 export const SELECTED_SLOT = 'selected_slot';
+
+/* VIDEO CHAT  */
+export const GET_VIDEO_TOKEN = 'get_video_token';
