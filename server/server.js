@@ -37,7 +37,7 @@ app.get('*', function (request, response){
   response.sendFile(path.resolve(__dirname, '../', 'index.html'));
 });
 
-app.set('port', process.env.PORT);
+app.set('port', process.env.PORT || 3000);
 
 app.listen(app.get('port'), function() {
   // db.ensureSchema();
