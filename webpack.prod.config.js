@@ -36,11 +36,7 @@ module.exports = {
         include: path.join(__dirname, 'client') },
       { test: /\.scss?$/,
         loader: 'style!css!sass',
-        include: path.join(__dirname, 'client', 'assets', 'sass') },
-      { test: /\.png$/,
-        loader: 'file' },
-      { test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-        loader: 'file'}
+        include: path.join(__dirname, 'client', 'assets', 'sass') }
     ]
   }
 }
