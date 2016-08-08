@@ -19,6 +19,8 @@ import MentorProfile from './components/MentorProfile';
 import MentorSignup from './components/MentorSignup';
 import MentorLogin from './components/MentorLogin';
 import Mentor from './components/Mentor';
+import VideoChatPage from './components/VideoChatPage';
+
 
 const routes = (
     <Route path="/" component={App} >
@@ -30,11 +32,16 @@ const routes = (
       <Route path="become/login" component={MentorLogin} />
       <Route component={Learner} >
         <Route path="learner/:username" component={LearnerDashboard} />
+
         <Route path="learner/:username/mentor/:mentorUsername/calendar" component={Calendar} />}
+
+        <Route path="mentor/:username/videochat" component={VideoChatPage} />
+        <Route path="learner/:username/videochat" component={VideoChatPage} />
+
         <Route path="learner/:username/profile" component={LearnerProfile} />
         <Route path="learner/:username/mentor/:mentorUsername/profile" component={MentorProfile} />
         <Route path="learner/:username/mentor/:mentorUsername/review" component={Review} />
-      </Route>
+        </Route>
       <Route component={Mentor} >
         <Route path="mentor/:username" component={MentorProfile} />
       </Route>

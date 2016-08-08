@@ -3,6 +3,43 @@ var _         = require('lodash');
 var Users     = require('../models/user');
 var Learners  = require('../models/userLearner');
 
+var path          = require('path');
+var http          = require('http');
+
+// require('dotenv').load();
+var AccessToken = require('twilio').AccessToken;
+var ConversationsGrant = AccessToken.ConversationsGrant;
+
+process.env.TWILIO_ACCOUNT_SID
+process.env.TWILIO_API_KEY
+process.env.TWILIO_API_SECRET
+process.env.TWILIO_CONFIGURATION_SID
+
+router.get('/token/:username', function(req, res) {
+    var username = req.params.username
+    console.log("request params in side get token route")
+
+    var identity = username
+    // Create an access token which we will sign and return to the client,
+    // containing the grant we just created
+    var token = new AccessToken(
+        process.env.TWILIO_ACCOUNT_SID,
+        process.env.TWILIO_API_KEY,
+        process.env.TWILIO_API_SECRET
+    );
+    // Assign the generated identity to the token
+    token.identity = identity;
+    //grant the access token Twilio Video capabilities
+    var grant = new ConversationsGrant();
+    grant.configurationProfileSid = process.env.TWILIO_CONFIGURATION_SID;
+    token.addGrant(grant);
+    // Serialize the token to a JWT string and include it in a JSON response
+    res.send({
+        identity: identity,
+        token: token.toJwt()
+    });
+});
+
 
 router.get('/learner', function(req, res){
   console.log("/learner");
