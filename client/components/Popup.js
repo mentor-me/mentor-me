@@ -53,14 +53,13 @@ export default class Popup extends Component {
   }
 
   handleFormSubmit(formProps) {
-
-    console.log('formProps create appt', formProps)
     let userId = this.props.auth.currentUser.id
     let mentorId = this.props.mentor.id
 
-    this.props.createAppointment(formProps, userId, mentorId);
-    close()
-  }
+    this.props.createAppointment(formProps, userId, mentorId)
+    this.close() //not closing modal still on create
+
+    }
 
 render(){
   //
@@ -114,8 +113,8 @@ return (
 export default reduxForm({
   form: 'appointment',
   fields: ['date', 'startTime', 'endTime', 'location', 'notes']},
-  state => ({ // mapStateToProps
+  state => ({
   auth: state.auth,
   mentor: state.learner.currentMentor,
-  initialValues: state.appointments.event // will pull state into form's initialValues
+  initialValues: state.appointments.event
 }), actions)(Popup);
