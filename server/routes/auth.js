@@ -79,8 +79,8 @@ router.post('/mentor/signup', function(req, res, next) {
                 'rate', 'description', 'availability',
                 'lastLogIn'
                 );
-  var skills         = req.body.skills;
-  var preferences    = req.body.preferences;
+  var skills             = req.body.skills;
+  var qualities          = req.body.qualities;
   newUser.secondary_role = req.body.role;
 
   db.User.findOne({
@@ -90,7 +90,7 @@ router.post('/mentor/signup', function(req, res, next) {
     .then(function(user, err){
       console.log("user", user, "error", err)
       if(!user){
-        Auth.mentorCreate(req, res, newUser, skills, preferences);
+        Auth.mentorCreate(req, res, newUser, skills, qualities);
       } else {
         return res.status(422).send({error: 'Email is in Use'})
       }
