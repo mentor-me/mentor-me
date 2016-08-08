@@ -6,7 +6,8 @@
   "scripts": {
 
      "start": "node ./server/server.js",
-     "postinstall": "webpack -p"
+     "dist": "webpack -p",
+     "postinstall": "npm run dist"
 
   },
 

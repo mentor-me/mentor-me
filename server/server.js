@@ -23,7 +23,7 @@ var config        = require('./config/config');
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-app.use(express.static('./'));
+app.use('/dist', express.static(path.join(__dirname, 'dist')));
 // app.use(session({secret: config.sessionSecret,
 // 				 saveUninitialized: true,
 // 				 resave: true}));

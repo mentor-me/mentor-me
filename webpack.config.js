@@ -1,15 +1,14 @@
 var webpack = require('webpack');
 var path = require('path');
 
+
 module.exports = {
   devtool: 'source-map',
   entry: [
-    'webpack/hot/dev-server',
-    'webpack-dev-server/client?http://localhost:8080/',
     './client/index.js'
   ],
   output: {
-    path: __dirname,
+    path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
     headers: { 'Access-Control-Allow-Origin': '*' }
   },
