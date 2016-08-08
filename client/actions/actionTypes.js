@@ -27,3 +27,7 @@ export const LOADING_MENTOR_COMPLETE = 'loading_mentor_complete';
 export const LOADING_MENTOR = 'loading_mentor';
 export const LOADING_LEARNER_DASHBOARD = 'loading_learner_dashboad';
 export const LOADING_LEARNER_DASHBOARD_COMPLETE = 'loading_learner_dashboad_complete';
+
+/* API/CALENDAR*/
+export const SELECTED_APPOINTMENT = 'selected_appointment';
+export const SELECTED_SLOT = 'selected_slot';

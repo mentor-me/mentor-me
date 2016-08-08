@@ -1,44 +1,22 @@
 import React, { Component } from 'react';
 import BigCalendar from 'react-big-calendar';
 import Moment from 'moment';
-import { reduxForm } from 'redux-form';
-import { createAppointment, fetchAppointments } from '../actions/calendar';
-
+import * as actions from '../actions/calendar';
 import Modal from 'react-modal';
+import Popup from './Popup.js'
+import AppointmentEdit from './AppointmentEdit.js'
+import {connect} from 'react-redux'
 
 BigCalendar.setLocalizer(
   BigCalendar.momentLocalizer(Moment)
 );
 
-const customStyles = {
-  overlay: {
-    backgroundColor: 'rgba(255,255,255, .1)',
-    zIndex: 900,
-  },
-
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-  },
-};
-
 export default class Calendar extends Component {
 
   componentWillMount() {
-    if(this.props.auth.currentUser.id){
-    this.props.fetchAppointments(this.props.auth.currentUser.id);
+    if(this.props.mentor.id){
+      this.props.fetchAppointments(this.props.mentor.id);
     }
-  }
-
-  handleFormSubmit(formProps) {
-    let userId = this.props.auth.currentUser.id
-    let mentorId = this.props.mentor.id
-
-    this.props.createAppointment(formProps, userId, mentorId);
   }
 
   constructor(props) {
@@ -46,29 +24,33 @@ export default class Calendar extends Component {
 
     this.state = {
       events: [],
-      date: '',
-      startTime: '',
-      endTime: '',
       modalIsOpen: false,
+      editModalIsOpen: false
 
     };
+  }
 
-    this.open = this.open.bind(this);
+  openEdit(event) {
+    console.log('event inside', event.isSelected)
+
+
+    this.props.selctedAppointment(event)
+
+    this.setState({
+      modalIsOpen: false,
+      editModalIsOpen: !this.state.editModalIsOpen
+
+    });
   }
 
   open(slotInfo) {
 
-    this.setState({
-      modalIsOpen: true,
-      date: Moment(slotInfo.start).format("YYYY-MM-DD"),
-      startTime: Moment(slotInfo.start).format("HH:mm"),
-      endTime: Moment(slotInfo.end).format("HH:mm")
-    });
-  }
+    this.props.selctedSlot(slotInfo)
 
-  close() {
     this.setState({
-      modalIsOpen: false,
+      editModalIsOpen: false,
+      modalIsOpen: !this.state.modalIsOpen
+
     });
   }
 
@@ -77,6 +59,8 @@ export default class Calendar extends Component {
     return this.props.appointments.map((appointment, i) => {
 
         let obj =   {
+            key: i,
+            isSelected: false,
             start: new Date(appointment.startTime),
             end: new Date(appointment.endTime),
             title: appointment.notes
@@ -85,72 +69,53 @@ export default class Calendar extends Component {
     });
   }
 
+  // eventStyleGetter (event) {
+  //
+  //   console.log("isSelected console log", isSelected);
+  //   var backgroundColor = '#' + event.hexColor;
+  //   var style = {
+  //       backgroundColor: '#5f5f5f',
+  //       borderRadius: '0px',
+  //       opacity: 1,
+  //       color: 'white',
+  //       width: '100%',
+  //       border: '0px',
+  //       display: 'block'
+  //   };
+  //   return {
+  //       style: style
+  //   };
+  // }
 
   render() {
-    const { appointments, auth, mentor, handleSubmit, fields: { date, startTime, endTime, location, notes } } = this.props;
-
 
     return (
 
       <div className="spacer30" style={{ height: 640 }}>
 
         <BigCalendar
-              selectable
-              events={appointments ? appointments : []}
-              events={this.props.appointments ? this.appointmentFormat() : []}
+            	selectable
+            	events={this.props.appointments ? this.appointmentFormat() : []}
+            	onSelectEvent={event => 
+                this.openEdit(event)
+              }
+            	defaultView="month"
+            	scrollToTime={new Date(1970, 1, 1, 6)}
+            	defaultDate={new Date(2016, 8, 8)}
 
-              onSelectEvent={event => this.open(event)}
-              defaultView="month"
-              scrollToTime={new Date(1970, 1, 1, 6)}
-              defaultDate={new Date(2016, 8, 8)}
-              onSelectSlot={(slotInfo) => this.open({ start: slotInfo.start, end: slotInfo.end,
+            	onSelectSlot={(slotInfo) => this.open({ start: slotInfo.start, end: slotInfo.end,
           }
 
           )}
         />
-
-          <Modal
-          isOpen={this.state.modalIsOpen}
-          style={customStyles}
-              >
-
-
-        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-
-          <div className="spacer30"> </div>
-            <div className="form-group">
-              <input type="date" className="form-control" placeholder="Date" {...date} value={this.state.date}/>
-            </div>
-
-            <div className="form-group">
-              <input type="time" className="form-control" placeholder="Start time" {...startTime} value={this.state.startTime}/>
-            </div>
-
-            <div className="form-group">
-              <input type="time" className="form-control" placeholder="End time" {...endTime} value={this.state.endTime}/>
-            </div>
-
-            <div className="form-group">
-              <input type="text" className="form-control" placeholder="Location" {...location} />
-            </div>
-
-            <div className="form-group">
-              <textarea className="form-control" placeholder="Notes" {...notes} />
-            </div>
-
-            <div>
-              <button className="btn-global" type="submit">Create Appt</button>
-            </div>
-
-          </form>
-
-          <div>
-            <button className="btn-global" onClick={this.close.bind(this)}>Cancel</button>
-          </div>
-
-
-        </Modal>
-
+      <AppointmentEdit
+              isOpen={this.state.editModalIsOpen}
+              event={this.state.current}
+                  />
+      <Popup
+            isOpen={this.state.modalIsOpen}
+            event={this.state.current}
+                />
       </div>
     );
   }
@@ -164,7 +129,5 @@ function mapStateToProps(state) {
   };
 }
 
-export default reduxForm({
-  form: 'appointment',
-  fields: ['date', 'startTime', 'endTime', 'location', 'notes'],
-}, mapStateToProps, { createAppointment, fetchAppointments })(Calendar);
+
+export default connect (mapStateToProps, actions)(Calendar);
