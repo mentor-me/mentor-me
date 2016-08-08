@@ -6,7 +6,7 @@ var Learners  = require('../models/userLearner');
 var path          = require('path');
 var http          = require('http');
 
-// require('dotenv').load();
+require('dotenv').load();
 var AccessToken = require('twilio').AccessToken;
 var ConversationsGrant = AccessToken.ConversationsGrant;
 
