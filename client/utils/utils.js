@@ -89,6 +89,9 @@ exports.mentorSearchByTerm = function(mentors, term){
   console.log("this is term", term);
   var filterMentor = _.filter(mentors, function(mentor){
     var found = false;
+    if(mentor.firstname && mentor.lastname &&_.includes((mentor.firstname + " " + mentor.lastname).toLowerCase(), term)){
+      return true;
+    }
     if(mentor.username &&_.includes(mentor.username.toLowerCase(), term)){
       return true;
     }

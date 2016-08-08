@@ -21,14 +21,14 @@ exports.fetchPublicAndPrivateConvos = function(req, res, learnerId) {
         {
           private: false
         },
-        $and [
+        {$and: [
           {
             private: true
           },
           {
             learnerId: learnerId
           }
-        ]
+        ]}
 
       ]
   }
