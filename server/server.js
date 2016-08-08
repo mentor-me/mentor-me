@@ -9,7 +9,9 @@ var http          = require('http');
 var formidable    = require('formidable');
 var mentorsRoutes = require("./routes/mentors");
 var learnerRoutes = require("./routes/learners");
-var authRoutes    = require('./routes/auth')
+var authRoutes    = require('./routes/auth');
+var conversationRoutes  = require('./routes/conversation')
+var messageRoutes  = require('./routes/message')
 var db            = require('./db/db.js');
 var passport      = require('passport');
 var cookieParser  = require('cookie-parser');
@@ -35,6 +37,9 @@ app.use(express.static('./'));
 app.use('/api', mentorsRoutes);
 app.use('/api', learnerRoutes);
 app.use('/api', authRoutes);
+app.use('/api', conversationRoutes);
+app.use('/api', messageRoutes);
+
 
 
 

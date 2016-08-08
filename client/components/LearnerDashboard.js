@@ -15,7 +15,7 @@ class LearnerDashboard extends Component {
   componentWillMount() {
     /* Hard coding UID for dev purposes */
     /* Omit second argument unless passing in zip  */
-    this.props.fetchPreferences(10);
+    this.props.fetchPreferences(1);
   }
 
   renderMentors() {

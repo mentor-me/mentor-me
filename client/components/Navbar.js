@@ -15,13 +15,18 @@ class Navbar extends Component {
         return (
           <ul className="nav navbar-nav pull-xs-right">
             <li className="nav-item">
+              <Link to={`/learner/${auth.currentUser.username}/profile`} className="nav-link">
+                <i className="fa fa-cog" />
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link to={`/learner/${auth.currentUser.username}`} className="nav-link">
                 <i className="fa fa-th" />
               </Link>
             </li>
             <li className="nav-item">
-              <Link to={`/learner/${auth.currentUser.username}/profile`} className="nav-link">
-                <i className="fa fa-cog" />
+              <Link to={`/learner/${auth.currentUser.username}/messages`} className="nav-link">
+                <i className="fa fa-comment-o" />
               </Link>
             </li>
             <li className="nav-item">
@@ -33,8 +38,9 @@ class Navbar extends Component {
         );
       }
       /* This is navbar for logged in MENTOR */
-      /* Need to clarify what secondary role is */ 
-      if (auth.currentUser.secondary_role) {
+      /* Need to clarify what secondary role is */
+      // if (auth.currentUser.secondary_role) {
+      else {
         return (
           <ul className="nav navbar-nav pull-xs-right">
             <li className="nav-item">

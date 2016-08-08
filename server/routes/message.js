@@ -1,6 +1,6 @@
 var router         = require("express").Router();
 var _              = require('lodash');
-var Messages  = require('../models/messages');
+var Messages  = require('../models/message');
 
 
 // get all messages with that conversation Id
@@ -16,3 +16,5 @@ router.post('/conversations/:conversationId/messages', function(req, res) {
   message.conversationId = req.params.conversationId;
   Messages.createMessage(req, res, message)
 });
+
+module.exports = router;

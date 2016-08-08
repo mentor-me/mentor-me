@@ -24,7 +24,7 @@ class Signup extends Component {
   }
 
   render() {
-    const { handleSubmit, fields: { username, firstname, lastname, learnerStyle, meetingFormat, email, password } } = this.props;
+    const { handleSubmit, fields: { username, firstname, lastname, zipCode, learnerStyle, meetingFormat, email, password } } = this.props;
 
     return (
         <div className="spacer50">
@@ -43,6 +43,9 @@ class Signup extends Component {
                   </div>
                   <div className="form-group">
                     <input type="text" className="form-control" placeholder="Last Name" {...lastname} />
+                  </div>
+                  <div className="form-group">
+                    <input type="text" className="form-control" placeholder="Zip Code" {...zipCode} />
                   </div>
                   <div className="form-group">
                     <select className="form-control" {...learnerStyle} >
@@ -79,5 +82,5 @@ class Signup extends Component {
 
 export default reduxForm({
   form: 'signup',
-  fields: ['username', 'firstname', 'lastname', 'learnerStyle', 'meetingFormat', 'email', 'password'],
+  fields: ['username', 'firstname', 'zipCode', 'lastname', 'learnerStyle', 'meetingFormat', 'email', 'password'],
 }, null, { signupUser })(Signup);
