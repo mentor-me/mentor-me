@@ -9,7 +9,7 @@
     "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "sass": "gulp run",
     "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
-    "start": "node ./server/server.js"
+    "start": "node server/server.js"
   },
   "precommit": [
     "lint"
