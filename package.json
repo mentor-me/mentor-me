@@ -2,12 +2,14 @@
   "name": "MentorMe",
   "version": "1.0.0",
   "description": "Mentors on demand",
-  "main": "server.js",
+  "main": "./server/server.js",
   "scripts": {
-    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "prod": "NODE_ENV=production node server.js",
-    "postinstall": "webpack -p"
+
+     "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
+     "start": "node ./server/server.js"
+
   },
+
   "precommit": [
     "lint"
   ],
