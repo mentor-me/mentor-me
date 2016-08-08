@@ -1,10 +1,40 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+import Moment from 'moment';
 
 import {
   CREATE_APPOINTMENT,
   FETCH_APPOINTMENTS,
+  SELECTED_APPOINTMENT,
+  SELECTED_SLOT
+
 } from './actionTypes';
+
+export function selctedSlot(event){
+
+  var appointmentFormatted = {
+    date: Moment(event.start).format("YYYY-MM-DD"),
+    startTime: Moment(event.start).format("HH:mm"),
+    endTime: Moment(event.end).format("HH:mm")
+  }
+    return {
+      type: SELECTED_SLOT,
+      payload: appointmentFormatted
+    }
+}
+
+export function selctedAppointment(event){
+
+  var appointmentFormatted = {
+    title: event.title,
+    startTime: Moment(event.start).format("HH:mm"),
+    endTime: Moment(event.end).format("HH:mm")
+  }
+    return {
+      type: SELECTED_APPOINTMENT,
+      payload: appointmentFormatted
+    }
+}
 
 export function createAppointment(formProps, mentorId, userId) {
 
@@ -18,27 +48,35 @@ export function createAppointment(formProps, mentorId, userId) {
       mentorId       : mentorId
   }
 
+  console.log('inside action post appt', appointment)
+
   return function (dispatch) {
+    //making appt true
     axios.post(endpoint, appointment)
       .then(response => {
         dispatch({ type: CREATE_APPOINTMENT });
-      }).catch((err) => {
-        console.log('createAppointment: ', err);
-    });
+        // browserHistory.push('somewhere');
+      })
+      .catch(() => {
+
+        console.log('in catch err ');
+      });
   };
 }
 
 export function fetchAppointments(userId) {
+
   const endpoint = `/api/learner/users/${userId}/appointments`;
+
   return dispatch => {
     axios.get(endpoint)
       .then(response => {
-        dispatch({
-          type: FETCH_APPOINTMENTS,
-          payload: response.data,
-        });
-      }).catch((err) => {
-        console.log('fetchAppointments: ', err);
-    });
+
+            dispatch({
+              type: FETCH_APPOINTMENTS,
+              payload: response.data,
+
+            });
+      });
   };
 }

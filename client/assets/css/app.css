@@ -357,6 +357,11 @@ div.mentor-profile .right-card {
   padding-left: 7.5px;
 }
 
+.modal-header {
+  text-align: right;
+  color: #d94744;
+}
+
 .rbc-btn {
   color: inherit;
   font: inherit;
@@ -894,6 +899,7 @@ button.rbc-input::-moz-focus-inner {
   -ms-flex: 1 0 0;
   -webkit-box-flex: 1;
           flex: 1 0 0;
+  width: 100%;
 }
 
 .rbc-time-slot.rbc-now {
