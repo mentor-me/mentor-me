@@ -4,7 +4,8 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 /* General Purpose Components */
 import App from './components/App';
 import Welcome from './components/Welcome';
-import Messages from './components/Messages';
+import Conversations from './components/Conversations';
+import Messages from './components/Messages'
 
 /* Learner Related Components */
 import Login from './components/Login';
@@ -34,7 +35,8 @@ const routes = (
       <Route component={Learner} >
         <Route path="learner/:username" component={LearnerDashboard} />
         <Route path="learner/:username/mentor/:mentorUsername/calendar" component={Calendar} />}
-        <Route path="learner/:username/messages" component={Messages} />
+        <Route path="learner/:username/conversations" component={Conversations} />
+        <Route path="learner/:username/conversations/:userId/:conversationId" component={Messages} />
         <Route path="learner/:username/videochat" component={VideoChatPage} />
         <Route path="learner/:username/profile" component={LearnerProfile} />
         <Route path="learner/:username/mentor/:mentorUsername/profile" component={MentorProfile} />

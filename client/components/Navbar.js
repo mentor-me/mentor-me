@@ -26,8 +26,8 @@ class Navbar extends Component {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to={`/learner/${auth.currentUser.username}/messages`} className="nav-link">
-                <i className="fa fa-comment-o" />
+              <Link to={`/learner/${auth.currentUser.username}/conversations`} className="nav-link">
+                <i className="fa fa-inbox" />
               </Link>
             </li>
             <li className="nav-item">

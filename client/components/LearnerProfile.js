@@ -10,8 +10,7 @@ class LearnerProfile extends Component {
 
   render() {
 
-    let showDrawer = this.state.showDrawer ? 'openDrawer' : '';
-    let drawerClasses = `${showDrawer} card-text activate-account`;
+    let drawer = this.state.showDrawer ? 'card drawer show-drawer' : 'card drawer';
 
     const { auth } = this.props;
     /* TODO: Do state check on whether user has Primary / Seconary Role */
@@ -21,10 +20,10 @@ class LearnerProfile extends Component {
         <div className="spacer30 learner-profile">
           <div className="container-fluid">
           <div className="row">
-            <div className="card">
+            <div className={drawer}>
               <div className="card-block">
                 <h4 className="card-text activate-account"> Activate Your Mentoring Account Today. </h4>
-                <i onClick={this.setState({ showDrawer: !showDrawer })} className="fa fa-plus-square-o pull-right"></i>
+                <i onClick={ () => this.setState({ showDrawer: !this.state.showDrawer }) } className="fa fa-plus-square-o pull-right"></i>
                 </div>
               </div>
             </div>
