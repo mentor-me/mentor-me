@@ -25,7 +25,7 @@ class LearnerPreferences extends Component {
     const { handleSubmit, fields: { visual, academic, remote, inPerson, radiusZip, radius }, prefs } = this.props;
     /* Toggle ZIP Code input depending on selection of local vs remote */
     let showInput = prefs.inPerson ? '' : 'hide';
-    let inputClasses = `${showInput} input-group`;
+    let inputClasses = `${showInput} input-group` ;
 
     return (
       <div className="card">
@@ -75,10 +75,11 @@ class LearnerPreferences extends Component {
                       /> Local
                     </label>
                   <form onSubmit={handleSubmit(this.handleZipSubmit.bind(this))} >
-                    <div className={inputClasses}>
+                    <div className="error-message">{radiusZip.touched && radiusZip.error ? radiusZip.error : ''}</div>
+                    <div className={`${showInput} input-group  ${radiusZip.touched && radiusZip.error ? 'has-danger' : ''}`}>
                     <input type="text" ref="zip" className="form-control" placeholder="Enter zip code" {...radiusZip} />
                     <span className="input-group-btn">
-                        <button className="btn btn-secondary input-group-btn-custom" type="submit"><i className="fa fa-map-marker" /></button>
+                        <button className={`btn btn-secondary input-group-btn-custom ${radiusZip.touched && radiusZip.error ? 'border-danger' : ''}`} type="submit"><i className="fa fa-map-marker" /></button>
                     </span>
                   </div>
                 </form>
@@ -90,11 +91,25 @@ class LearnerPreferences extends Component {
   }
 }
 
+const validate = formProps => {
+  const errors = {};
+
+  if(!formProps.radiusZip) {
+    errors.radiusZip = 'Required';
+  }
+  else if (!( /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(formProps.radiusZip))){
+        errors.radiusZip = 'Invalid zipcode';
+      }
+
+  return errors
+}
+
 function mapStateToProps(state) {
   return {
     auth: state.auth.currentUser,
     prefs: state.learner.preferences,
-    initialValues: state.learner.preferences
+    initialValues: state.learner.preferences,
+    validate
   };
 }
 

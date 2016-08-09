@@ -20,6 +20,10 @@ class LearnerDashboard extends Component {
 
   renderMentors() {
     let { mentors, auth } = this.props;
+    if(mentors.length === 0 ) {
+      console.log("inhere")
+      return <div className="message-info">We did not find anyone matching your search terms </div>
+    }
     /* Wait until mentors prop exists  */
     /* TODO: incorporate redux fetch / fetch-complete prop  */
     if(mentors){
@@ -30,6 +34,7 @@ class LearnerDashboard extends Component {
         }
       });
     }
+
   }
 
   render() {

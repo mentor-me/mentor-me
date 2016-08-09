@@ -103,9 +103,9 @@ exports.LearnerFetchedAndFilteredMentor = function(req, res, preferences, radius
       res.status(200).send(mentors)
     } else {
       var filterMentors = _.filter(mentors, function(mentor){
-        console.log("this is the mentors zip", mentor.zip)
+        console.log("this is the mentors obj-----", mentor)
         console.log("this the index valei sis the ", _.indexOf(zipMatchArr , mentor.zip))
-        if(_.indexOf(zipMatchArr , mentor.zip) !== -1 )
+        if(_.indexOf(zipMatchArr , mentor.zip) !== -1 && mentor.Quality.inPerson === true)
         return mentor;
       })
       res.status(200).send(filterMentors)
