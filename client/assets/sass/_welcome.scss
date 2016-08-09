@@ -8,6 +8,7 @@
   left: 0;
   right: 0;
 }
+
 //
 // .welcome {
 //   p {
@@ -82,6 +83,7 @@
 
 
 #callouts {
+  padding: 0px 15px;
 	width: 100%;
 	min-height: 350px;
 
@@ -139,4 +141,17 @@ footer {
 footer p {
   margin: 0;
   font-size: .65rem;
+}
+
+@media screen and (max-width: 660px) {
+
+  #banner {
+  	.banner_content {
+  		text-align: center;
+      padding-top: 200px;
+      height: 200px;
+
+  	}
+  }
+
 }

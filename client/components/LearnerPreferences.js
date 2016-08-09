@@ -99,7 +99,7 @@ const validate = formProps => {
   }
   else if (!( /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(formProps.radiusZip))){
         errors.radiusZip = 'Invalid zipcode';
-      }
+  }
 
   return errors
 }
