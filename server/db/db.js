@@ -215,10 +215,22 @@ var Preference = sequelize.define('Preference', {
 ///////////////////////////////////////////////////
 
 var Quality = sequelize.define('Quality', {
-  visual     : Sequelize.BOOLEAN,
-  academic   : Sequelize.BOOLEAN,
-  remote     : Sequelize.BOOLEAN,
-  inPerson   : Sequelize.BOOLEAN
+  visual     : {
+                type:Sequelize.BOOLEAN,
+                defaultValue: false
+              },
+  academic   : {
+                type:Sequelize.BOOLEAN,
+                defaultValue: false
+              },
+  remote     : {
+                type:Sequelize.BOOLEAN,
+                defaultValue: false
+              },
+  inPerson   : {
+                type:Sequelize.BOOLEAN,
+                defaultValue: false
+              }
   },{
     tableName: 'Qualities', // this will define the table's name
     timestamps: true      // this will activate the timestamp columns

@@ -16,21 +16,21 @@ export default class Welcome extends Component {
               <h1 className="header-tag">How It Works</h1>
             </div>
             <div id="callouts">
-              <div className="col-xs-12 col-sm-4 col-md-4  col-lg-4">
+              <div className="col-xs-12 col-sm-12 col-md-4  col-lg-4">
                 <div className="callout">
                   <i className="fa fa-comment-o" aria-hidden="true"></i>
                   <h2>Chat built In</h2>
                   <p>Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget.</p>
                 </div>
               </div>
-              <div className="col-xs-12 col-sm-4 col-md-4  col-lg-4">
+              <div className="col-xs-12 col-sm-12 col-md-4  col-lg-4">
                 <div className="callout">
                   <i className="fa fa-desktop" aria-hidden="true"></i>
                   <h2>Video Chat</h2>
                   <p>Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget.</p>
                 </div>
               </div>
-              <div className="col-xs-12 col-sm-4 col-md-4  col-lg-4">
+              <div className="col-xs-12 col-sm-12 col-md-4  col-lg-4">
                 <div className="callout">
                   <i className="fa fa-question-circle-o" aria-hidden="true"></i>
                   <h2>Mentoring</h2>
