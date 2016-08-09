@@ -24,7 +24,7 @@ class SignupMentor extends Component {
   }
 
   render() {
-    const { handleSubmit, fields: { username, firstname, lastname, zipCode, skills, learnerStyle, meetingFormat, description, email, password } } = this.props;
+    const { handleSubmit, fields: { username, firstname, lastname, zipCode, skills, learnerStyle, meetingFormat, description, email, password, passwordConfirm } } = this.props;
 
     return (
         <div className="spacer50">
@@ -35,7 +35,8 @@ class SignupMentor extends Component {
                 <h2 className="header-tag">signup</h2>
                 <h1 className="sub-header">Your ideal <em>mentor</em> is waiting for you.</h1>
                 <div className="spacer30"></div>
-                  <div className="form-group">
+                  <div className="error-message">{username.touched && username.error ? username.error : ''}</div>
+                  <div className={`form-group ${username.touched && username.error ? 'has-danger' : ''}`}>
                     <input type="text" className="form-control" placeholder="Username" {...username} />
                   </div>
                   <div className="form-group">
@@ -47,7 +48,8 @@ class SignupMentor extends Component {
                   <div className="form-group">
                     <input type="text" className="form-control" placeholder="Your Skills" {...skills} />
                   </div>
-                  <div className="form-group">
+                  <div className="error-message">{zipCode.touched && zipCode.error ? zipCode.error : ''}</div>
+                  <div className={`form-group ${email.touched && email.error ? 'has-danger' : ''}`}>
                     <input type="text" className="form-control" placeholder="Zip Code" {...zipCode} />
                   </div>
                   <div className="form-group">
@@ -65,11 +67,15 @@ class SignupMentor extends Component {
                   <div className="form-group">
                     <textarea style={{"width": "100%"}} className="form-control" placeholder="Describe yourself here..." {...description} />
                   </div>
-                  <div className="form-group">
+                  <div className={`form-group ${email.touched && email.error ? 'has-danger' : ''}`}>
                     <input type="text" className="form-control" placeholder="Email" {...email} />
                   </div>
-                  <div className="form-group">
+                  <div className={`form-group ${password.touched && password.error ? 'has-danger' : ''}`}>
+                    <div className="error-message">{password.touched && password.error ? password.error : ''}</div>
                     <input type="text" className="form-control" type="password" placeholder="Password" {...password} />
+                  </div>
+                  <div className={`form-group ${password.touched && password.error ? 'has-danger' : ''}`}>
+                    <input type="text" className="form-control" type="password" placeholder="Password Confirm" {...passwordConfirm} />
                   </div>
                   <button className="btn-global" type="submit"> Sign Up </button>
                 </form>
@@ -86,7 +92,38 @@ class SignupMentor extends Component {
 
 }
 
+
+const validate = formProps => {
+  const errors = {}
+  if (!formProps.username) {
+    errors.username = 'Required'
+  } else if (formProps.username.length > 6) {
+    errors.username = 'Must be 6 characters or less'
+  }
+  if (!formProps.email) {
+    errors.email = 'Required'
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formProps.email)) {
+    errors.email = 'Invalid email address'
+  }
+
+  if(formProps.password){
+    if (formProps.password.length < 7){
+      errors.password = 'Password must be at least 7 characters'
+    }
+  }
+  if(!formProps.zipCode) {
+    errors.zipCode = 'Required';
+  }
+  else if (!( /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(formProps.zipCode))){
+        errors.zipCode = 'Invalid zipcode';
+  }
+
+  return errors
+}
+
 export default reduxForm({
   form: 'signupMentor',
-  fields: ['username', 'firstname', 'lastname', 'zipCode', 'skills', 'learnerStyle', 'meetingFormat', 'description', 'email', 'password'],
+  fields: ['username', 'firstname', 'lastname', 'zipCode', 'skills', 'learnerStyle', 'meetingFormat', 'description', 'email', 'password', 'passwordConfirm'],
+  validate
+
 }, null, { signupMentor })(SignupMentor);
