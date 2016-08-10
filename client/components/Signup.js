@@ -87,8 +87,8 @@ const validate = formProps => {
   const errors = {}
   if (!formProps.username) {
     errors.username = 'Required'
-  } else if (formProps.username.length > 6) {
-    errors.username = 'Must be 6 characters or less'
+  } else if (formProps.username.length < 6) {
+    errors.username = 'Must be at least 6 characters'
   }
   if (!formProps.email) {
     errors.email = 'Required'

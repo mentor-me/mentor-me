@@ -7,6 +7,7 @@ import { signoutUser } from '../actions/auth';
 
 class Navbar extends Component {
 
+
   renderNavLinks() {
     const { auth, signoutUser } = this.props;
     if (auth.authenticated) {
@@ -82,7 +83,7 @@ class Navbar extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-default navbar-fixed-top ">
+        <nav className="navbar navbar-default navbar-fixed-top" >
           <div className="container-fluid">
             <Link to={"/"} className="navbar-brand">
               <img src="/client/assets/images/logo.png" id="logo" />
@@ -93,7 +94,6 @@ class Navbar extends Component {
       </div>
     );
   }
-
 }
 
 
