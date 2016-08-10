@@ -6,7 +6,7 @@ export default class Welcome extends Component {
       <div className="welcome-wrapper">
         <div id="banner">
          <div className="banner_content">
-           <p>Find the Perfect Mentor.</p>
+           <p className="animated fadeInUp">Find the Perfect Mentor.</p>
            <button className="btn-global" type="submit"> Sign Up </button>
          </div>
         </div>

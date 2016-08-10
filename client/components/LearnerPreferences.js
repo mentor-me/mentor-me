@@ -75,7 +75,7 @@ class LearnerPreferences extends Component {
                       /> Local
                     </label>
                   <form onSubmit={handleSubmit(this.handleZipSubmit.bind(this))} >
-                    <div className="error-message">{radiusZip.touched && radiusZip.error ? radiusZip.error : ''}</div>
+                    <div className={`error-message  ${showInput}`}>{radiusZip.touched && radiusZip.error ? radiusZip.error : ''}</div>
                     <div className={`${showInput} input-group  ${radiusZip.touched && radiusZip.error ? 'has-danger' : ''}`}>
                     <input type="text" ref="zip" className="form-control" placeholder="Enter zip code" {...radiusZip} />
                     <span className="input-group-btn">
