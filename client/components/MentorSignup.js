@@ -109,8 +109,12 @@ const validate = formProps => {
   if(formProps.password){
     if (formProps.password.length < 7){
       errors.password = 'Password must be at least 7 characters'
+    } else if (formProps.password !== formProps.passwordConfirm){
+      errors.password = 'Passwords must match'
+
     }
   }
+
   if(!formProps.zipCode) {
     errors.zipCode = 'Required';
   }
