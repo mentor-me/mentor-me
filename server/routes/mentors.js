@@ -27,6 +27,10 @@ router.get('/mentor/users/:userId', function(req, res){
   Mentors.mentorFetchedById(req, res, userId);
 });
 
+router.put('/mentor/users/:userId/visited', function(req, res){
+  var userId = req.params.userId;
+  Mentors.mentorIncrementTotalVisits(req, res, userId);
+});
 
 router.put('/mentor/users/:userId', function(req, res){
   var mentorId = req.params.userId;

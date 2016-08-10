@@ -15,6 +15,9 @@ class LearnerPreferences extends Component {
     /* Pass second argument here in order to filter on ZIP */
     this.props.fetchPreferences(1, this.props.values.radiusZip);
   }
+  resubmitZip(uid){
+    this.props.fetchPreferences(uid);
+  }
 
   handleCheckChange() {
     this.props.changePreferences(1, this.props.prefs);
@@ -70,11 +73,21 @@ class LearnerPreferences extends Component {
                           onChange={(event) => {
                             inPerson.onChange(event.target.checked)
                             prefs.inPerson = !inPerson.checked
+                            console.log(inPerson.checked);
+                            if(inPerson.checked && radiusZip.value !== ""){
+                              this.resubmitZip(this.props.auth)
+                            }
                             this.handleCheckChange();
                           }}
                       /> Local
                     </label>
-                  <form onSubmit={handleSubmit(this.handleZipSubmit.bind(this))} >
+                  <form onSubmit={handleSubmit(this.handleZipSubmit.bind(this))} onChange={ event => {
+                      console.log(radiusZip)
+                      if(radiusZip.value.length === 1) {
+                        this.resubmitZip(this.props.auth)
+                      }
+                    }
+                    }>
                     <div className={`error-message  ${showInput}`}>{radiusZip.touched && radiusZip.error ? radiusZip.error : ''}</div>
                     <div className={`${showInput} input-group  ${radiusZip.touched && radiusZip.error ? 'has-danger' : ''}`}>
                     <input type="text" ref="zip" className="form-control" placeholder="Enter zip code" {...radiusZip} />

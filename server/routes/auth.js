@@ -21,7 +21,6 @@ router.get('/allMentors', function(req, res) {
 });
 
 
-
 router.post('/login', function(req, res){
   console.log("this is the req in /login ", req.body)
   var loginUser = _.pick(req.body, 'email', 'password', 'lastLogIn');
@@ -40,9 +39,9 @@ router.post('/signup', function(req, res, next) {
                 'rate', 'description', 'availability',
                 'lastLogIn'
                 );
-  var skills       = req.body.skills;
-  var preferences  = req.body.preferences;
-  newUser.primary_role = req.body.role;
+  var skills             = req.body.skills;
+  var preferences        = req.body.preferences;
+  newUser.secondary_role = req.body.role;
 
   db.User.findOne({
     where:
@@ -81,7 +80,7 @@ router.post('/mentor/signup', function(req, res, next) {
                 );
   var skills             = req.body.skills;
   var qualities          = req.body.qualities;
-  newUser.secondary_role = req.body.role;
+  newUser.primary_role   = req.body.role;
 
   db.User.findOne({
     where:
@@ -106,7 +105,6 @@ router.get('/auth/linkedin',
                         'r_skills',
                         'r_educations'] })
 )
-
 
 
 module.exports = router;

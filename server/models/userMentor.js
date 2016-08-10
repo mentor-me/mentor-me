@@ -43,7 +43,6 @@ var async = require('async');
 // };
 
 
-
 exports.mentorFetchedById = function(req, res, userId){
     db.User.findById(userId)
         .then(function(user){
@@ -55,6 +54,22 @@ exports.mentorFetchedById = function(req, res, userId){
                 res.status(500).send(err.message);
 
         });
+
+}
+
+exports.mentorIncrementTotalVisits = function(req, res, userId){
+    db.User.findById(userId)
+    .then(function(user){
+      var totalVisit = user.totalVisit + 1
+      user.update({ totalVisit: totalVisit})
+      .then(function(result){
+        res.status(200).send("Total Visits have been updated to" + totalVisit)
+      })
+    })
+    .catch(function(err){
+      console.error(err.message);
+      res.status(500).send(err.message);
+    })
 
 }
 
