@@ -30,12 +30,17 @@ exports.learnerCreate = function(req, res, newUser, skills, preferences) {
           res.status(500).send(err.message + " Username and Email must be unique");
       });
 };
-
+///////////
 exports.learnerLogin = function(req, res, loginUser){
   console.log("this is the user login ::", loginUser)
   db.User.findOne({
     where: {
-        email: loginUser.email
+        email: loginUser.email,
+          $or: [
+            {primary_role  : "2"},
+            {secondary_role: "2"}
+          ]
+
     }})
     .then(function(user){
     console.log("this is the user from the login router ", user)
@@ -52,7 +57,7 @@ exports.learnerLogin = function(req, res, loginUser){
     }
     else
     {
-        res.status(401).send();
+        res.status(401).send("There is no Learner with that account info");
     }
 
     })
@@ -119,7 +124,12 @@ exports.mentorLogin = function(req, res, loginUser){
   console.log("this is the user login ::", loginUser)
   db.User.findOne({
     where: {
-        email: loginUser.email
+        email: loginUser.email,
+          $or: [
+            {primary_role  : "1"},
+            {secondary_role: "1"}
+          ]
+
     }})
     .then(function(user){
     console.log("this is the user from the login router ", user)

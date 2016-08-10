@@ -24,7 +24,7 @@ class Signup extends Component {
   }
 
   render() {
-    const { handleSubmit, fields: { username, firstname, lastname, zipCode, learnerStyle, meetingFormat, email, password } } = this.props;
+    const { handleSubmit, fields: { username, firstname, lastname, zipCode, learnerStyle, meetingFormat, email, password, passwordConfirm } } = this.props;
 
     return (
         <div className="spacer50">
@@ -64,9 +64,12 @@ class Signup extends Component {
                   <div className={`form-group ${email.touched && email.error ? 'has-danger' : ''}`}>
                     <input type="text" className="form-control" placeholder="Email" {...email} />
                   </div>
-                  <div className="error-message">{password.touched && password.error ? password.error : ''}</div>
                   <div className={`form-group ${password.touched && password.error ? 'has-danger' : ''}`}>
+                    <div className="error-message">{password.touched && password.error ? password.error : ''}</div>
                     <input type="text" className="form-control" type="password" placeholder="Password" {...password} />
+                  </div>
+                  <div className={`form-group ${password.touched && password.error ? 'has-danger' : ''}`}>
+                    <input type="text" className="form-control" type="password" placeholder="Password Confirm" {...passwordConfirm} />
                   </div>
                   <button className="btn-global" type="submit"> Sign Up </button>
                 </form>
@@ -99,6 +102,9 @@ const validate = formProps => {
   if(formProps.password){
     if (formProps.password.length < 7){
       errors.password = 'Password must be at least 7 characters'
+    } else if (formProps.password !== formProps.passwordConfirm){
+      errors.password = 'Passwords must match'
+
     }
   }
   if(!formProps.zipCode) {
