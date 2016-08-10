@@ -34,3 +34,10 @@ export const SELECTED_SLOT = 'selected_slot';
 
 /* VIDEO CHAT  */
 export const GET_VIDEO_TOKEN = 'get_video_token';
+
+/* CHAT */
+export const USER_CONVERSATIONS = 'user_conversations';
+export const CONVERSATION_MESSAGES = 'conversation_messages';
+export const POST_MESSAGE = 'post_message';
+export const CLEAR_MESSAGES = 'clear_messages';
+export const SAVE_MESSAGE = 'save_message';

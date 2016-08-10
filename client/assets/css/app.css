@@ -1179,6 +1179,86 @@ div.loader i.fa {
   margin-top: 20%;
 }
 
+.messages h4 {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.messages td:last-child {
+  text-align: right;
+}
+
+.messages tr:first-child td {
+  border-top: none;
+}
+
+.messages tr:hover {
+  cursor: pointer;
+}
+
+.messages tr:hover i {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+.messages .table {
+  margin-bottom: 0;
+}
+
+.conversation .msg-container {
+  height: 60vh;
+  overflow-y: scroll !important;
+}
+
+.conversation ::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 10px;
+}
+
+.conversation ::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.125);
+  border-radius: 3px;
+}
+
+.conversation .msg {
+  display: inline-block;
+  padding: 4px 6px;
+  border-radius: 4px;
+  margin: 0 5px;
+}
+
+.conversation .msg-time {
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 0.75em;
+}
+
+.conversation .left {
+  text-align: left;
+}
+
+.conversation .left .msg {
+  background: lightsteelblue;
+}
+
+.conversation .right {
+  text-align: right;
+}
+
+.conversation .right .msg {
+  background: lightgreen;
+}
+
+.conversation #msg-input {
+  width: 100%;
+  border: none;
+}
+
+div.learner-profile .drawer {
+  height: 68px;
+  -webkit-transition: height .5s;
+  transition: height .5s;
+}
+
 div.learner-profile h4.activate-account {
   display: inline-block;
   margin: 0;
@@ -1189,6 +1269,14 @@ div.learner-profile i {
   font-size: 1.8em;
 }
 
+div.learner-profile i:hover {
+  cursor: pointer;
+}
+
 div.learner-profile p.card-text span {
   font-weight: 700;
+}
+
+div.learner-profile .show-drawer {
+  height: 200px;
 }

@@ -1,5 +1,10 @@
 div.learner-profile {
 
+  .drawer {
+    height: 68px;
+    transition: height .5s;
+  }
+
   h4.activate-account {
     display: inline-block;
     margin: 0;
@@ -10,7 +15,16 @@ div.learner-profile {
     font-size: 1.8em;
   }
 
+  i:hover {
+    cursor: pointer;
+  }
+
   p.card-text span {
     font-weight: 700;
   }
+
+  .show-drawer {
+    height: 200px;
+  }
+
 }

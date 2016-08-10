@@ -20,8 +20,6 @@ var config        = require('./config/config');
 // sockets
 var socketIo      = require('socket.io');
 var server        = http.createServer(app);
-var io            = socketIo(server);
-
 
 // Utilities
 require('./config/passport')(passport);
@@ -41,12 +39,13 @@ app.use('/api', conversationRoutes);
 app.use('/api', messageRoutes);
 
 
-
-
 app.get('*', function (request, response){
   response.sendFile(path.resolve(__dirname, '../', 'index.html'));
 });
 
+// Sockets
+var io = new socketIo(server)
+require('./sockets/socketEvents')(io);
 
 app.set('port', 3000);
 server.listen(app.get('port'), function() {
