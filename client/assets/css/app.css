@@ -1224,6 +1224,7 @@ div.loader i.fa {
   display: inline-block;
   padding: 4px 6px;
   border-radius: 4px;
+  margin: 0 5px;
 }
 
 .conversation .msg-time {
