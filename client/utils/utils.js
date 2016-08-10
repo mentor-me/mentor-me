@@ -14,9 +14,9 @@ function getScore(reviewCount, rating) {
   	if (reviewCount > maxReviewCount) {
   		throw new Error('too many reviews');
   	}
-
-  	return ( scoreReviewCount * 0.4 * (reviewCount / maxReviewCount) ) +
-  		     ( scoreReviewCount * 0.6 * (rating / maxReviewScore));
+    // return rating * 4;
+  	return ( scoreReviewCount * 0.2 * (reviewCount / maxReviewCount) ) +
+  		     ( scoreReviewCount * 0.7 * (rating / maxReviewScore));
   }
 }
 
@@ -47,6 +47,7 @@ exports.mentorSortPrefs = function(preferences, mentors) {
     var reviewScore = getScore(reviewCount, rating);
     var appointmentScore   = total_appointments !== 0 ? (reviewCount / total_appointments) : 0 ;
     score = Math.floor((score + reviewScore + appointmentScore) * 1000);
+    console.log("score for user ", score, mentor.firstname)
 
     //console.log("this is the score after:: ",score)
     var exists = false;
@@ -66,8 +67,10 @@ exports.mentorSortPrefs = function(preferences, mentors) {
   //console.log("this is the sorted list looping ", sortedList.length )
 
   //console.log("this is the Key ARR ::", keyArr);
-  var keySortArr = _.sortedUniq(keyArr);
-  //console.log("this is the sorted array", keySortArr)
+  var keySortArr = keyArr.sort(function(a, b) {
+    return b - a;
+  });
+  console.log("this is the sorted array", keySortArr)
   _.forEach(keySortArr, function(key){
     _.forEach(sortedList, function(scoreObj){
       // //console.log("This scoreObj",JSON.stringify(scoreObj, null , 4));
@@ -79,7 +82,7 @@ exports.mentorSortPrefs = function(preferences, mentors) {
     })
 
   })
-  //console.log("this is the return form SORT :: ",mentorBySortScore)
+  console.log("this is the return form SORT :: ",mentorBySortScore)
   return mentorBySortScore;
 }
 
