@@ -48,6 +48,7 @@
     display: inline-block;
     padding: 4px 6px;
     border-radius: 4px;
+    margin: 0 5px;
   }
 
   .msg-time {
@@ -64,7 +65,7 @@
   }
 
   .right {
-    text-align: right
+    text-align: right;
   }
 
   .right .msg {
@@ -75,5 +76,5 @@
     width: 100%;
     border: none;
   }
-  
+
 }

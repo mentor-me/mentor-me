@@ -3,7 +3,8 @@ import axios from 'axios';
 import {
   USER_CONVERSATIONS,
   CONVERSATION_MESSAGES,
-  POST_MESSAGE
+  CLEAR_MESSAGES,
+  SAVE_MESSAGE
 } from './actionTypes';
 
 export function fetchConversations(uid) {
@@ -28,7 +29,6 @@ export function fetchMessages(conversationId) {
   return dispatch => {
     axios.get(endpoint)
       .then(response => {
-        console.log('messages from conversation: ', response)
         dispatch({
           type: CONVERSATION_MESSAGES,
           payload: response.data
@@ -42,17 +42,33 @@ export function fetchMessages(conversationId) {
 
 export function postMessage(conversationId, data) {
   const endpoint = `/api/conversations/${conversationId}/messages`;
-  console.log('messages to post to server: ', data)
-  return dispatch => {
-    axios.post(endpoint, data)
-      .then(response => {
-        dispatch({
-          type: POST_MESSAGE,
-          payload: response.data
-        });
+  /* Save message in state before DB post */
+    return dispatch => {
+      dispatch({
+        type: SAVE_MESSAGE,
+        payload: data
       })
-      .catch((err) => {
-        console.log('fetchConversations Error: ', err);
+      axios.post(endpoint, data)
+        .then(response => {
+          console.log('message successfully posted to db', response)
+        })
+        .catch((err) => {
+          console.log('fetchConversations Error: ', err);
+        })
+      }
+}
+
+export function clearMessages() {
+  return {
+    type: CLEAR_MESSAGES
+  }
+}
+
+export function saveMessage(data) {
+  return dispatch => {
+    dispatch({
+      type: SAVE_MESSAGE,
+      payload: data
     })
-  };
+  }
 }
