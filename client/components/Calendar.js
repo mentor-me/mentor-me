@@ -7,7 +7,6 @@ import Popup from './Popup.js'
 import AppointmentEdit from './AppointmentEdit.js'
 import {connect} from 'react-redux'
 
-
 BigCalendar.setLocalizer(
   BigCalendar.momentLocalizer(Moment)
 );
@@ -15,7 +14,11 @@ BigCalendar.setLocalizer(
 export default class Calendar extends Component {
 
   componentWillMount() {
+
+    console.log(this.props.mentor.id)
+
     if(this.props.mentor.id){
+
       this.props.fetchAppointments(this.props.mentor.id);
     }
   }
@@ -32,7 +35,7 @@ export default class Calendar extends Component {
   }
 
   openEdit(event) {
-    console.log('event inside', event.isSelected)
+    console.log('event inside', slotInfo.end)
 
     this.props.selectedAppointment(event)
 
@@ -69,23 +72,24 @@ export default class Calendar extends Component {
     });
   }
 
-  // eventStyleGetter (event) {
-  //
-  //   console.log("isSelected console log", isSelected);
-  //   var backgroundColor = '#' + event.hexColor;
-  //   var style = {
-  //       backgroundColor: '#5f5f5f',
-  //       borderRadius: '0px',
-  //       opacity: 1,
-  //       color: 'white',
-  //       width: '100%',
-  //       border: '0px',
-  //       display: 'block'
-  //   };
-  //   return {
-  //       style: style
-  //   };
-  // }
+  eventStyleGetter (event) {
+
+    console.log("isSelected console log", isSelected);
+
+    var backgroundColor = '#' + event.hexColor;
+    var style = {
+        backgroundColor: '#5f5f5f',
+        borderRadius: '0px',
+        opacity: 1,
+        color: 'white',
+        width: '100%',
+        border: '0px',
+        display: 'block'
+    };
+    return {
+        style: style
+    };
+  }
 
   render() {
 
@@ -125,7 +129,7 @@ function mapStateToProps(state) {
   return {
     appointments: state.learner.appointments,
     auth: state.auth,
-    mentor: state.learner.currentMentor
+    mentor: state.learner.currentMentor,
   };
 }
 

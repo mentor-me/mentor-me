@@ -32,7 +32,6 @@ export default class AppointmentEdit extends Component {
 
     };
 
-
   }
 
   componentWillReceiveProps(nextProps){
@@ -79,18 +78,23 @@ return (
       <div className="form-group">
         <input type="date" className="form-control" placeholder="Date" {...date} />
       </div>
+
       <div className="form-group">
         <input type="time" className="form-control" placeholder="Start time" {...startTime}/>
       </div>
+
       <div className="form-group">
         <input type="time" className="form-control" placeholder="End time" {...endTime}/>
       </div>
+
       <div className="form-group">
         <input type="text" className="form-control" placeholder="Location" {...location} />
       </div>
+
       <div className="form-group">
         <textarea className="form-control" placeholder="Notes" {...notes} />
       </div>
+      
       <div>
         <button className="btn-global" type="submit">Save Changes</button>
       </div>

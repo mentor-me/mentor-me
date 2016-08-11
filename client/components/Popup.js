@@ -57,10 +57,10 @@ export default class Popup extends Component {
     let userId = this.props.auth.currentUser.id
     let mentorId = this.props.mentor.id
 
-  return this.props.createAppointment(formProps, userId, mentorId)
-    .then(() => {
-        console.log("after appt create")
-   });//not closing modal still on create
+    this.props.createAppointment(formProps, userId, mentorId)
+  //   .then(() => {
+  //       console.log("after appt create")
+  //  });//not closing modal still on create
 
   }
 
