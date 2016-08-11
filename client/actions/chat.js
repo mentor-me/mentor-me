@@ -54,10 +54,10 @@ export function postMessage(conversationId, data) {
   const endpoint = `/api/conversations/${conversationId}/messages`;
   /* Save message in state before DB post */
     return dispatch => {
-      dispatch({
-        type: SAVE_MESSAGE,
-        payload: data
-      })
+      // dispatch({
+      //   type: SAVE_MESSAGE,
+      //   payload: data
+      // })
       axios.post(endpoint, data)
         .then(response => {
           console.log('message successfully posted to db', response)

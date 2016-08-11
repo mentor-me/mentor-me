@@ -30,16 +30,21 @@ renderTopCard() {
               <Gravatar style={GravatarStyles} email={currentMentor.email} https />
               <h4 className="card-title mentor-name"> {currentMentor.firstname} {currentMentor.lastname} </h4>
               {/*<Link to={`/learner/${auth.username}/mentor/${currentMentor.username}/schedule`} >*/}
-
               <Link to={`/learner/${auth.username}/mentor/${currentMentor.username}/calendar`}>
-              <button className="btn-global pull-right"> Schedule a Meeting </button>
+                <button className="btn-global pull-right">
+                  Schedule Meeting <i className="fa fa-calendar"/>
+                </button>
               </Link>
 
               {/*</Link>*/}
               <Link to={`/learner/${auth.username}/mentor/${currentMentor.username}/review`} >
-                <button className="btn-global pull-right"> Submit a Review </button>
+                <button className="btn-global pull-right">
+                  Submit Review <i className="fa fa-pencil"/>
+                </button>
               </Link>
-              <button className="btn-global pull-right"> Send a Message </button>
+              <button className="btn-global pull-right">
+                Send Message <i className="fa fa-comment-o"/>
+              </button>
             </div>
           </div>
         );
