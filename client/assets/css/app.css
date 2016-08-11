@@ -383,6 +383,10 @@ div.mentor-profile .right-card {
   padding-left: 7.5px;
 }
 
+div.mentor-profile i.fa {
+  margin-left: 3px;
+}
+
 .modal-header {
   text-align: right;
   color: #d94744;
@@ -1218,6 +1222,10 @@ div.loader i.fa {
 .conversation ::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.125);
   border-radius: 3px;
+}
+
+.conversation ::-webkit-scrollbar-track {
+  background-color: #eee;
 }
 
 .conversation .msg {

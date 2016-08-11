@@ -12,10 +12,20 @@ import Message from './Message';
 
 class Messages extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      messages: []
+    }
+  }
+
   componentWillMount() {
     let { conversationId } = this.props.params;
     /* Fetch messages from DB on mount */
     this.props.fetchMessages(conversationId);
+    this.setState({
+      messages: [ ...this.props.messages.messages ]
+    })
   }
 
   componentDidMount() {
@@ -28,8 +38,15 @@ class Messages extends Component {
     /* When client recives msg, save to redux */
     socket.on('message', msg => {
       console.log('recieving message!', msg)
-      this.props.saveMessage(msg);
+      this.newMessage(msg);
+      // this.props.saveMessage(msg);
     })
+  }
+
+  newMessage(msg) {
+    this.setState({
+      messages: [ ...this.state.messages, msg ]
+    });
   }
 
   componentDidUpdate() {
@@ -39,23 +56,25 @@ class Messages extends Component {
 
   componentWillUnmount() {
     let { conversationId } = this.props.params;
-    socket.emit('disconnect chat', conversationId)
-    this.props.clearMessages();
+    socket.emit('disconnect chat', conversationId);
+    this.setState({ messages: [] })
+    // this.props.clearMessages();
   }
 
   handleSubmit(e) {
     let { postMessage, params } = this.props;
     let text = ReactDOM.findDOMNode(this.refs.msg).value;
     e.preventDefault();
-    let newMessage = {
+    var newMessage = {
       content: text.trim(),
       userId: params.userId,
       conversationId: params.conversationId,
       createdAt: moment().format()
     }
     /* Post to back end */
-    if (text) {
-      socket.emit('new message', newMessage)
+    if (text.length) {
+      socket.emit('new message', newMessage);
+      this.newMessage(newMessage);
       postMessage(params.conversationId, newMessage);
     }
     ReactDOM.findDOMNode(this.refs.msg).value = '';
@@ -63,7 +82,7 @@ class Messages extends Component {
 
   renderMessages() {
     let { params } = this.props;
-    let { messages } = this.props.messages;
+    let { messages } = this.state;
     return messages.map((msg, i) => <Message msg={ msg } userId={ params.userId } key={ i } />)
   }
 
