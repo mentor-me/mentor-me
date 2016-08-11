@@ -157,10 +157,10 @@ exports.mentorLogin = function(req, res, loginUser){
 
 
 }
-//////////////
-exports.mentorUpdate = function(req, res, description, qualities, skills, userId){
+
+exports.mentorUpdate = function(req, res, userUpdate, qualities, skills, userId){
     console.log("this is in mentor update", qualities.mentorId)
-    db.User.update({description: description}, {
+    db.User.update(userUpdate, {
       where: { id: userId }, returning:true
     })
     .then(function(result){
@@ -169,10 +169,7 @@ exports.mentorUpdate = function(req, res, description, qualities, skills, userId
       db.Quality.create(qualities)
       .then(function(quality){
       console.log("this is the user  ::::::: ", user)
-          // console.log("user quaities set", quality)
-          // user.setSkills().then(function(skill){
-          //   console.log("This is the skill thing", skill)
-          // })
+
           async.eachSeries(skills, function(skill, callback) {
             console.log(skill)
             var skillObj = {title: skill}
@@ -190,17 +187,26 @@ exports.mentorUpdate = function(req, res, description, qualities, skills, userId
     .then(function(result){
       res.status(200).send("User and their quaities have been updated");
     })
-  }
+    .catch(function(err){
+        res.status(500).send(err.message);
+    })
+}
 
-exports.learnerUpdate = function(req, res, preferences, userId){
-
+exports.learnerUpdate = function(req, res, preferences, secondary_role, userId){
+  console.log("In learner update :::")
+  db.User.update({secondary_role: secondary_role}, {
+    where: { id: userId }, returning:true
+  })
+  .then(function(result){
     db.Preference.create(preferences)
       .then(function(preference){
         res.status(200).send("User and their preference have been updated");
 
       })
 
-
-
+  })
+  .catch(function(err){
+      res.status(500).send(err.message);
+  })
 
 }

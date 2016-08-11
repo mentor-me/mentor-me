@@ -15,7 +15,7 @@ import Learner from './components/Learner';
 import Become from './components/Become';
 import Calendar from './components/Calendar';
 import Review from './components/Review';
-import LearnerProfile from './components/LearnerProfile';
+import Profile from './components/Profile';
 import MentorProfile from './components/MentorProfile';
 /* Mentor Related Components */
 import MentorSignup from './components/MentorSignup';

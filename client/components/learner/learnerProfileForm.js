@@ -7,7 +7,7 @@ import { signupMentor, updateMentor } from '../../actions/auth.js';
 class BecomeMentor extends Component {
 
   handleFormSubmit(formProps) {
-    console.log("these are the form props", formProps)
+    console.log("these are the form props", formProps, "and auth ", this.props.auth)
     this.props.updateMentor(formProps, this.props.auth);
   }
 

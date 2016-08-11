@@ -39,7 +39,7 @@ import {
     email: loginProps.email,
     password: loginProps.password,
     zip: loginProps.zipCode,
-    role: 2,
+    secondary_role: 2,
     lastLogIn: new Date(),
     preferences: {
       visual: loginProps.learnerStyle == "Visual" ? 'true' : 'false',
@@ -80,7 +80,7 @@ import {
 //////////////////////////////////////////
 
 export function signupMentor(loginProps) {
-
+  console.log("this is in singup mentor")
  let data = {
    username: loginProps.username,
    firstname: loginProps.firstname,
@@ -90,7 +90,7 @@ export function signupMentor(loginProps) {
    description: loginProps.description,
    skills: loginProps.skills.split(' '),
    zip: loginProps.zipCode,
-   role: 1,
+   primary_role: "1",
    lastLogIn: new Date(),
    qualities: {
      visual: loginProps.learnerStyle == "Visual" ? 'true' : 'false',
@@ -99,6 +99,7 @@ export function signupMentor(loginProps) {
      inPerson: loginProps.meetingFormat == "In Person" ? 'true' : 'false'
    }
  }
+ console.log("This is data from sign up mentor",data)
 
   return dispatch => {
     axios.post('/api/mentor/signup', data)
@@ -137,8 +138,15 @@ export function loginMentor(loginProps) {
   }
 }
 
+
+
+////////////////////////////////////////////
+//////////    UPGRADE PROFILE     /////////
+//////////////////////////////////////////
+
 export function updateMentor(formProps, currentUser){
   let data = {
+    primary_role: "1",
     description: formProps.description,
     skills: formProps.skills,
     qualities: {
@@ -161,19 +169,22 @@ export function updateMentor(formProps, currentUser){
 }
 export function updateLearner(formProps, currentUser){
   let data = {
+    secondary_role: "2",
     preferences: {
-      visual: loginProps.learnerStyle == "Visual" ? 'true' : 'false',
-      academic: loginProps.learnerStyle == "Academic" ? 'true' : 'false',
-      remote: loginProps.meetingFormat == "Remote" ? 'true' : 'false',
-      inPerson: loginProps.meetingFormat == "In Person" ? 'true' : 'false'
+      visual: formProps.learnerStyle == "Visual" ? 'true' : 'false',
+      academic: formProps.learnerStyle == "Academic" ? 'true' : 'false',
+      remote: formProps.meetingFormat == "Remote" ? 'true' : 'false',
+      inPerson: formProps.meetingFormat == "In Person" ? 'true' : 'false'
     }
   }
-  axios.put(`api/learner/${currentUser}/becomeAmentor`, data)
+  axios.put(`api/mentor/${1}/becomeAlearner`, data)
   .then(response => {
     console.log(response.data);
   })
   .catch((err) => {
     console.log("You could not become a mentor", err);
+    browserHistory.push(`/mentor/${currentUser.username}`)
+
   });
 
 }

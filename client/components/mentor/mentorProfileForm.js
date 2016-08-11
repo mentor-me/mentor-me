@@ -8,6 +8,7 @@ class BecomeMentor extends Component {
 
   handleFormSubmit(formProps) {
     console.log("these are the form props", formProps)
+    console.log("these are the AUTH form props", this.props.auth)
     this.props.updateLearner(formProps, this.props.auth);
   }
 
@@ -26,8 +27,8 @@ class BecomeMentor extends Component {
     }
 
   render() {
-    const { handleSubmit, fields: {  teachingStyle, meetingFormat} } = this.props;
-
+    const { handleSubmit, fields: { teachingStyle, meetingFormat} } = this.props;
+    console.log("this is in the render ", this.props.auth)
     return (
       <form className="form-control profile-form" onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
         <div className="form-group">
@@ -50,22 +51,7 @@ class BecomeMentor extends Component {
 }
 
 
-const validate = formProps => {
-  const errors = {}
-  if (formProps.description) {
-    if(formProps.description.length < 100){
-      errors.description = 'Your description should be at least 100 characters long.'
-    }
-  }
-  if(!formProps.description){
-    errors.description = 'Required'
-  }
-  if(!formProps.skills){
-    errors.skills = 'Required'
-  }
 
-  return errors
-}
 
 
 function mapStateToProps(state) {
@@ -75,6 +61,5 @@ function mapStateToProps(state) {
 }
 export default reduxForm({
   form: 'becomeMentor',
-  fields: [ 'teachingStyle', 'meetingFormat'],
-  validate
+  fields: [ 'teachingStyle', 'meetingFormat']
 }, mapStateToProps, { updateLearner })(BecomeMentor);
