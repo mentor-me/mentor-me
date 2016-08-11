@@ -157,3 +157,50 @@ exports.mentorLogin = function(req, res, loginUser){
 
 
 }
+//////////////
+exports.mentorUpdate = function(req, res, description, qualities, skills, userId){
+    console.log("this is in mentor update", qualities.mentorId)
+    db.User.update({description: description}, {
+      where: { id: userId }, returning:true
+    })
+    .then(function(result){
+
+      var user = result[1][0];
+      db.Quality.create(qualities)
+      .then(function(quality){
+      console.log("this is the user  ::::::: ", user)
+          // console.log("user quaities set", quality)
+          // user.setSkills().then(function(skill){
+          //   console.log("This is the skill thing", skill)
+          // })
+          async.eachSeries(skills, function(skill, callback) {
+            console.log(skill)
+            var skillObj = {title: skill}
+            user.createSkill(skillObj, userId)
+            .then(function(result) {
+              callback()
+            })
+            .then(function(){
+                // userRecord.setSkills(skillsArr, userRecord.id)
+            })
+
+        })
+      })
+    })
+    .then(function(result){
+      res.status(200).send("User and their quaities have been updated");
+    })
+  }
+
+exports.learnerUpdate = function(req, res, preferences, userId){
+
+    db.Preference.create(preferences)
+      .then(function(preference){
+        res.status(200).send("User and their preference have been updated");
+
+      })
+
+
+
+
+}

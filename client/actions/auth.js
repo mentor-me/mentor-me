@@ -92,7 +92,7 @@ export function signupMentor(loginProps) {
    zip: loginProps.zipCode,
    role: 1,
    lastLogIn: new Date(),
-   preferences: {
+   qualities: {
      visual: loginProps.learnerStyle == "Visual" ? 'true' : 'false',
      academic: loginProps.learnerStyle == "Academic" ? 'true' : 'false',
      remote: loginProps.meetingFormat == "Remote" ? 'true' : 'false',
@@ -117,8 +117,8 @@ export function signupMentor(loginProps) {
 }
 
 export function loginMentor(loginProps) {
-  var date = { lastLogIn: new Date() };
-  var obj = {...loginProps, ...date};
+  let date = { lastLogIn: new Date() };
+  let obj = {...loginProps, ...date};
   return dispatch => {
     axios.post('/api/mentor/login', loginProps)
       .then(response => {
@@ -135,4 +135,45 @@ export function loginMentor(loginProps) {
         console.log("Login bad", err);
       });
   }
+}
+
+export function updateMentor(formProps, currentUser){
+  let data = {
+    description: formProps.description,
+    skills: formProps.skills,
+    qualities: {
+      visual: formProps.teachingStyle = "Visual" ? 'true' : 'false',
+      academic: formProps.teachingStyle = "Academic" ? 'true' : 'false',
+      remote: formProps.meetingFormat = "Remote" ? 'true' : 'false',
+      inPerson: formProps.meetingFormat = "In Person" ? 'true' : 'false'
+    }
+  }
+  console.log("this is the data obj" , data)
+  axios.put(`/api/learner/${currentUser.id}/becomeAmentor`, data)
+  .then(response => {
+    console.log(response.data, currentUser.username);
+    browserHistory.push(`/learner/${currentUser.username}`)
+  })
+  .catch((err) => {
+    console.log("You could not become a mentor", err);
+  });
+
+}
+export function updateLearner(formProps, currentUser){
+  let data = {
+    preferences: {
+      visual: loginProps.learnerStyle == "Visual" ? 'true' : 'false',
+      academic: loginProps.learnerStyle == "Academic" ? 'true' : 'false',
+      remote: loginProps.meetingFormat == "Remote" ? 'true' : 'false',
+      inPerson: loginProps.meetingFormat == "In Person" ? 'true' : 'false'
+    }
+  }
+  axios.put(`api/learner/${currentUser}/becomeAmentor`, data)
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch((err) => {
+    console.log("You could not become a mentor", err);
+  });
+
 }

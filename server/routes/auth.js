@@ -106,5 +106,23 @@ router.get('/auth/linkedin',
                         'r_educations'] })
 )
 
+router.put('/learner/:userId/becomeAmentor', function(req, res){
+  var description    = req.body.description;
+  var skills         = req.body.skills
+  var qualities      = req.body.qualities;
+  var userId         = req.params.userId;
+  qualities.mentorId = userId;
+  Auth.mentorUpdate(req, res, description, qualities, skills, userId)
+
+})
+
+router.put('/mentor/:userId/becomeAlearner', function(req, res){
+  var preferences = req.body.preferences;
+  var userId      = req.params.userId;
+  preferences.learnerId = userId;
+  Auth.learnerUpdate(req, res, preferences, userId)
+
+})
+
 
 module.exports = router;
