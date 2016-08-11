@@ -30,7 +30,8 @@ exports.learnerCreate = function(req, res, newUser, skills, preferences) {
           res.status(500).send(err.message + " Username and Email must be unique");
       });
 };
-///////////
+
+
 exports.learnerLogin = function(req, res, loginUser){
   console.log("this is the user login ::", loginUser)
   db.User.findOne({
@@ -64,8 +65,6 @@ exports.learnerLogin = function(req, res, loginUser){
     .catch(function(err){
         res.status(500).send(err.message);
     })
-
-
 
 }
 
@@ -153,10 +152,8 @@ exports.mentorLogin = function(req, res, loginUser){
     .catch(function(err){
         res.status(500).send(err.message);
     })
-
-
-
 }
+
 
 exports.mentorUpdate = function(req, res, userUpdate, qualities, skills, userId){
     console.log("this is in mentor update", qualities.mentorId)
@@ -165,27 +162,30 @@ exports.mentorUpdate = function(req, res, userUpdate, qualities, skills, userId)
     })
     .then(function(result){
 
-      var user = result[1][0];
+      var updatedUser = result[1][0];
       db.Quality.create(qualities)
       .then(function(quality){
-      console.log("this is the user  ::::::: ", user)
+      console.log("this is the user  ::::::: ", updatedUser)
 
           async.eachSeries(skills, function(skill, callback) {
             console.log(skill)
             var skillObj = {title: skill}
-            user.createSkill(skillObj, userId)
+            updatedUser.createSkill(skillObj, userId)
             .then(function(result) {
               callback()
             })
             .then(function(){
                 // userRecord.setSkills(skillsArr, userRecord.id)
+                console.log("this is result", updatedUser);
+                res.status(200).send(updatedUser);
+
+
             })
 
         })
       })
-    })
-    .then(function(result){
-      res.status(200).send("User and their quaities have been updated");
+      .then(function(result){
+      })
     })
     .catch(function(err){
         res.status(500).send(err.message);
@@ -198,9 +198,11 @@ exports.learnerUpdate = function(req, res, preferences, secondary_role, userId){
     where: { id: userId }, returning:true
   })
   .then(function(result){
+    console.log("this is the updated user", result[1][0])
+    var updatedUser = result[1][0];
     db.Preference.create(preferences)
       .then(function(preference){
-        res.status(200).send("User and their preference have been updated");
+        res.status(200).send(updatedUser);
 
       })
 
