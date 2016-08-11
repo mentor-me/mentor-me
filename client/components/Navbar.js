@@ -55,6 +55,11 @@ class Navbar extends Component {
               </Link>
             </li>
             <li className="nav-item">
+              <Link to={`/mentor/${auth.currentUser.username}/conversations`} className="nav-link">
+                <i className="fa fa-inbox" />
+              </Link>
+            </li>
+            <li className="nav-item">
               <a href="#" className="nav-link" onClick={() => signoutUser()}>
                 Log Out
               </a>

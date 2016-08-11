@@ -30,7 +30,7 @@
 .conversation {
 
   .msg-container {
-    height: 60vh;
+    height: 70vh;
     overflow-y: scroll !important;
   }
 
@@ -57,7 +57,11 @@
   }
 
   .left {
+    margin: 12px 0;
     text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
 
   .left .msg {
@@ -65,7 +69,11 @@
   }
 
   .right {
+    margin: 12px 0;
     text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 
   .right .msg {
@@ -75,6 +83,11 @@
   #msg-input {
     width: 100%;
     border: none;
+    padding: 15px 15px;
+  }
+
+  .form-group {
+    margin-bottom: 0;
   }
 
 }
