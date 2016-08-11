@@ -1206,7 +1206,7 @@ div.loader i.fa {
 }
 
 .conversation .msg-container {
-  height: 60vh;
+  height: 70vh;
   overflow-y: scroll !important;
 }
 
@@ -1233,7 +1233,17 @@ div.loader i.fa {
 }
 
 .conversation .left {
+  margin: 12px 0;
   text-align: left;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 
 .conversation .left .msg {
@@ -1241,7 +1251,17 @@ div.loader i.fa {
 }
 
 .conversation .right {
+  margin: 12px 0;
   text-align: right;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
 }
 
 .conversation .right .msg {
@@ -1251,6 +1271,11 @@ div.loader i.fa {
 .conversation #msg-input {
   width: 100%;
   border: none;
+  padding: 15px 15px;
+}
+
+.conversation .form-group {
+  margin-bottom: 0;
 }
 
 div.learner-profile .drawer {
