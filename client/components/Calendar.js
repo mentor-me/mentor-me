@@ -7,6 +7,7 @@ import Popup from './Popup.js'
 import AppointmentEdit from './AppointmentEdit.js'
 import {connect} from 'react-redux'
 
+
 BigCalendar.setLocalizer(
   BigCalendar.momentLocalizer(Moment)
 );
@@ -22,19 +23,18 @@ export default class Calendar extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      events: [],
-      modalIsOpen: false,
-      editModalIsOpen: false
+      this.state = {
+        events: [],
+        modalIsOpen: false,
+        editModalIsOpen: false
 
-    };
+      };
   }
 
   openEdit(event) {
     console.log('event inside', event.isSelected)
 
-
-    this.props.selctedAppointment(event)
+    this.props.selectedAppointment(event)
 
     this.setState({
       modalIsOpen: false,
@@ -45,7 +45,7 @@ export default class Calendar extends Component {
 
   open(slotInfo) {
 
-    this.props.selctedSlot(slotInfo)
+    this.props.selectedSlot(slotInfo)
 
     this.setState({
       editModalIsOpen: false,
@@ -96,7 +96,7 @@ export default class Calendar extends Component {
         <BigCalendar
             	selectable
             	events={this.props.appointments ? this.appointmentFormat() : []}
-            	onSelectEvent={event => 
+            	onSelectEvent={event =>
                 this.openEdit(event)
               }
             	defaultView="month"

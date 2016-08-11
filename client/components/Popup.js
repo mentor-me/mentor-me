@@ -3,6 +3,7 @@ import BigCalendar from 'react-big-calendar';
 import Moment from 'moment';
 import { reduxForm } from 'redux-form';
 import * as actions from '../actions/calendar';
+import axios from 'axios';
 
 import Modal from 'react-modal';
 
@@ -49,17 +50,19 @@ export default class Popup extends Component {
   close() {
     this.setState({
       modalIsOpen: false
-    });
+    })
   }
 
   handleFormSubmit(formProps) {
     let userId = this.props.auth.currentUser.id
     let mentorId = this.props.mentor.id
 
-    this.props.createAppointment(formProps, userId, mentorId)
-    this.close() //not closing modal still on create
+  return this.props.createAppointment(formProps, userId, mentorId)
+    .then(() => {
+        console.log("after appt create")
+   });//not closing modal still on create
 
-    }
+  }
 
 render(){
   //
@@ -98,7 +101,7 @@ return (
         <textarea className="form-control" placeholder="Notes" {...notes} />
       </div>
       <div>
-        <button className="btn-global" type="submit">Create Appt</button>
+        <button  className="btn-global" type="submit">Create Appt</button>
       </div>
 
     </form>

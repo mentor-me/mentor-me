@@ -10,7 +10,7 @@ import {
 
 } from './actionTypes';
 
-export function selctedSlot(event){
+export function selectedSlot(event){
 
   var appointmentFormatted = {
     date: Moment(event.start).format("YYYY-MM-DD"),
@@ -23,7 +23,7 @@ export function selctedSlot(event){
     }
 }
 
-export function selctedAppointment(event){
+export function selectedAppointment(event){
 
   var appointmentFormatted = {
     title: event.title,
@@ -48,20 +48,28 @@ export function createAppointment(formProps, mentorId, userId) {
       mentorId       : mentorId
   }
 
-  console.log('inside action post appt', appointment)
+  const request = axios.post(endpoint, appointment)
 
-  return function (dispatch) {
-    //making appt true
-    axios.post(endpoint, appointment)
-      .then(response => {
-        dispatch({ type: CREATE_APPOINTMENT });
-        // browserHistory.push('somewhere');
-      })
-      .catch(() => {
+      return {
+        type: CREATE_APPOINTMENT,
+        payload: request
+      }
+  
 
-        console.log('in catch err ');
-      });
-  };
+  // console.log('inside action post appt', appointment)
+  //
+  // return function (dispatch) {
+  //   //making appt true
+  //   axios.post(endpoint, appointment)
+  //     .then(response => {
+  //       dispatch({ type: CREATE_APPOINTMENT });
+  //       return console.log("appointment created!")
+  //     })
+  //     .catch(() => {
+  //
+  //       console.log('in catch err ');
+  //     });
+  // };
 }
 
 export function fetchAppointments(userId) {
