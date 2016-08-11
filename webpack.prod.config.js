@@ -2,7 +2,7 @@ module.exports = {
   devtool: 'source-map',
   entry: './client/index.js',
   output: {
-    filename: 'client/bundle.js'
+    filename: 'bundle.js'
   },
   watch: true,
   module: {

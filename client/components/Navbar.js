@@ -12,7 +12,7 @@ class Navbar extends Component {
     const { auth, signoutUser } = this.props;
     if (auth.authenticated) {
       /* This is navbar for logged in LEARNER */
-      if (auth.currentUser.primary_role) {
+      if (auth.currentUser.secondary_role == 2) {
         return (
           <ul className="nav navbar-nav pull-xs-right">
             <li className="nav-item">
@@ -45,12 +45,12 @@ class Navbar extends Component {
         return (
           <ul className="nav navbar-nav pull-xs-right">
             <li className="nav-item">
-              <Link to={`/learner/${auth.currentUser.username}/profile`} className="nav-link">
+              <Link to={`/mentor/${auth.currentUser.username}/profile`} className="nav-link">
                 <i className="fa fa-cog" />
               </Link>
             </li>
             <li className="nav-item">
-              <Link to={`/learner/${auth.currentUser.username}/calendar`} className="nav-link">
+              <Link to={`/mentor/${auth.currentUser.username}/calendar`} className="nav-link">
                 <i className="fa fa-calendar" />
               </Link>
             </li>

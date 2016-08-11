@@ -46,6 +46,7 @@ const routes = (
         <Route path="mentor/:username" component={MentorProfile} />
         <Route path="mentor/:username/profile" component={Profile} />
         <Route path="mentor/:username/conversations" component={Conversations} />
+        <Route path="mentor/:username/calendar" component={Calendar} />}
         <Route path="mentor/:username/conversations/:userId/:conversationId" component={Messages} />
         <Route path="mentor/:username/videochat" component={VideoChatPage} />
       </Route>

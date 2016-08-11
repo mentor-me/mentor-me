@@ -44,6 +44,10 @@
     border-radius: 3px;
   }
 
+  ::-webkit-scrollbar-track {
+    background-color: #eee;
+  }
+
   .msg {
     display: inline-block;
     padding: 4px 6px;
