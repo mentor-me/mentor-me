@@ -3,6 +3,7 @@ div.learner-profile {
   .drawer {
     height: 68px;
     transition: height .5s;
+    overflow: hidden;
   }
 
   h4.activate-account {
@@ -14,6 +15,15 @@ div.learner-profile {
   i {
     font-size: 1.8em;
   }
+  .profile-form {
+    margin-top:20px;
+    .profile-text-area {
+      margin-top:20px;
+    }
+    .btn-global {
+      margin-top:20px;
+    }
+  }
 
   i:hover {
     cursor: pointer;
@@ -24,7 +34,7 @@ div.learner-profile {
   }
 
   .show-drawer {
-    height: 200px;
+    height: 100%;
   }
 
 }

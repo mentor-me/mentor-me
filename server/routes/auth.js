@@ -41,7 +41,7 @@ router.post('/signup', function(req, res, next) {
                 );
   var skills             = req.body.skills;
   var preferences        = req.body.preferences;
-  newUser.secondary_role = req.body.role;
+  newUser.secondary_role = req.body.secondary_role;
 
   db.User.findOne({
     where:
@@ -80,7 +80,7 @@ router.post('/mentor/signup', function(req, res, next) {
                 );
   var skills             = req.body.skills;
   var qualities          = req.body.qualities;
-  newUser.primary_role   = req.body.role;
+  newUser.primary_role   = req.body.primary_role;
 
   db.User.findOne({
     where:
@@ -105,6 +105,26 @@ router.get('/auth/linkedin',
                         'r_skills',
                         'r_educations'] })
 )
+
+router.put('/learner/:userId/becomeAmentor', function(req, res){
+  var userUpdate     = _.pick(req.body, 'description', 'primary_role');
+  var skills         = req.body.skills
+  var qualities      = req.body.qualities;
+  var userId         = req.params.userId;
+
+  qualities.mentorId = userId;
+  Auth.mentorUpdate(req, res, userUpdate, qualities, skills, userId)
+
+})
+
+router.put('/mentor/:userId/becomeAlearner', function(req, res){
+  var preferences     = req.body.preferences;
+  var userId          = req.params.userId;
+  var secondary_role  = "2";
+  preferences.learnerId = userId;
+  Auth.learnerUpdate(req, res, preferences, secondary_role, userId)
+
+})
 
 
 module.exports = router;

@@ -1257,6 +1257,7 @@ div.learner-profile .drawer {
   height: 68px;
   -webkit-transition: height .5s;
   transition: height .5s;
+  overflow: hidden;
 }
 
 div.learner-profile h4.activate-account {
@@ -1269,6 +1270,18 @@ div.learner-profile i {
   font-size: 1.8em;
 }
 
+div.learner-profile .profile-form {
+  margin-top: 20px;
+}
+
+div.learner-profile .profile-form .profile-text-area {
+  margin-top: 20px;
+}
+
+div.learner-profile .profile-form .btn-global {
+  margin-top: 20px;
+}
+
 div.learner-profile i:hover {
   cursor: pointer;
 }
@@ -1278,5 +1291,5 @@ div.learner-profile p.card-text span {
 }
 
 div.learner-profile .show-drawer {
-  height: 200px;
+  height: 100%;
 }
