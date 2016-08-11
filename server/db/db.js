@@ -62,7 +62,7 @@ var User = sequelize.define('User', {
     reviewCount        : Sequelize.INTEGER,
     total_appointments : Sequelize.INTEGER,
     rate               : Sequelize.REAL,
-    description        : Sequelize.STRING,
+    description        : Sequelize.TEXT,
     availability       : Sequelize.BOOLEAN,
     lastLogIn          : Sequelize.DATE,
     totalVisit         : Sequelize.INTEGER,
@@ -139,7 +139,14 @@ var Review = sequelize.define('Review', {
  ///////////////////////////////////////////////////
 
  var Conversation = sequelize.define('Conversation', {
-    name   : Sequelize.TEXT,
+    name   : {
+      type: Sequelize.STRING,
+          unique   : true,
+          allowNull: false,
+          validate : {
+              notEmpty: true
+          }
+    }
     private: Sequelize.BOOLEAN
   },{
     tableName: 'Conversations', // this will define the table's name
