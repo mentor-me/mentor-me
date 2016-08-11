@@ -22,7 +22,7 @@ renderTopCard() {
     const { currentMentor, auth } = this.props;
     /* If the person loggin in is a mentor (primary role 1) */
     if (currentMentor) {
-      if (auth.primary_role == 2) {
+      if (auth.secondary_role == 2) {
         return (
           <div className="card mentor-profile">
             <div className="card-block">

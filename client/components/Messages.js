@@ -4,30 +4,31 @@ import ReactDOM from 'react-dom';
 import io from 'socket.io-client';
 import moment from 'moment';
 
-import { fetchMessages, postMessage, clearMessages, saveMessage } from '../actions/chat';
+import { fetchMessages, postMessage, clearMessages, saveMessage, receiveSocket } from '../actions/chat';
 
+import Loader from './Loader';
 import Message from './Message';
-const socket = io();
+// const socket = io();
 
 class Messages extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { msg: '' };
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
 
   componentWillMount() {
     let { conversationId } = this.props.params;
     /* Fetch messages from DB on mount */
     this.props.fetchMessages(conversationId);
-    /* Register socket in room with correct ID */
-    socket.emit('joinConversation', {
-      conversationId: conversationId
-    });
+  }
+
+  componentDidMount() {
+
+    let { conversationId } = this.props.params;
+    /* Notify backend of socket */
+    socket.emit('chat mounted', conversationId);
+    /* Register socket ID */
+    socket.on('receive socket', socketID => this.props.receiveSocket(socketID));
     /* When client recives msg, save to redux */
-    socket.on('message', message => {
-      this.props.saveMessage(message);
+    socket.on('message', msg => {
+      console.log('recieving message!', msg)
+      this.props.saveMessage(msg);
     })
   }
 
@@ -37,46 +38,49 @@ class Messages extends Component {
   }
 
   componentWillUnmount() {
+    let { conversationId } = this.props.params;
+    socket.emit('disconnect chat', conversationId)
     this.props.clearMessages();
   }
 
-  handleInputChange(e) {
-    this.setState({ msg: e.target.value })
-  }
-
   handleSubmit(e) {
-    e.preventDefault();
     let { postMessage, params } = this.props;
-    let timeNow = moment().format();
-    let data = {
-      content: this.state.msg,
+    let text = ReactDOM.findDOMNode(this.refs.msg).value;
+    e.preventDefault();
+    let newMessage = {
+      content: text.trim(),
       userId: params.userId,
-      createdAt: timeNow
+      conversationId: params.conversationId,
+      createdAt: moment().format()
     }
-    socket.emit('message', data)
     /* Post to back end */
-    if (this.state.msg.length) {
-      postMessage(params.conversationId, data);
+    if (text) {
+      socket.emit('new message', newMessage)
+      postMessage(params.conversationId, newMessage);
     }
     ReactDOM.findDOMNode(this.refs.msg).value = '';
   }
 
+  renderMessages() {
+    let { params } = this.props;
+    let { messages } = this.props.messages;
+    return messages.map((msg, i) => <Message msg={ msg } userId={ params.userId } key={ i } />)
+  }
+
   render() {
 
-    let { messages } = this.props.chat;
-
+    let { loading } = this.props.messages;
     return (
       <div className="row conversation">
         <div className="card">
           <div className="card-block msg-container" ref="chatBox">
-            { messages ? messages.map((msg, i) => <Message msg={ msg } key={ i } />) : '' }
+            { loading ? <Loader /> : this.renderMessages() }
           </div>
         </div>
         <div className="card text-input">
-          <form onSubmit={ this.handleSubmit }>
+          <form onSubmit={ this.handleSubmit.bind(this) }>
             <div className="form-group">
-              <input className="form-control" ref="msg" onChange={ this.handleInputChange } type="text" id="msg-input" />
-              <button type="submit" className="btn-global">Send</button>
+              <input className="form-control" ref="msg" autoComplete="off" type="text" id="msg-input" />
             </div>
           </form>
         </div>
@@ -87,8 +91,8 @@ class Messages extends Component {
 
 function mapStateToProps(state) {
   return {
-    chat: state.chat
+    messages: state.chat
   };
 }
 
-export default connect(mapStateToProps, { fetchMessages, postMessage, clearMessages, saveMessage })(Messages)
+export default connect(mapStateToProps, { fetchMessages, postMessage, clearMessages, saveMessage, receiveSocket })(Messages)
