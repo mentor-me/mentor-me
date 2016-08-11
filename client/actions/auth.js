@@ -16,7 +16,9 @@ import {
    return dispatch => {
      axios.post('/api/login', obj)
        .then(response => {
-        //  localStorage.setItem('token', response.headers.auth);
+        // localStorage.setItem('token', response.headers.auth);
+        console.log("This is the response on login", response)
+        // localStorage.setItem('', response.headers.auth);
          dispatch({
            type: AUTH_USER,
            payload: response.data
@@ -39,7 +41,7 @@ import {
     email: loginProps.email,
     password: loginProps.password,
     zip: loginProps.zipCode,
-    secondary_role: 2,
+    secondary_role: "2",
     lastLogIn: new Date(),
     preferences: {
       visual: loginProps.learnerStyle == "Visual" ? 'true' : 'false',
@@ -55,7 +57,7 @@ import {
          console.log('sign up resp: ', response)
          dispatch({
            type: AUTH_USER,
-           payload: data
+           payload: response.data
          })
          browserHistory.push(`/learner/${data.username}`);
        })
@@ -106,7 +108,7 @@ export function signupMentor(loginProps) {
       .then(response => {
         dispatch({
           type: AUTH_USER,
-          payload: data
+          payload: response.data
         })
         browserHistory.push(`/mentor/${data.username}`);
       })
@@ -157,16 +159,23 @@ export function updateMentor(formProps, currentUser){
     }
   }
   console.log("this is the data obj" , data)
-  axios.put(`/api/learner/${currentUser.id}/becomeAmentor`, data)
-  .then(response => {
-    console.log(response.data, currentUser.username);
-    browserHistory.push(`/learner/${currentUser.username}`)
-  })
-  .catch((err) => {
-    console.log("You could not become a mentor", err);
-  });
+  return dispatch => {
+    axios.put(`/api/learner/${currentUser.id}/becomeAmentor`, data)
+    .then(response => {
+      console.log("This is the response data obj", response.data);
+      dispatch({
+        type: AUTH_USER,
+        payload: response.data
+      })
+      browserHistory.push(`/mentor/${response.data.username}`)
+    })
+    .catch((err) => {
+      console.log("You could NOT become a mentor", err);
+    });
 
+  }
 }
+
 export function updateLearner(formProps, currentUser){
   let data = {
     secondary_role: "2",
@@ -177,14 +186,19 @@ export function updateLearner(formProps, currentUser){
       inPerson: formProps.meetingFormat == "In Person" ? 'true' : 'false'
     }
   }
-  axios.put(`api/mentor/${1}/becomeAlearner`, data)
-  .then(response => {
-    console.log(response.data);
-  })
-  .catch((err) => {
-    console.log("You could not become a mentor", err);
-    browserHistory.push(`/mentor/${currentUser.username}`)
+  return dispatch => {
+    axios.put(`/api/mentor/${currentUser.id}/becomeAlearner`, data)
+    .then(response => {
+      console.log("This is the response data obj", response.data);
+      dispatch({
+        type: AUTH_USER,
+        payload: response.data
+      })
+      browserHistory.push(`/mentor/${response.data.username}`)
+    })
+    .catch((err) => {
+      console.log("You could not become a learner", err);
 
-  });
-
+    });
+  }
 }
