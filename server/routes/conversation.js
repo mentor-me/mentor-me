@@ -23,4 +23,7 @@ router.get('/conversations/:userId', function(req, res) {
   Conversations.fetchPublicAndPrivateConvos(req, res, userId);
 })
 
+
+// create find or create by name(the name is unique)
+
 module.exports = router;
