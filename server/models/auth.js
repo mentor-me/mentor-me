@@ -17,6 +17,7 @@ exports.learnerCreate = function(req, res, newUser, skills, preferences) {
           return user;
         })
         .then(function(user){
+
           var token = user.generateToken('auth');
           console.log("this after preferences :::::: ", token);
           res.status(200)
@@ -34,7 +35,7 @@ exports.learnerCreate = function(req, res, newUser, skills, preferences) {
 
 exports.learnerLogin = function(req, res, loginUser){
   console.log("this is the user login ::", loginUser)
-  db.User.findOne({
+  db.User.update(loginUser, {
     where: {
         email: loginUser.email,
           $or: [
@@ -42,9 +43,10 @@ exports.learnerLogin = function(req, res, loginUser){
             {secondary_role: "2"}
           ]
 
-    }})
-    .then(function(user){
+    }, returning:true})
+    .then(function(result){
     console.log("this is the user from the login router ", user)
+      var user = result[1][0]
       if(!user || !bcrypt.compareSync(loginUser.password, user.get('passwordHash'))){
           return res.status(401).send();
       }
@@ -121,7 +123,7 @@ exports.mentorCreate = function(req, res, newUser, skills, qualities) {
 
 exports.mentorLogin = function(req, res, loginUser){
   console.log("this is the user login ::", loginUser)
-  db.User.findOne({
+  db.User.update(loginUser, {
     where: {
         email: loginUser.email,
           $or: [
@@ -129,13 +131,15 @@ exports.mentorLogin = function(req, res, loginUser){
             {secondary_role: "1"}
           ]
 
-    }})
-    .then(function(user){
+    }, returning:true})
+    .then(function(result){
+      console.log("This is the result stupid value ", result)
+      var user = result[1][0];
     console.log("this is the user from the login router ", user)
       if(!user || !bcrypt.compareSync(loginUser.password, user.get('passwordHash'))){
           return res.status(401).send();
       }
-
+      user.update(loginUser);
       var token = user.generateToken('authentication');
     if(token){
         res.status(200)

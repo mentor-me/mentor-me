@@ -11,10 +11,11 @@ import {
 //////////////////////////////////////////
 
  export function loginUser(loginProps) {
-   var date = { lastLogIn: new Date() };
-   var obj = {...loginProps, ...date};
+   var updatedInfo = { lastLogIn: new Date(), availability: true };
+   var obj = {...loginProps, ...updatedInfo};
+   console.log("this is the obj ", obj)
    return dispatch => {
-     axios.post('/api/login', obj)
+     axios.put('/api/login', obj)
        .then(response => {
         // localStorage.setItem('token', response.headers.auth);
         console.log("This is the response on login", response)
@@ -37,7 +38,8 @@ import {
   let data = {
     username: loginProps.username,
     firstname: loginProps.firstname,
-    firstname: loginProps.lastname,
+    lastname: loginProps.lastname,
+    availability: true,
     email: loginProps.email,
     password: loginProps.password,
     zip: loginProps.zipCode,
@@ -87,6 +89,7 @@ export function signupMentor(loginProps) {
    username: loginProps.username,
    firstname: loginProps.firstname,
    lastname: loginProps.lastname,
+   availability: true,
    email: loginProps.email,
    password: loginProps.password,
    description: loginProps.description,
@@ -120,10 +123,10 @@ export function signupMentor(loginProps) {
 }
 
 export function loginMentor(loginProps) {
-  let date = { lastLogIn: new Date() };
-  let obj = {...loginProps, ...date};
+  var updatedInfo = { lastLogIn: new Date(), availability: true };
+  var obj = {...loginProps, ...updatedInfo};
   return dispatch => {
-    axios.post('/api/mentor/login', loginProps)
+    axios.put('/api/mentor/login', obj)
       .then(response => {
         console.log(response.data)
        //  localStorage.setItem('token', response.headers.auth);

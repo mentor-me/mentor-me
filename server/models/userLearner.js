@@ -308,7 +308,7 @@ exports.learnerReviewMentor = function(req, res, review){
       var totalRatings = _.reduce(reviews, function(sum, review) {
         return sum + review.rating;
       }, 0);
-      var averageRating = totalRatings/ length;
+      var averageRating = (totalRatings/ length) * 100;
       var reviewsInfo   = { averageRating:averageRating , length: length}
       console.log("this is review info inside ", reviewsInfo)
       return reviewsInfo
