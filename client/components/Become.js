@@ -62,7 +62,9 @@ export default class Welcome extends Component {
 
       <div id="become_mentor_action" >
         <h1>Signing up is easy just fill out a form with your information and answer a few simple questions.</h1>
+      <Link to={"become/mentor"}>
         <button className="btn-accent" type="submit"> Sign Up </button>
+      </Link>
       </div>
 
           </div>
