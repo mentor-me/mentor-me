@@ -1,7 +1,24 @@
 div.mentor-profile {
 
+  div.picture-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  h4.mentor-name {
+    margin-left: 10px;
+  }
+
   div.fixed-height {
-    height: 200px;
+    height: 250px;
+    overflow: auto;
   }
 
   div.card-block {
@@ -9,22 +26,33 @@ div.mentor-profile {
     width: 100%;
   }
 
-  // img.mentor-img,
-  button.btn-global,
-  h4.mentor-name {
-    display: table-cell;
-    vertical-align: middle;
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
   }
 
-  button:nth-of-type(n + 1) {
-    margin-left: 15px;
+  button.btn-global {
+    margin: 10px 10px;
+    width: 215px;
   }
 
-  // img.mentor-img { width: 42px; }
+  // button:nth-of-type(n + 1) {
+  //   margin-left: 15px;
+  // }
+
+  div.btn-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
 
   span.review-date {
     color: #999;
-    margin-left: 15px;
+    margin-left: 0px;
   }
 
   .left-card {
@@ -36,7 +64,7 @@ div.mentor-profile {
   }
 
   i.fa {
-    margin-left: 3px;
+    margin-left: 5px;
   }
 
 }

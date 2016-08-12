@@ -141,12 +141,8 @@ var Review = sequelize.define('Review', {
  var Conversation = sequelize.define('Conversation', {
     name   : {
       type: Sequelize.STRING,
-          unique   : true,
-          allowNull: false,
-          validate : {
-              notEmpty: true
-          }
-    }
+          unique   : true
+    },
     private: Sequelize.BOOLEAN
   },{
     tableName: 'Conversations', // this will define the table's name
