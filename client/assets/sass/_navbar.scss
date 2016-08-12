@@ -1,5 +1,4 @@
 .navbar {
-  background-color: $secondary-gray;
 
   #logo {
     width: 150px;
@@ -16,6 +15,9 @@
   li.nav-item:last-child {
       border-right: none;
       padding-right: none;
+  }
+  a:hover {
+    color:$accent-darkred
   }
 
   img {
