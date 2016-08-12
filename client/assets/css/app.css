@@ -334,6 +334,11 @@ footer p {
   display: block;
 }
 
+div.mentor-card {
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+}
+
 div.mentor-card span.mentor-card-name {
   font-size: 1.2em;
   margin-right: 15px;
