@@ -7,12 +7,21 @@ import { signoutUser } from '../actions/auth';
 
 class Navbar extends Component {
 
+  renderNavClass(){
+    console.log("this is the auth ", this.props.auth.authenticated)
+    let divStyle = {backgroundColor:"transparent"}
+    if(this.props.auth.authenticated){
+      return;
+    } else {
+      return divStyle;
+    }
+  }
 
   renderNavLinks() {
     const { auth, signoutUser } = this.props;
     if (auth.authenticated) {
       /* This is navbar for logged in LEARNER */
-      if (auth.currentUser.secondary_role == 2) {
+      if (auth.currentUser.secondary_role == "2") {
         return (
           <ul className="nav navbar-nav pull-xs-right">
             <li className="nav-item">
@@ -88,7 +97,7 @@ class Navbar extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-default navbar-fixed-top" >
+        <nav className="navbar navbar-default navbar-fixed-top" style={this.renderNavClass()}>
           <div className="container-fluid">
             <Link to={"/"} className="navbar-brand">
               <img src="/client/assets/images/logo.png" id="logo" />
