@@ -25,5 +25,11 @@ router.get('/conversations/:userId', function(req, res) {
 
 
 // create find or create by name(the name is unique)
+router.post('/conversations', function(req, res) {
+  var convInfo = _.pick(req.body, 'name', 'private',
+                            'mentorId', 'learnerId')
+  var convName     = req.body.name;
+  Conversations.findOrCreateConvos(req, res, convInfo, convName);
+})
 
 module.exports = router;

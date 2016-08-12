@@ -55,3 +55,22 @@ exports.startConversation = function(req, res, conversation){
   })
 
 }
+
+
+exports.findOrCreateConvos = function(req, res, convInfo, convName) {
+  db.Conversation.findOrCreate({
+    where: {
+      name: convName
+    },
+    defaults: convInfo
+  })
+    .then(function(conversation){
+      console.log(conversation[0])
+      res.status(200).send(conversation[0]);
+    })
+    .catch(function(err){
+      console.error('err', err.message);
+      res.status(500).send(err.message);
+    });
+
+}
