@@ -4,6 +4,17 @@
   color: $accent-red;
 }
 
+.edit-modal-button-containter {
+    display: flex;
+    align-items: center;;
+    justify-content: space-around;
+  
+}
+
+.edit-modal-buttons {
+  min-width: 150;
+}
+
 .rbc-btn {
   color: inherit;
   font: inherit;

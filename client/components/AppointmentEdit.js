@@ -13,6 +13,7 @@ const customStyles = {
   },
 
   content: {
+    minWidth: '400',
     top: '50%',
     left: '50%',
     right: 'auto',
@@ -31,8 +32,6 @@ export default class AppointmentEdit extends Component {
       event: this.props.event
 
     };
-
-
   }
 
   componentWillReceiveProps(nextProps){
@@ -43,10 +42,15 @@ export default class AppointmentEdit extends Component {
     });
   }
 
-  close() {
-    this.setState({
-      editModalIsOpen: false
-    });
+
+  handleDelete (){
+    let userId = this.props.auth.currentUser.id
+    let mentorId = this.props.mentor.id
+    let appId = this.props.appt.id
+
+    this.props.deleteAppointment(userId, mentorId, appId);
+    this.props.close()
+
   }
 
   handleFormSubmit(formProps) {
@@ -54,9 +58,12 @@ export default class AppointmentEdit extends Component {
     console.log('formProps create appt', formProps)
     let userId = this.props.auth.currentUser.id
     let mentorId = this.props.mentor.id
+    let appId = this.props.appt.id
 
-    this.props.createAppointment(formProps, userId, mentorId);
-    close()
+    // console.log('inside handle form submit appId = ', appId)
+    this.props.updateAppointment(formProps, userId, mentorId, appId);
+    this.props.close()
+
   }
 
 render(){
@@ -65,7 +72,7 @@ render(){
   //     return <noscript/>
   //   }
 
-  const { appointments, auth, mentor, handleSubmit, fields: { date, startTime, endTime, location, notes } } = this.props;
+  const { appointments, auth, mentor, handleSubmit, fields: { date, startTime, endTime, location, notes, title } } = this.props;
 
 return (
 
@@ -73,32 +80,50 @@ return (
     isOpen={this.state.editModalIsOpen}
     style={customStyles}>
 
+    <div className="modal-header">
+
+      <i className="fa fa-times-circle-o fa-2x" aria-hidden="true" onClick={this.props.close}></i>
+    </div>
+
     <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 
     <div className="spacer30"> </div>
+
+      <div className="form-group">
+        <input type="text" className="form-control" placeholder="Subject" {...title} />
+      </div>
+
       <div className="form-group">
         <input type="date" className="form-control" placeholder="Date" {...date} />
       </div>
+
       <div className="form-group">
         <input type="time" className="form-control" placeholder="Start time" {...startTime}/>
       </div>
+
       <div className="form-group">
         <input type="time" className="form-control" placeholder="End time" {...endTime}/>
       </div>
+
       <div className="form-group">
         <input type="text" className="form-control" placeholder="Location" {...location} />
       </div>
+
       <div className="form-group">
         <textarea className="form-control" placeholder="Notes" {...notes} />
       </div>
-      <div>
-        <button className="btn-global" type="submit">Save Changes</button>
+
+      <div className="edit-modal-button-containter">
+        <div>
+          <button className="btn-global  edit-modal-buttons" type="submit">Update </button>
+        </div>
+
+        <div>
+          <button className="btn-global" onClick={this.handleDelete.bind(this)}  type="submit">Delete</button>
+        </div>
       </div>
 
     </form>
-        <div>
-          <button className="btn-global" onClick={this.close.bind(this)}>Cancel</button>
-        </div>
 
   </Modal>
 
@@ -118,9 +143,10 @@ return (
 
 export default reduxForm({
   form: 'editAppointment',
-  fields: ['date', 'startTime', 'endTime', 'location', 'notes']},
+  fields: ['date', 'startTime', 'endTime', 'location', 'notes', 'title']},
   state => ({
   auth: state.auth,
   mentor: state.learner.currentMentor,
+  appt: state.appointments.event,
   initialValues: state.appointments.event
 }), actions)(AppointmentEdit);
