@@ -13,15 +13,6 @@ BigCalendar.setLocalizer(
 
 export default class Calendar extends Component {
 
-  componentWillMount() {
-
-    console.log(this.props.mentor.id)
-
-    if(this.props.mentor.id){
-
-      this.props.fetchAppointments(this.props.mentor.id);
-    }
-  }
 
   constructor(props) {
     super(props);
@@ -32,10 +23,21 @@ export default class Calendar extends Component {
         editModalIsOpen: false
 
       };
+
+  }
+
+  componentWillMount() {
+    // console.log(this.props.auth.currentUser.id)
+    //TODO: change this back to currentUser ID once Localstorage solution in place
+    if(this.props.mentor.id){
+
+      this.props.fetchAppointments(this.props.mentor.id);
+    }
   }
 
   openEdit(event) {
-    console.log('event inside', slotInfo.end)
+
+        console.log("openEdit console log event = ", event);
 
     this.props.selectedAppointment(event)
 
@@ -52,10 +54,24 @@ export default class Calendar extends Component {
 
     this.setState({
       editModalIsOpen: false,
-      modalIsOpen: !this.state.modalIsOpen
+      modalIsOpen: true
 
     });
   }
+
+  close() {
+     this.setState({
+      modalIsOpen: false,
+      editModalIsOpen: false,
+
+    })
+
+    this.props.fetchAppointments(this.props.auth.currentUser.id);
+    // setTimeout(() => {
+    //   console.log(this.state.modalIsOpen)
+    // }, 300)
+  }
+
 
   appointmentFormat() {
 
@@ -66,7 +82,10 @@ export default class Calendar extends Component {
             isSelected: false,
             start: new Date(appointment.startTime),
             end: new Date(appointment.endTime),
-            title: appointment.notes
+            title: appointment.subject,
+            id: appointment.id,
+            location: appointment.location,
+            notes: appointment.notes
           }
           return obj;
     });
@@ -106,7 +125,6 @@ export default class Calendar extends Component {
             	defaultView="month"
             	scrollToTime={new Date(1970, 1, 1, 6)}
             	defaultDate={new Date(2016, 8, 8)}
-
             	onSelectSlot={(slotInfo) => this.open({ start: slotInfo.start, end: slotInfo.end,
           }
 
@@ -114,10 +132,13 @@ export default class Calendar extends Component {
         />
       <AppointmentEdit
               isOpen={this.state.editModalIsOpen}
+              close={this.close.bind(this)}
               event={this.state.current}
+
                   />
       <Popup
             isOpen={this.state.modalIsOpen}
+            close={this.close.bind(this)}
             event={this.state.current}
                 />
       </div>

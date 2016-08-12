@@ -29,12 +29,8 @@ export default class Popup extends Component {
     super(props);
 
     this.state = {
-      modalIsOpen: this.props.isOpen,
-      event: this.props.event,
-      delete: "",
-      date: "",
-      startTime: "",
-      endTime:""
+      modalIsOpen: false,
+      event: this.props.event
     };
 
   }
@@ -47,44 +43,44 @@ export default class Popup extends Component {
     });
   }
 
-  close() {
-    this.setState({
-      modalIsOpen: false
-    })
-  }
-
   handleFormSubmit(formProps) {
     let userId = this.props.auth.currentUser.id
     let mentorId = this.props.mentor.id
 
     this.props.createAppointment(formProps, userId, mentorId)
-  //   .then(() => {
-  //       console.log("after appt create")
-  //  });//not closing modal still on create
+
+    this.props.close()
 
   }
 
 render(){
-  //
+  
   // if(!this.props.isOpen){
   //     return <noscript/>
   //   }
 
-  const { appointments, auth, mentor, handleSubmit, fields: { date, startTime, endTime, location, notes } } = this.props;
+  const { appointments, auth, mentor, handleSubmit, fields: { date, startTime, endTime, location, notes, title } } = this.props;
 
 return (
 
 
   <Modal
     isOpen={this.state.modalIsOpen}
-    style={customStyles}>
+    style={customStyles}
+    >
+
     <div className="modal-header">
 
-      <i className="fa fa-times-circle-o fa-2x" aria-hidden="true" onClick={this.close.bind(this)}></i>
+      <i className="fa fa-times-circle-o fa-2x" aria-hidden="true" onClick={this.props.close}></i>
     </div>
     <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 
     <div className="spacer30"> </div>
+
+      <div className="form-group">
+        <input type="text" className="form-control" placeholder="Subject" {...title} />
+      </div>
+
       <div className="form-group">
         <input type="date" className="form-control" placeholder="Date" {...date} />
       </div>
@@ -115,7 +111,7 @@ return (
 
 export default reduxForm({
   form: 'appointment',
-  fields: ['date', 'startTime', 'endTime', 'location', 'notes']},
+  fields: ['date', 'startTime', 'endTime', 'location', 'notes', 'title']},
   state => ({
   auth: state.auth,
   mentor: state.learner.currentMentor,
