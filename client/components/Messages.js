@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import io from 'socket.io-client';
 import moment from 'moment';
+import axios from 'axios';
 
 import { fetchMessages, postMessage, clearMessages, saveMessage, receiveSocket } from '../actions/chat';
 
@@ -15,16 +16,26 @@ class Messages extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: []
+      messages: [],
+      loading: false
     }
   }
 
   componentWillMount() {
+    this.setState({ loading: true })
     let { conversationId } = this.props.params;
-    /* Fetch messages from DB on mount */
-    this.props.fetchMessages(conversationId);
-    this.setState({
-      messages: [ ...this.props.messages.messages ]
+    console.log('conversationId------', conversationId)
+    const endpoint = `/api/conversations/${conversationId}/messages`;
+    axios.get(endpoint)
+    .then(response => {
+      console.log(response.data)
+      this.setState({
+        messages: response.data,
+        loading: false
+      })
+    })
+    .catch((err) => {
+      console.log('fetchConversations Error: ', err);
     })
   }
 
@@ -43,6 +54,9 @@ class Messages extends Component {
     })
   }
 
+  componentWillReceiveProps() {
+  }
+
   newMessage(msg) {
     this.setState({
       messages: [ ...this.state.messages, msg ]
@@ -57,7 +71,7 @@ class Messages extends Component {
   componentWillUnmount() {
     let { conversationId } = this.props.params;
     socket.emit('disconnect chat', conversationId);
-    this.setState({ messages: [] })
+    // this.setState({ messages: [] })
     // this.props.clearMessages();
   }
 
@@ -83,17 +97,20 @@ class Messages extends Component {
   renderMessages() {
     let { params } = this.props;
     let { messages } = this.state;
+    console.log('here are the messages', messages)
     return messages.map((msg, i) => <Message msg={ msg } userId={ params.userId } key={ i } />)
   }
 
   render() {
 
     let { loading } = this.props.messages;
+    let { messages } = this.state;
+
     return (
       <div className="row conversation">
         <div className="card">
           <div className="card-block msg-container" ref="chatBox">
-            { loading ? <Loader /> : this.renderMessages() }
+            { this.state.loading ? <Loader /> : this.renderMessages() }
           </div>
         </div>
         <div className="card text-input">

@@ -351,8 +351,32 @@ div.mentor-card i.fa {
   margin-right: 3px;
 }
 
+div.mentor-profile div.picture-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 10px;
+}
+
+div.mentor-profile h3 {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+div.mentor-profile h4.mentor-name {
+  margin-left: 10px;
+}
+
 div.mentor-profile div.fixed-height {
-  height: 200px;
+  height: 250px;
+  overflow: auto;
 }
 
 div.mentor-profile div.card-block {
@@ -360,19 +384,39 @@ div.mentor-profile div.card-block {
   width: 100%;
 }
 
-div.mentor-profile button.btn-global,
-div.mentor-profile h4.mentor-name {
-  display: table-cell;
-  vertical-align: middle;
+div.mentor-profile img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 
-div.mentor-profile button:nth-of-type(n + 1) {
-  margin-left: 15px;
+div.mentor-profile button.btn-global {
+  margin: 10px 10px;
+  width: 215px;
+}
+
+div.mentor-profile div.btn-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px;
 }
 
 div.mentor-profile span.review-date {
   color: #999;
-  margin-left: 15px;
+  margin-left: 0px;
 }
 
 div.mentor-profile .left-card {
@@ -384,7 +428,7 @@ div.mentor-profile .right-card {
 }
 
 div.mentor-profile i.fa {
-  margin-left: 3px;
+  margin-left: 5px;
 }
 
 .modal-header {
@@ -1229,17 +1273,17 @@ div.loader i.fa {
   overflow-y: scroll !important;
 }
 
-.conversation ::-webkit-scrollbar {
+.conversation .msg-container::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 10px;
 }
 
-.conversation ::-webkit-scrollbar-thumb {
+.conversation .msg-container::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.125);
   border-radius: 3px;
 }
 
-.conversation ::-webkit-scrollbar-track {
+.conversation .msg-container::-webkit-scrollbar-track {
   background-color: #eee;
 }
 

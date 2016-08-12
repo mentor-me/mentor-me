@@ -34,17 +34,17 @@
     overflow-y: scroll !important;
   }
 
-  ::-webkit-scrollbar {
+  .msg-container::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 10px;
   }
 
-  ::-webkit-scrollbar-thumb {
+  .msg-container::-webkit-scrollbar-thumb {
     background-color: $bootstrap-gray;
     border-radius: 3px;
   }
 
-  ::-webkit-scrollbar-track {
+  .msg-container::-webkit-scrollbar-track {
     background-color: #eee;
   }
 

@@ -3,7 +3,8 @@ import { browserHistory } from 'react-router';
 
 import {
   AUTH_USER,
-  UNAUTH_USER
+  UNAUTH_USER,
+  CURRENT_MENTOR
 } from './actionTypes';
 
 ////////////////////////////////////////////
@@ -18,12 +19,12 @@ import {
      axios.put('/api/login', obj)
        .then(response => {
         // localStorage.setItem('token', response.headers.auth);
-        console.log("This is the response on login", response)
-        // localStorage.setItem('', response.headers.auth);
-         dispatch({
-           type: AUTH_USER,
-           payload: response.data
-         })
+        console.log("This is the response on login", response.data);
+        localStorage.setItem('user', JSON.stringify(response.data));
+        dispatch({
+          type: AUTH_USER,
+          payload: response.data
+        })
          browserHistory.push(`/learner/${response.data.username}`);
        })
        .catch((err) => {
@@ -56,6 +57,7 @@ import {
    return dispatch => {
      axios.post('/api/signup', data)
        .then(response => {
+         localStorage.setItem('user', JSON.stringify(response.data));
          console.log('sign up resp: ', response)
          dispatch({
            type: AUTH_USER,
@@ -109,6 +111,7 @@ export function signupMentor(loginProps) {
   return dispatch => {
     axios.post('/api/mentor/signup', data)
       .then(response => {
+        localStorage.setItem('user', JSON.stringify(response.data));
         dispatch({
           type: AUTH_USER,
           payload: response.data
@@ -128,6 +131,7 @@ export function loginMentor(loginProps) {
   return dispatch => {
     axios.put('/api/mentor/login', obj)
       .then(response => {
+        localStorage.setItem('user', JSON.stringify(response.data));
         console.log(response.data)
        //  localStorage.setItem('token', response.headers.auth);
         dispatch({

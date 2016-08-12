@@ -19,7 +19,6 @@ import {
   LOADING_MENTOR_COMPLETE,
   LOADING_LEARNER_DASHBOARD,
   LOADING_LEARNER_DASHBOARD_COMPLETE
-
 } from './actionTypes';
 
 export function newSearchQuery(query) {

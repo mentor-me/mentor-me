@@ -23,7 +23,7 @@ class LearnerPreferences extends Component {
     this.props.changePreferences(1, this.props.prefs);
   }
 
-  render() {
+  render() {``
 
     const { handleSubmit, fields: { visual, academic, remote, inPerson, radiusZip, radius }, prefs } = this.props;
     /* Toggle ZIP Code input depending on selection of local vs remote */
