@@ -7,44 +7,47 @@ import SkillPill from './SkillPill';
 import ReviewEntry from './ReviewEntry';
 import Loader from './Loader';
 
+import { fetchMentorReviews } from '../actions/mentors';
+import { accessConversation } from '../actions/chat';
+
 class MentorProfile extends Component {
+
+componentWillMount() {
+  let user = JSON.parse(localStorage.getItem('user'));
+  // let { auth } = this.props;
+  if (user.primary_role == 1) {
+    this.props.fetchMentorReviews(user.id)
+  }
+}
 
 renderTopCard() {
 
-    let GravatarStyles = {
-      'display': 'table',
-      'verticalAlign': 'middle',
-      'width': '42px',
-      'height': '42px',
-      'borderRadius': '100%'
-    }
-
-    const { currentMentor, auth } = this.props;
+    let { currentMentor, auth } = this.props;
+    let convo = { mentorId: currentMentor.id, name: `${auth.username}${currentMentor.username}`, private: true, username: auth.username, uid: auth.id }
     /* If the person loggin in is a mentor (primary role 1) */
     if (currentMentor) {
       if (auth.secondary_role == 2) {
         return (
           <div className="card mentor-profile">
-            <div className="card-block">
-              {/*<img className="img-circle mentor-img" src="http://www.asthmamd.org/images/icon_user_1.png" />*/}
-              <Gravatar style={GravatarStyles} email={currentMentor.email} https />
-              <h4 className="card-title mentor-name"> {currentMentor.firstname} {currentMentor.lastname} </h4>
-              {/*<Link to={`/learner/${auth.username}/mentor/${currentMentor.username}/schedule`} >*/}
+            <div className="card-block btn-container">
               <Link to={`/learner/${auth.username}/mentor/${currentMentor.username}/calendar`}>
                 <button className="btn-global pull-right">
                   Schedule Meeting <i className="fa fa-calendar"/>
                 </button>
               </Link>
-
-              {/*</Link>*/}
               <Link to={`/learner/${auth.username}/mentor/${currentMentor.username}/review`} >
                 <button className="btn-global pull-right">
                   Submit Review <i className="fa fa-pencil"/>
                 </button>
               </Link>
-              <button className="btn-global pull-right">
+              <button onClick={ () => this.props.accessConversation(convo) } className="btn-global pull-right">
                 Send Message <i className="fa fa-comment-o"/>
               </button>
+              <Link to={`/learner/${auth.username}/videochat`} >
+                <button className="btn-global pull-right">
+                  Start Video Chat <i className="fa fa-video-camera"/>
+                </button>
+              </Link>
             </div>
           </div>
         );
@@ -53,8 +56,8 @@ renderTopCard() {
         return (
           <div className="card mentor-profile">
             <div className="card-block">
-              <Gravatar style={GravatarStyles} email={currentMentor.email} https />
-              <h4 className="card-title mentor-name"> {currentMentor.firstname} {currentMentor.lastname} </h4>
+              {/*<Gravatar email={currentMentor.email} https />*/}
+              <h3 className="card-title mentor-name"> {currentMentor.firstname} {currentMentor.lastname} </h3>
               <div className="btn-global pull-right">Your Avg. Rating: {currentMentor.rating ? currentMentor.rating : 'N/A'}</div>
             </div>
           </div>
@@ -64,12 +67,16 @@ renderTopCard() {
   }
 
   renderAboutCard() {
-    let { currentMentor } = this.props;
+
+    let { currentMentor, auth } = this.props;
     if (currentMentor) {
       return (
         <div className="card fixed-height">
           <div className="card-block">
-            <h4 className="card-title"> About Me </h4>
+            <div className="picture-title">
+              <Gravatar email={currentMentor.email} https />
+              <h4 className="mentor-name"> Your Profile </h4>
+            </div>
             <div className="card-text">
             { currentMentor.description }
             </div>
@@ -80,8 +87,12 @@ renderTopCard() {
   }
 
   renderExpertiseCard() {
+    // CHANGE THIS
     let { Skills } = this.props.currentMentor;
-      let pills = Skills.map((skill, i) => {
+    // TODO: DO NOT HARD CODE THIS - FIND DIFF WAY TO ACCESS
+    // CURRENT MENTOR SKILLS FOR MENTOR!!!!
+    let tempPills = [{title: 'coffee'}, {title: 'tea'}];
+      let pills = tempPills.map((skill, i) => {
         return <SkillPill skill={ skill.title } key={ i } />
       })
       return (
@@ -91,7 +102,7 @@ renderTopCard() {
             Areas of Expertise
             </h4>
             <div className="card-text">
-            {pills}
+            { pills }
             </div>
           </div>
         </div>
@@ -99,8 +110,9 @@ renderTopCard() {
   }
 
   renderReview() {
-    let { currentMentorReviews, currentMentor } = this.props;
-      return currentMentorReviews.map((review, i) => {
+    let { currentMentorReviews, currentMentor, mentor, auth } = this.props;
+    let reviews = auth.secondary_role == 2 ? currentMentorReviews : mentor.reviews;
+      return reviews.map((review, i) => {
         return <ReviewEntry mentor={currentMentor} review={review} key={i} />
       })
   }
@@ -140,8 +152,9 @@ function mapStateToProps(state) {
     currentMentor: state.learner.currentMentor,
     currentMentorReviews: state.learner.currentMentorReviews,
     auth: state.auth.currentUser,
-    loading: state.learner.loadingMentor
+    loading: state.learner.loadingMentor,
+    mentor: state.mentor
   };
 }
 
-export default connect(mapStateToProps)(MentorProfile);
+export default connect(mapStateToProps, { accessConversation, fetchMentorReviews })(MentorProfile);

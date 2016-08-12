@@ -7,21 +7,27 @@ import ConversationRecord from './ConversationRecord';
 class Conversations extends Component {
 
   componentWillMount() {
-    this.props.fetchConversations(1)
+    let user = JSON.parse(localStorage.getItem('user'));
+    this.props.fetchConversations(user.id)
   }
 
   loadConversations() {
-
     let { chat, auth } = this.props;
     if(chat) {
       return chat.conversations.map((convo, i) => {
-          return <ConversationRecord key={ i } currentUser={auth} convo={ convo } />
+        if (auth.secondary_role == 2) {
+          let link = `/learner/${auth.username}/conversations/${auth.id}/${convo.id}`;
+          return <ConversationRecord key={ i } currentUser={auth} convo={ convo } link={ link } />
+        } else {
+          let link = `/mentor/${auth.username}/conversations/${auth.id}/${convo.id}`;
+          return <ConversationRecord key={ i } currentUser={auth} convo={ convo } link={ link } />
+        }
       })
     }
-
   }
 
   render() {
+    let { conversations } = this.props.chat;
     return (
       <div className="messages">
         <div className="row">
@@ -32,15 +38,17 @@ class Conversations extends Component {
           <div className="card-block">
             <table className="table table-hover">
               <tbody>
-                { this.loadConversations() }
+                { conversations.length ? this.loadConversations() : 'Your inbox is currently empty.' }
               </tbody>
             </table>
             </div>
+
             </div>
         </div>
       </div>
     );
   }
+
 }
 
 function mapStateToProps(state) {
