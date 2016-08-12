@@ -13,28 +13,33 @@ BigCalendar.setLocalizer(
 
 export default class Calendar extends Component {
 
-  componentWillMount() {
-    if(this.props.mentor.id){
-      this.props.fetchAppointments(this.props.mentor.id);
-    }
-  }
 
   constructor(props) {
     super(props);
 
-    this.state = {
-      events: [],
-      modalIsOpen: false,
-      editModalIsOpen: false
+      this.state = {
+        events: [],
+        modalIsOpen: false,
+        editModalIsOpen: false
 
-    };
+      };
+
+  }
+
+  componentWillMount() {
+    // console.log(this.props.auth.currentUser.id)
+    //TODO: change this back to currentUser ID once Localstorage solution in place
+    if(this.props.mentor.id){
+
+      this.props.fetchAppointments(this.props.mentor.id);
+    }
   }
 
   openEdit(event) {
-    console.log('event inside', event.isSelected)
 
+        console.log("openEdit console log event = ", event);
 
-    this.props.selctedAppointment(event)
+    this.props.selectedAppointment(event)
 
     this.setState({
       modalIsOpen: false,
@@ -45,14 +50,28 @@ export default class Calendar extends Component {
 
   open(slotInfo) {
 
-    this.props.selctedSlot(slotInfo)
+    this.props.selectedSlot(slotInfo)
 
     this.setState({
       editModalIsOpen: false,
-      modalIsOpen: !this.state.modalIsOpen
+      modalIsOpen: true
 
     });
   }
+
+  close() {
+     this.setState({
+      modalIsOpen: false,
+      editModalIsOpen: false,
+
+    })
+
+    this.props.fetchAppointments(this.props.auth.currentUser.id);
+    // setTimeout(() => {
+    //   console.log(this.state.modalIsOpen)
+    // }, 300)
+  }
+
 
   appointmentFormat() {
 
@@ -63,29 +82,33 @@ export default class Calendar extends Component {
             isSelected: false,
             start: new Date(appointment.startTime),
             end: new Date(appointment.endTime),
-            title: appointment.notes
+            title: appointment.subject,
+            id: appointment.id,
+            location: appointment.location,
+            notes: appointment.notes
           }
           return obj;
     });
   }
 
-  // eventStyleGetter (event) {
-  //
-  //   console.log("isSelected console log", isSelected);
-  //   var backgroundColor = '#' + event.hexColor;
-  //   var style = {
-  //       backgroundColor: '#5f5f5f',
-  //       borderRadius: '0px',
-  //       opacity: 1,
-  //       color: 'white',
-  //       width: '100%',
-  //       border: '0px',
-  //       display: 'block'
-  //   };
-  //   return {
-  //       style: style
-  //   };
-  // }
+  eventStyleGetter (event) {
+
+    console.log("isSelected console log", isSelected);
+
+    var backgroundColor = '#' + event.hexColor;
+    var style = {
+        backgroundColor: '#5f5f5f',
+        borderRadius: '0px',
+        opacity: 1,
+        color: 'white',
+        width: '100%',
+        border: '0px',
+        display: 'block'
+    };
+    return {
+        style: style
+    };
+  }
 
   render() {
 
@@ -96,13 +119,12 @@ export default class Calendar extends Component {
         <BigCalendar
             	selectable
             	events={this.props.appointments ? this.appointmentFormat() : []}
-            	onSelectEvent={event => 
+            	onSelectEvent={event =>
                 this.openEdit(event)
               }
             	defaultView="month"
             	scrollToTime={new Date(1970, 1, 1, 6)}
             	defaultDate={new Date(2016, 8, 8)}
-
             	onSelectSlot={(slotInfo) => this.open({ start: slotInfo.start, end: slotInfo.end,
           }
 
@@ -110,10 +132,13 @@ export default class Calendar extends Component {
         />
       <AppointmentEdit
               isOpen={this.state.editModalIsOpen}
+              close={this.close.bind(this)}
               event={this.state.current}
+
                   />
       <Popup
             isOpen={this.state.modalIsOpen}
+            close={this.close.bind(this)}
             event={this.state.current}
                 />
       </div>
@@ -125,7 +150,7 @@ function mapStateToProps(state) {
   return {
     appointments: state.learner.appointments,
     auth: state.auth,
-    mentor: state.learner.currentMentor
+    mentor: state.learner.currentMentor,
   };
 }
 

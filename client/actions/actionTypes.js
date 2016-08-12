@@ -8,10 +8,6 @@ export const LEARNER_PREFERENCES = 'learner_preferences';
 export const CURRENT_MENTOR = 'current_mentor';
 export const CLEAR_MENTOR = 'clear_mentor';
 
-/* API/APPOINTMENTS */
-export const CREATE_APPOINTMENT = 'create_appoinment';
-export const FETCH_APPOINTMENTS = 'fetch_appointments';
-
 /* API/REVIEWS */
 export const SUBMIT_REVIEW = 'submit_review';
 export const CURRENT_MENTOR_REVIEWS = 'current_mentor_reviews';
@@ -31,6 +27,11 @@ export const LOADING_LEARNER_DASHBOARD_COMPLETE = 'loading_learner_dashboad_comp
 /* API/CALENDAR*/
 export const SELECTED_APPOINTMENT = 'selected_appointment';
 export const SELECTED_SLOT = 'selected_slot';
+export const CREATE_APPOINTMENT = 'create_appoinment';
+export const FETCH_APPOINTMENTS = 'fetch_appointments';
+export const UPDATE_APPOINTMENT = 'update_appointment';
+export const DELETE_APPOINTMENT = 'delete_appointment';
+
 
 /* VIDEO CHAT  */
 export const GET_VIDEO_TOKEN = 'get_video_token';
