@@ -1,5 +1,5 @@
 .media-container, .media-container > video {
-  max-width: 270px;
+  max-width: 100%;
 }
 
 .video-login {
@@ -37,6 +37,10 @@
           font-size: 15px;
         }
       }
+      .video-display {
+        height: 100vh;
+        width:100%;
+      }
     }
     .clear::after {
       content: "";
@@ -55,6 +59,7 @@
         font-size: 2em;
         color: #DDD;
       }
+
       button#button-invite {
         color: $accent-red;
         background: 0 0;

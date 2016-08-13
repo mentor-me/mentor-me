@@ -43,6 +43,10 @@ a:hover {
   margin-bottom: 100px;
 }
 
+.container {
+  width: 100%;
+}
+
 .inner-btn {
   padding: 10px 15px;
   letter-spacing: 2px;
@@ -1393,7 +1397,7 @@ div.learner-profile .show-drawer {
 }
 
 .media-container, .media-container > video {
-  max-width: 270px;
+  max-width: 100%;
 }
 
 .video-login #controls {
@@ -1431,6 +1435,11 @@ div.learner-profile .show-drawer {
 .video-login #controls #preview button#button-preview i.fa {
   margin-right: 20px;
   font-size: 15px;
+}
+
+.video-login #controls #preview .video-display {
+  height: 100vh;
+  width: 100%;
 }
 
 .video-login #controls .clear::after {
