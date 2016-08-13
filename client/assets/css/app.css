@@ -1391,3 +1391,72 @@ div.learner-profile p.card-text span {
 div.learner-profile .show-drawer {
   height: 100%;
 }
+
+.media-container, .media-container > video {
+  max-width: 270px;
+}
+
+.video-login #controls {
+  margin-top: -10px;
+}
+
+.video-login #controls #preview {
+  width: 100%;
+  margin: 0 1.5em;
+  text-align: left;
+}
+
+.video-login #controls #preview h1.sub-header {
+  width: 100%;
+}
+
+.video-login #controls #preview button.btn-global {
+  float: left;
+  border-radius: none;
+  height: 3em;
+  border-radius: 0;
+  margin: 0 auto;
+}
+
+.video-login #controls #preview button#button-preview {
+  height: 3em;
+  border-radius: 0;
+  margin-top: 0;
+  float: right;
+  background: #d94744;
+  color: white;
+  position: relative;
+}
+
+.video-login #controls #preview button#button-preview i.fa {
+  margin-right: 20px;
+  font-size: 15px;
+}
+
+.video-login #controls .clear::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.video-login #controls #invite-controls {
+  margin-top: 20px;
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #d94744;
+}
+
+.video-login #controls #invite-controls p.instructions {
+  text-align: center;
+  margin-bottom: 1em;
+  font-style: oblique;
+  font-size: 2em;
+  color: #DDD;
+}
+
+.video-login #controls #invite-controls button#button-invite {
+  color: #d94744;
+  background: 0 0;
+  border-radius: 0;
+  border: 1px solid #d94744;
+}
