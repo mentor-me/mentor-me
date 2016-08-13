@@ -83,9 +83,5 @@ router.delete('/mentor/users/:userId/appointment/:appId', function(req, res){
 });
 
 
-
-
-
-
 //////////////////////////////////////////////////////////
 module.exports = router;
