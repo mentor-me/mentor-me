@@ -14,22 +14,16 @@ exports.fetchConversations = function(req, res, term){
 }
 
 
-exports.fetchPublicAndPrivateConvos = function(req, res, learnerId) {
+exports.fetchPublicAndPrivateConvos = function(req, res, userId) {
   db.Conversation.findAll({
     where: {
       $or: [
-        {
-          private: false
-        },
-        {$and: [
           {
-            private: true
+            learnerId: userId
           },
           {
-            learnerId: learnerId
+            mentorId:  userId
           }
-        ]}
-
       ]
   }
   })

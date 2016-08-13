@@ -26,7 +26,7 @@ class MentorCard extends Component {
     })
 
     return (
-      <div className="row mentor-card">
+      <div className="row mentor-card animated slideInUp">
         <div className="card">
           <div className="card-block">
             <div className="card-title">
