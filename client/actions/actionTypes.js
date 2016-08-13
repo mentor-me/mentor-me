@@ -12,7 +12,6 @@ export const CLEAR_MENTOR = 'clear_mentor';
 export const MENTOR_FETCH_REVIEWS = 'mentor_fetch_reviews';
 
 
-
 /* API/REVIEWS */
 export const SUBMIT_REVIEW = 'submit_review';
 export const CURRENT_MENTOR_REVIEWS = 'current_mentor_reviews';

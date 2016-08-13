@@ -8,7 +8,7 @@ class Conversations extends Component {
 
   componentWillMount() {
     let user = JSON.parse(localStorage.getItem('user'));
-    this.props.fetchConversations(user.id)
+    this.props.fetchConversations(user.id);
   }
 
   loadConversations() {
