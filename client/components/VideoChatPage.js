@@ -39,22 +39,28 @@ export default class VideoChatPage extends Component {
   render() {
 
     return (
-      <div id="controls">
-        <div id="preview">
-          <p className="instructions">Hello Beautiful</p>
-          <div id="local-conversation" ref='localMedia'>
+      <div className="row">
+        <div className="col-xs-10 offset-xs-1 col-sm-10 offset-sm-1 col-md-10 offset-md-1">
+        <div className="video-login">
+          <div id="controls">
+            <div id="preview">
+              <h2 className="header-tag">Video Chat</h2>
+              <h1 className="sub-header">Start you <em>video chat</em> session now</h1>
+              <div id="local-conversation" ref='localMedia'>
 
-          </div>
-          <div>
-            <button className="btn-global" onClick={this.startChat.bind(this)}>Get Token</button>
-          </div>
-          <button onClick={this.previewMyCamera.bind(this)} id="button-preview">Preview My Camera</button>
-        </div>
+              </div>
+                <button className="btn-global" onClick={this.startChat.bind(this)}>Get Token</button>
+              <button onClick={this.previewMyCamera.bind(this)} id="button-preview"><i className="fa fa-video-camera" aria-hidden="true"></i>Preview My Camera</button>
+            </div>
+            <div className="clear"></div>
 
-        <div id="invite-controls">
-          <p className="instructions">Invite another Video Client</p>
-          <input id="invite-to" type="text" placeholder="Identity to send an invite to" />
-          <button id="button-invite">Send Invite</button>
+            <div id="invite-controls">
+              <p className="instructions">Invite another Video Client</p>
+              <input id="invite-to" type="text" placeholder="Identity to send an invite to" />
+              <button id="button-invite">Send Invite</button>
+            </div>
+          </div>
+          </div>
         </div>
       </div>
 
@@ -71,3 +77,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, { getToken })(VideoChatPage);
+
+
+// this is for the opening video page
