@@ -27,6 +27,10 @@ a:hover {
   display: none;
 }
 
+.show {
+  display: block;
+}
+
 .spacer30 {
   margin-top: 30px;
 }
@@ -165,6 +169,13 @@ button.input-group-btn-custom {
   width: 150px;
 }
 
+.navbar button {
+  background: none;
+  color: #d94744;
+  padding: 0;
+  margin: 0;
+}
+
 .navbar ul {
   margin-top: 5px;
 }
@@ -172,6 +183,7 @@ button.input-group-btn-custom {
 .navbar li.nav-item {
   border-right: 1px solid #5f5f5f;
   padding-right: 16px;
+  height: 38px;
 }
 
 .navbar li.nav-item:last-child {
@@ -189,6 +201,31 @@ button.input-group-btn-custom {
 
 .navbar i.fa {
   font-size: 1.4em;
+}
+
+.navbar i.fa-comments-o {
+  margin-top: 4px;
+}
+
+.navbar #dropdown-no-caret::after {
+  display: none;
+}
+
+.navbar .dropdown-menu {
+  padding: 8px;
+  height: 250px;
+  width: 200px;
+  overflow-y: scroll;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+}
+
+.navbar .dropdown-menu li {
+  padding: 10px 6px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.navbar .dropdown-menu li:hover {
+  background-color: rgba(0, 0, 0, 0.125);
 }
 
 .test {
@@ -1396,6 +1433,7 @@ div.learner-profile .show-drawer {
   height: 100%;
 }
 
+<<<<<<< HEAD
 .media-container, .media-container > video {
   max-width: 100%;
 }
@@ -1468,4 +1506,117 @@ div.learner-profile .show-drawer {
   background: 0 0;
   border-radius: 0;
   border: 1px solid #d94744;
+=======
+div.chatBox {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin-right: 15px;
+  background: #fbfbfb;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  height: 380px;
+  width: 260px;
+  z-index: 9999;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+div.chatBox div.utility-bar {
+  height: 30px;
+  width: 100%;
+  background-color: #cc4d4b;
+  color: #eee;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+div.chatBox div.utility-bar span.title {
+  padding-left: 8px;
+  font-size: 13px;
+}
+
+div.chatBox div.utility-bar div.icon-container {
+  padding-right: 8px;
+}
+
+div.chatBox div.utility-bar div.icon-container i.fa-close {
+  padding-left: 8px;
+}
+
+div.chatBox div.utility-bar div.icon-container i.fa-close:hover {
+  cursor: pointer;
+}
+
+div.chatBox div.text-window {
+  height: 310px;
+  width: 100%;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 7px;
+  overflow-y: scroll;
+  word-wrap: break-word;
+}
+
+div.chatBox div.text-window div.left,
+div.chatBox div.text-window div.right {
+  margin: 4px 0;
+}
+
+div.chatBox div.text-window div.msg {
+  display: inline-block;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+div.chatBox div.text-window div.left {
+  text-align: left;
+}
+
+div.chatBox div.text-window div.right {
+  text-align: right;
+}
+
+div.chatBox div.text-window div.left div.msg {
+  background-color: lightgreen;
+}
+
+div.chatBox div.text-window div.right div.msg {
+  background-color: lightsteelblue;
+}
+
+div.chatBox div.text-window::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 10px;
+}
+
+div.chatBox div.text-window::-webkit-scrollbar-thumb {
+  background-color: gray;
+}
+
+div.chatBox div.text-window::-webkit-scrollbar-track {
+  background-color: #eee;
+}
+
+div.chatBox div.input-box {
+  height: 40px;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+div.chatBox div.input-box #msg-input {
+  width: 100%;
+  border: none;
+  padding: 10px 10px;
+>>>>>>> revampChat
 }

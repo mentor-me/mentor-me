@@ -11,7 +11,7 @@ export default class ReviewEntry extends Component {
         <div className="card">
           <div className="card-header">
             {/*<span className="card-text reviewer-name"> { mentor.firstname } { mentor.lastname } </span>*/}
-            <span className="card-text review-date"> { dateFormat(review.createdAt, "mm/dd/yyyy") } </span>
+            <span className="card-text review-date"> { dateFormat(review.createdAt, "m/dd/yyyy") } </span>
             <span className="review-by pull-right" style={{"height": "20px"}}>
               <StarRatingComponent
                 name={`hello${review.createdAt}`}

@@ -1,0 +1,114 @@
+div.chatBox {
+
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin-right: 15px;
+  background: #fbfbfb;
+  border: 1px solid $bootstrap-gray;
+  height: 380px;
+  width: 260px;
+  z-index: 9999;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
+
+  div.utility-bar {
+    height: 30px;
+    width: 100%;
+    background-color: $accent-darkred;
+    color: #eee;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom: 1px solid $bootstrap-gray;
+    display: flex;
+    justify-content: space-between;;
+    align-items: center;
+
+    span.title {
+      padding-left: 8px;
+      font-size: 13px;
+    }
+
+    div.icon-container {
+
+      padding-right: 8px;
+
+      i.fa-close {
+        padding-left: 8px;
+      }
+
+      i.fa-close:hover {
+        cursor: pointer;
+        // color: gray;
+      }
+    }
+
+  }
+
+  div.text-window {
+    height: 310px;
+    width: 100%;
+    font-size: 14px;
+    border-bottom: 1px solid $bootstrap-gray;
+    padding: 7px;
+    overflow-y: scroll;
+    word-wrap: break-word;
+
+    div.left,
+    div.right {
+      margin: 4px 0;
+    }
+
+    div.msg {
+      display: inline-block;
+      padding: 2px 4px;
+      border-radius: 2px;
+    }
+
+    div.left {
+      text-align: left;
+    }
+
+    div.right {
+      text-align: right;
+    }
+
+    div.left div.msg {
+      background-color: lightgreen;
+    }
+
+    div.right div.msg {
+      background-color: lightsteelblue;
+    }
+
+  }
+
+  div.text-window::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 10px;
+  }
+
+  div.text-window::-webkit-scrollbar-thumb {
+    // background-color: $bootstrap-gray;
+    background-color: gray;
+  }
+
+  div.text-window::-webkit-scrollbar-track {
+    background-color: #eee;
+  }
+
+  div.input-box {
+    height: 40px;
+    width: 100%;
+    border-bottom: 1px solid $bootstrap-gray;
+
+    #msg-input {
+      width: 100%;
+      border: none;
+      padding: 10px 10px;
+    }
+
+  }
+
+}
