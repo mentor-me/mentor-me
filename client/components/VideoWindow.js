@@ -21,9 +21,15 @@ export default class VideoWindow extends Component {
 
   render() {
     return (
-      <div>
-        <div ref='remoteMedia' className='media-container'></div>
-        <div ref='localMedia' className='media-container'></div>
+      <div className="row">
+        <div className="video-display">
+        <div className="col-md-8">
+          <div ref='remoteMedia' className='media-container remote-media'></div>
+        </div>
+        <div className="col-md-4">
+          <div ref='localMedia' className='media-container local-media'></div>
+        </div>
+        </div>
       </div>
     );
   }

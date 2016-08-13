@@ -40,7 +40,7 @@ export default class VideoChatPage extends Component {
 
     return (
       <div className="row">
-        <div className="col-xs-10 offset-xs-1 col-sm-10 offset-sm-1 col-md-10 offset-md-1">
+        <div className="col-xs-12">
         <div className="video-login">
           <div id="controls">
             <div id="preview">
