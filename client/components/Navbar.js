@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 
+import { fetchConversations, currentConversation, openChatBox } from '../actions/chat';
 import { signoutUser } from '../actions/auth';
 
 
 class Navbar extends Component {
+
+  componentWillMount() {
+    let user = JSON.parse(localStorage.getItem('user'));
+    this.props.fetchConversations(user.id);
+  }
 
   renderNavClass(){
     console.log("this is the auth ", this.props.auth.authenticated)
@@ -17,6 +24,27 @@ class Navbar extends Component {
     }
   }
 
+  loadChatMessages(convo) {
+    console.log('clicked conversation!')
+    let { chat } = this.props;
+
+    socket.emit('disconnect chat', chat.currentConversation);
+    socket.emit('chat mounted', convo.id);
+    this.props.currentConversation( convo.id );
+    this.props.openChatBox();
+
+  }
+
+  loadConversations() {
+    let { chat, auth } = this.props;
+    if(chat) {
+      return chat.conversations.map((convo, i) => {
+        let conversationWith = convo.name.replace(auth.currentUser.username, '')
+        return <MenuItem eventKey={i} onClick={ () => this.loadChatMessages(convo) } >{ conversationWith }</MenuItem>
+      })
+    }
+  }
+
   renderNavLinks() {
     const { auth, signoutUser } = this.props;
     if (auth.authenticated) {
@@ -25,6 +53,11 @@ class Navbar extends Component {
         return (
           <ul className="nav navbar-nav pull-xs-right">
             <li className="nav-item">
+              <DropdownButton eventKey="4" title={ <i className="fa fa-comments-o" /> } noCaret id="dropdown-no-caret">
+                { this.loadConversations() }
+              </DropdownButton>
+            </li>
+            <li className="nav-item">
               <Link to={`/learner/${auth.currentUser.username}/profile`} className="nav-link">
                 <i className="fa fa-cog" />
               </Link>
@@ -32,11 +65,6 @@ class Navbar extends Component {
             <li className="nav-item">
               <Link to={`/learner/${auth.currentUser.username}`} className="nav-link">
                 <i className="fa fa-th" />
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to={`/learner/${auth.currentUser.username}/conversations`} className="nav-link">
-                <i className="fa fa-inbox" />
               </Link>
             </li>
             <li className="nav-item">
@@ -54,6 +82,11 @@ class Navbar extends Component {
         return (
           <ul className="nav navbar-nav pull-xs-right">
             <li className="nav-item">
+              <DropdownButton eventKey="4" title={ <i className="fa fa-comments-o" /> } noCaret id="dropdown-no-caret">
+                { this.loadConversations() }
+              </DropdownButton>
+            </li>
+            <li className="nav-item">
               <Link to={`/mentor/${auth.currentUser.username}/profile`} className="nav-link">
                 <i className="fa fa-cog" />
               </Link>
@@ -61,11 +94,6 @@ class Navbar extends Component {
             <li className="nav-item">
               <Link to={`/mentor/${auth.currentUser.username}/calendar`} className="nav-link">
                 <i className="fa fa-calendar" />
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to={`/mentor/${auth.currentUser.username}/conversations`} className="nav-link">
-                <i className="fa fa-inbox" />
               </Link>
             </li>
             <li className="nav-item">
@@ -114,7 +142,8 @@ class Navbar extends Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    chat: state.chat
   };
 }
 
-export default connect(mapStateToProps, { signoutUser })(Navbar);
+export default connect(mapStateToProps, { signoutUser, fetchConversations, currentConversation, openChatBox })(Navbar);

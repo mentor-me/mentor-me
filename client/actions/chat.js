@@ -8,7 +8,10 @@ import {
   CONVERSATION_MESSAGES,
   CLEAR_MESSAGES,
   SAVE_MESSAGE,
-  RECIEVE_SOCKET
+  RECIEVE_SOCKET,
+  CURRENT_CONVERSATION,
+  OPEN_CHAT_BOX,
+  CLOSE_CHAT_BOX
 } from './actionTypes';
 
 export function accessConversation(data) {
@@ -78,6 +81,7 @@ export function fetchMessages(conversationId) {
 }
 
 export function postMessage(conversationId, data) {
+  console.log('INSIDE POST MESSAGE!')
   const endpoint = `/api/conversations/${conversationId}/messages`;
   return dispatch => {
     axios.post(endpoint, data)
@@ -95,5 +99,24 @@ export function receiveSocket(socketID) {
   return {
     type: RECIEVE_SOCKET,
     payload: socketID
+  }
+}
+
+export function currentConversation(conversationId) {
+  return {
+    type: CURRENT_CONVERSATION,
+    payload: conversationId
+  }
+}
+
+export function openChatBox() {
+  return {
+    type: OPEN_CHAT_BOX
+  }
+}
+
+export function closeChatBox() {
+  return {
+    type: CLOSE_CHAT_BOX
   }
 }

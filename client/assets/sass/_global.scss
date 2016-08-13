@@ -20,8 +20,13 @@ a:hover {
   border-color: $danger-red;
   color: $danger-red;
 }
+
 .hide {
   display: none;
+}
+
+.show {
+  display: block;
 }
 
 .spacer30 {
