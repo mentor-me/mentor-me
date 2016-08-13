@@ -20,6 +20,14 @@ router.get('/allMentors', function(req, res) {
   console.log(MentorsALL)
 });
 
+router.put('/logout/:userId', function(req, res){
+  var userId = req.params.userId;
+  var avaiable   = false;
+  Auth.userLogout(req, res, userId, avaiable)
+
+});
+
+
 
 router.put('/login', function(req, res){
   console.log("this is the req in /login ", req.body)
