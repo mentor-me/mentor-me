@@ -5,14 +5,19 @@ import {
   CONVERSATION_MESSAGES,
   SAVE_MESSAGE,
   CLEAR_MESSAGES,
-  RECIEVE_SOCKET
+  RECIEVE_SOCKET,
+  CURRENT_CONVERSATION,
+  OPEN_CHAT_BOX,
+  CLOSE_CHAT_BOX
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
   conversations: [],
   messages: [],
+  currentConversation: null,
   user: null,
-  loading: false
+  loading: false,
+  open: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -27,12 +32,18 @@ export default (state = INITIAL_STATE, action) => {
       };
     case CLEAR_MESSAGES:
       return state;
+    case CURRENT_CONVERSATION:
+      return { ...state, currentConversation: action.payload };;
     case RECIEVE_SOCKET:
       return { ...state, user: action.payload };
     case LOADING_MESSAGES:
       return { ...state, loading: true };
     case LOADING_MESSAGES_COMPLETE:
       return { ...state, loading: false };
+    case OPEN_CHAT_BOX:
+      return { ...state, open: true };
+    case CLOSE_CHAT_BOX:
+      return { ...state, open: false };
     default:
       return state;
   }

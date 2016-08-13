@@ -48,3 +48,6 @@ export const POST_MESSAGE = 'post_message';
 export const CLEAR_MESSAGES = 'clear_messages';
 export const SAVE_MESSAGE = 'save_message';
 export const RECIEVE_SOCKET = 'recieve_socket';
+export const CURRENT_CONVERSATION = 'current_conversation';
+export const OPEN_CHAT_BOX = 'open_chat_box';
+export const CLOSE_CHAT_BOX = 'close_chat_box';

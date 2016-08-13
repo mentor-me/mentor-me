@@ -4,6 +4,13 @@
     width: 150px;
   }
 
+  button {
+    background: none;
+    color: $accent-red;
+    padding: 0;
+    margin: 0;
+  }
+
   ul {
     margin-top: 5px;
   }
@@ -11,6 +18,7 @@
   li.nav-item {
       border-right: 1px solid $secondary-graylight;
       padding-right: 16px;
+      height: 38px;
   }
   li.nav-item:last-child {
       border-right: none;
@@ -26,6 +34,33 @@
 
   i.fa {
     font-size: 1.4em;
+  }
+
+  i.fa-comments-o {
+    margin-top: 4px;
+  }
+
+  #dropdown-no-caret::after {
+    display: none;
+  }
+
+  .dropdown-menu {
+    padding: 8px;
+    height: 250px;
+    width: 200px;
+    overflow-y: scroll;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+
+    li {
+      padding: 10px 6px;
+      border-bottom: 1px solid $bootstrap-gray;
+
+    }
+
+    li:hover {
+      background-color: $bootstrap-gray;
+    }
+
   }
 
 }

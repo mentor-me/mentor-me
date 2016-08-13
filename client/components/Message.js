@@ -11,16 +11,6 @@ export default class Message extends Component {
       'fontSize': '0.65em',
       'color': 'lightgray',
       'display': 'block',
-      'marginTop': '2px',
-      'marginLeft': '6px',
-      'marginRight': '6px'
-    }
-
-    let GravatarStyles = {
-      'width': '40px',
-      'height': '40px',
-      'borderRadius': '50%',
-      'display': 'inline-block'
     }
 
     let { msg, userId } = this.props;
@@ -30,25 +20,19 @@ export default class Message extends Component {
     if(msg.userId == userId){
       return (
         <div className="left">
-            <div style={ { 'marginRight': '6px' } } >
-              <Gravatar style={GravatarStyles} email='joe@bob.com' https />
-            </div>
-            <div>
-              <div className="msg"> { msg.content } </div>
-              <TimeAgo style={TimeAgoStyles} date={ msg.createdAt } />
-            </div>
+          <div>
+            <div className="msg"> { msg.content } </div>
+            <TimeAgo style={ TimeAgoStyles } date={ msg.createdAt } />
+          </div>
         </div>
       );
     } else {
       return (
         <div className="right">
-            <div>
-              <div className="msg"> { msg.content } </div>
-              <TimeAgo style={ TimeAgoStyles } date={ msg.createdAt } />
-            </div>
-            <div style={ { 'marginLeft': '6px'} }>
-              <Gravatar style={GravatarStyles} email='joe@bob.com' https />
-            </div>
+          <div>
+            <div className="msg"> { msg.content } </div>
+            <TimeAgo style={ TimeAgoStyles } date={ msg.createdAt } />
+          </div>
         </div>
       );
     }
