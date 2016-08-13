@@ -157,10 +157,6 @@ button.input-group-btn-custom {
   border-radius: 0;
 }
 
-.navbar {
-  background-color: #3d3c3c;
-}
-
 .navbar #logo {
   width: 150px;
 }
@@ -177,6 +173,10 @@ button.input-group-btn-custom {
 .navbar li.nav-item:last-child {
   border-right: none;
   padding-right: none;
+}
+
+.navbar a:hover {
+  color: #cc4d4b;
 }
 
 .navbar img {
@@ -199,7 +199,8 @@ button.input-group-btn-custom {
 }
 
 #banner {
-  background-image: url("../images/office-team.jpg");
+  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../images/home-banner.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../images/home-banner.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -331,6 +332,11 @@ footer p {
 
 .learner label {
   display: block;
+}
+
+div.mentor-card {
+  box-sizing: border-box;
+  overflow-wrap: break-word;
 }
 
 div.mentor-card span.mentor-card-name {

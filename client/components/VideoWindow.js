@@ -28,3 +28,6 @@ export default class VideoWindow extends Component {
     );
   }
 }
+
+// remote is the person I am chatting with
+// local is me

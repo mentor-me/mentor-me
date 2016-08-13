@@ -1,5 +1,6 @@
 div.mentor-card {
-
+  box-sizing: border-box;
+overflow-wrap: break-word;
   span.mentor-card-name {
     font-size: 1.2em;
     margin-right: 15px;
