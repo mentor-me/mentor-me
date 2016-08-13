@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
-import io from 'socket.io-client';
 import moment from 'moment';
 import axios from 'axios';
 
@@ -9,7 +8,6 @@ import { fetchMessages, postMessage, clearMessages, saveMessage, receiveSocket }
 
 import Loader from './Loader';
 import Message from './Message';
-// const socket = io();
 
 class Messages extends Component {
 
@@ -24,7 +22,6 @@ class Messages extends Component {
   componentWillMount() {
     this.setState({ loading: true })
     let { conversationId } = this.props.params;
-    console.log('conversationId------', conversationId)
     const endpoint = `/api/conversations/${conversationId}/messages`;
     axios.get(endpoint)
     .then(response => {
@@ -54,9 +51,6 @@ class Messages extends Component {
     })
   }
 
-  componentWillReceiveProps() {
-  }
-
   newMessage(msg) {
     this.setState({
       messages: [ ...this.state.messages, msg ]
@@ -71,8 +65,6 @@ class Messages extends Component {
   componentWillUnmount() {
     let { conversationId } = this.props.params;
     socket.emit('disconnect chat', conversationId);
-    // this.setState({ messages: [] })
-    // this.props.clearMessages();
   }
 
   handleSubmit(e) {

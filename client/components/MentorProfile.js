@@ -41,7 +41,7 @@ renderTopCard() {
                 </button>
               </Link>
               <button onClick={ () => this.props.accessConversation(convo) } className="btn-global pull-right">
-                Send Message <i className="fa fa-comment-o"/>
+                Send Message <i className="fa fa-envelope-o"/>
               </button>
               <Link to={`/learner/${auth.username}/videochat`} >
                 <button className="btn-global pull-right">
