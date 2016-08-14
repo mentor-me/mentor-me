@@ -51,3 +51,5 @@ export const RECIEVE_SOCKET = 'recieve_socket';
 export const CURRENT_CONVERSATION = 'current_conversation';
 export const OPEN_CHAT_BOX = 'open_chat_box';
 export const CLOSE_CHAT_BOX = 'close_chat_box';
+export const ADD_NOTIFICATION = 'add_notification';
+export const REMOVE_NOTIFICATION = 'remove_notification';

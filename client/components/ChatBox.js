@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import moment from 'moment';
 
-import { fetchMessages, postMessage, clearMessages, saveMessage, receiveSocket, closeChatBox } from '../actions/chat';
+import { fetchMessages, postMessage, clearMessages, saveMessage, receiveSocket, closeChatBox, addNotification } from '../actions/chat';
 import Message from './Message';
 import Loader from './Loader';
 
@@ -18,25 +18,46 @@ class ChatBox extends Component {
   }
 
   componentDidMount() {
-
+    // let user = JSON.parse(localStorage.getItem('user'));
+    // let { auth } = this.props;
     // let { conversationId } = this.props.params;
     /* Notify backend of socket */
-    // socket.emit('chat mounted', conversationId);
+    let { currentConversation } = this.props.chat;
+
+    socket.emit('chat mounted', currentConversation.id);
     /* Register socket ID */
-    socket.on('receive socket', socketID => this.props.receiveSocket(socketID));
+    socket.on('receive socket', socketID => {
+      console.log('RECIEVING SOCKET ID: ', socketID)
+      this.props.receiveSocket(socketID)
+    });
     /* When client recives msg, save to redux */
+    // socket.on('message', msg => {
+    //   console.log('recieving message!', msg)
+    //   this.newMessage(msg);
+    //   // this.props.saveMessage(msg);
+    // })
     socket.on('message', msg => {
       console.log('recieving message!', msg)
       this.newMessage(msg);
       // this.props.saveMessage(msg);
     })
+
+    socket.on('notification', data => {
+      console.log('RECIEVING NOTIFICATION: ', data)
+      this.props.addNotification(data)
+    });
+
   }
 
   componentWillReceiveProps() {
+
+    let { auth } = this.props;
+    // socket.emit('join global', auth.currentUser.username)
+
     this.setState({ loading: true })
     // let { currentChat } = this.props.params;
     let { currentConversation } = this.props.chat;
-    const endpoint = `/api/conversations/${currentConversation}/messages`;
+    const endpoint = `/api/conversations/${currentConversation.id}/messages`;
     axios.get(endpoint)
     .then(response => {
       this.setState({
@@ -69,13 +90,18 @@ class ChatBox extends Component {
     var newMessage = {
       content: text.trim(),
       userId: user.id,
-      conversationId: currentConversation,
+      conversationId: currentConversation.id,
       createdAt: moment().format()
     }
     if (text.length) {
       socket.emit('new message', newMessage);
+      socket.emit('global message', {
+        id: currentConversation.id,
+        recipient: currentConversation.recipient,
+        from: user.id
+      });
       this.newMessage(newMessage);
-      this.props.postMessage(currentConversation, newMessage);
+      this.props.postMessage(currentConversation.id, newMessage);
     }
     ReactDOM.findDOMNode(this.refs.msg).value = '';
   }
@@ -127,8 +153,9 @@ class ChatBox extends Component {
 
 function mapStateToProps(state) {
   return {
-    chat: state.chat
+    chat: state.chat,
+    auth: state.auth
   };
 }
 
-export default connect(mapStateToProps, { fetchMessages, postMessage, clearMessages, saveMessage, receiveSocket, closeChatBox })(ChatBox)
+export default connect(mapStateToProps, { fetchMessages, postMessage, clearMessages, saveMessage, receiveSocket, closeChatBox, addNotification })(ChatBox)
