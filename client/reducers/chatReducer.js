@@ -1,3 +1,5 @@
+import _ from 'underscore';
+
 import {
   LOADING_MESSAGES,
   LOADING_MESSAGES_COMPLETE,
@@ -8,16 +10,19 @@ import {
   RECIEVE_SOCKET,
   CURRENT_CONVERSATION,
   OPEN_CHAT_BOX,
-  CLOSE_CHAT_BOX
+  CLOSE_CHAT_BOX,
+  ADD_NOTIFICATION,
+  REMOVE_NOTIFICATION
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
   conversations: [],
   messages: [],
-  currentConversation: null,
+  currentConversation: {id: null, recipient: null },
   user: null,
   loading: false,
-  open: false
+  open: false,
+  notifications: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -44,6 +49,15 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, open: true };
     case CLOSE_CHAT_BOX:
       return { ...state, open: false };
+    // case REMOVE_NOTIFICATION:
+    //   return { ...state, notifications: [
+    //
+    // ] };
+    case ADD_NOTIFICATION:
+      console.log(action.payload)
+      return { ...state, notifications:
+        _.uniq([ ...state.notifications, action.payload ], (item, key, a) => item.a )
+      };
     default:
       return state;
   }

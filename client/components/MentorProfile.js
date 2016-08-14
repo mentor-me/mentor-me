@@ -8,7 +8,7 @@ import ReviewEntry from './ReviewEntry';
 import Loader from './Loader';
 
 import { fetchMentorReviews } from '../actions/mentors';
-import { accessConversation } from '../actions/chat';
+import { accessConversation, currentConversation, openChatBox } from '../actions/chat';
 
 class MentorProfile extends Component {
 
@@ -18,6 +18,15 @@ componentWillMount() {
   if (user.primary_role == 1) {
     this.props.fetchMentorReviews(user.id)
   }
+}
+
+loadChatMessages(convo) {
+  let { chat } = this.props;
+  socket.emit('disconnect chat', chat.currentConversation.id);
+  // socket.emit('chat mounted', convo.id);
+  // this.props.currentConversation( convo.id );
+  this.props.accessConversation( convo );
+  this.props.openChatBox();
 }
 
 renderTopCard() {
@@ -40,7 +49,7 @@ renderTopCard() {
                   Submit Review <i className="fa fa-pencil"/>
                 </button>
               </Link>
-              <button onClick={ () => this.props.accessConversation(convo) } className="btn-global pull-right">
+              <button onClick={ () => this.props.loadChatMessages(convo) } className="btn-global pull-right">
                 Send Message <i className="fa fa-envelope-o"/>
               </button>
               <Link to={`/learner/${auth.username}/videochat`} >
@@ -153,8 +162,9 @@ function mapStateToProps(state) {
     currentMentorReviews: state.learner.currentMentorReviews,
     auth: state.auth.currentUser,
     loading: state.learner.loadingMentor,
-    mentor: state.mentor
+    mentor: state.mentor,
+    chat: state.chat
   };
 }
 
-export default connect(mapStateToProps, { accessConversation, fetchMentorReviews })(MentorProfile);
+export default connect(mapStateToProps, { accessConversation, fetchMentorReviews, currentConversation, openChatBox })(MentorProfile);

@@ -10,10 +10,11 @@ class ConversationRecord extends Component {
   onConversationEntryClick() {
 
     let { convo, chat } = this.props;
+    let conversationWith = convo.name.replace(currentUser.username, '')
 
     socket.emit('disconnect chat', chat.currentConversation);
     socket.emit('chat mounted', convo.id);
-    this.props.currentConversation( convo.id );
+    this.props.currentConversation( { id: convo.id, recipient: conversationWith } );
     this.props.openChatBox();
 
   }
