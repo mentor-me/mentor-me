@@ -12,9 +12,16 @@ export default class VideoChatPage extends Component {
     };
   }
 
+  componentDidMount() {
+    console.log("inside component did mount!!!!!!")
+    let user = JSON.parse(localStorage.getItem('user'));
+    this.props.getToken(user.username)
+  }
+
   startChat(){
     // console.log("inside startChat function")
-    this.props.getToken(this.props.auth.currentUser.username)
+    let user = JSON.parse(localStorage.getItem('user'));
+    this.props.getToken(user.username)
   }
 
   previewMyCamera () {

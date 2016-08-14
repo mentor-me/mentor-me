@@ -4,7 +4,8 @@ import { browserHistory } from 'react-router';
 import {
   AUTH_USER,
   UNAUTH_USER,
-  CURRENT_MENTOR
+  CURRENT_MENTOR,
+  USER_CONVERSATIONS
 } from './actionTypes';
 
 ////////////////////////////////////////////
@@ -26,6 +27,9 @@ import {
           payload: response.data
         })
          browserHistory.push(`/learner/${response.data.username}`);
+        //  console.log()
+        socket.emit('join global', response.data.username)
+         getInitialConversations(response.data.id, dispatch);
        })
        .catch((err) => {
          // dispatch AUTH_ERROR
@@ -64,6 +68,8 @@ import {
            payload: response.data
          })
          browserHistory.push(`/learner/${data.username}`);
+         socket.emit('join global', response.data.username)
+        //  getInitialConversations(response.data.id, dispatch);
        })
        .catch((err) => {
          // dispatch AUTH_ERROR
@@ -117,6 +123,7 @@ export function signupMentor(loginProps) {
           payload: response.data
         })
         browserHistory.push(`/mentor/${data.username}`);
+        socket.emit('join global', response.data.username)
       })
       .catch((err) => {
         // dispatch AUTH_ERROR
@@ -139,6 +146,8 @@ export function loginMentor(loginProps) {
           payload: response.data
         })
         browserHistory.push(`/mentor/${response.data.username}`);
+        getInitialConversations(response.data.id, dispatch);
+        socket.emit('join global', response.data.username)
       })
       .catch((err) => {
         // dispatch AUTH_ERROR
@@ -208,4 +217,20 @@ export function updateLearner(formProps, currentUser){
 
     });
   }
+}
+
+//////// HELPER ///////
+function getInitialConversations(uid, dispatch) {
+  const endpoint = `/api/conversations/${uid}`;
+  axios.get(endpoint)
+    .then(response => {
+      console.log('----user conversations!!!!!----', response.data)
+      dispatch({
+        type: USER_CONVERSATIONS,
+        payload: response.data
+      });
+    })
+    .catch((err) => {
+      console.log('fetchConversations Error: ', err);
+  })
 }

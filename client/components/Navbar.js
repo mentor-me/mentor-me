@@ -5,13 +5,17 @@ import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 import { fetchConversations, currentConversation, openChatBox } from '../actions/chat';
 import { signoutUser } from '../actions/auth';
+import _ from 'underscore';
 
 
 class Navbar extends Component {
 
   componentWillMount() {
-    let user = JSON.parse(localStorage.getItem('user'));
-    this.props.fetchConversations(user.id);
+    // let user = JSON.parse(localStorage.getItem('user'));
+    // let { auth } = this.props;
+    // if (auth.currentUser.id) {
+    //   this.props.fetchConversations(auth.currentUser.id);
+    // }
   }
 
   renderNavClass(){
@@ -26,11 +30,12 @@ class Navbar extends Component {
 
   loadChatMessages(convo) {
     console.log('clicked conversation!')
-    let { chat } = this.props;
+    let { chat, auth } = this.props;
+    let conversationWith = convo.name.replace(auth.currentUser.username, '')
 
     socket.emit('disconnect chat', chat.currentConversation);
     socket.emit('chat mounted', convo.id);
-    this.props.currentConversation( convo.id );
+    this.props.currentConversation({ id: convo.id, recipient: conversationWith });
     this.props.openChatBox();
 
   }
@@ -40,14 +45,26 @@ class Navbar extends Component {
     if(chat) {
       return chat.conversations.map((convo, i) => {
         let conversationWith = convo.name.replace(auth.currentUser.username, '')
-        return <MenuItem eventKey={i} onClick={ () => this.loadChatMessages(convo) } >{ conversationWith }</MenuItem>
+        // if conversationWith = a name in notifications, then yes
+        var notify;
+        if ( chat.notifications.forEach( item => { item.recipient == conversationWith })) {
+          notify = '-';
+        } else {
+          notify = '';
+        }
+        return <MenuItem eventKey={i} onClick={ () => this.loadChatMessages(convo) } > { conversationWith } {notify} </MenuItem>
       })
     }
   }
 
+  // componentWillReceiveProps() {
+  //   this.loadConversations();
+  // }
+
   renderNavLinks() {
     const { auth, signoutUser } = this.props;
     if (auth.authenticated) {
+      // call fetch conversations!
       /* This is navbar for logged in LEARNER */
       if (auth.currentUser.secondary_role == "2") {
         return (

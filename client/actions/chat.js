@@ -11,7 +11,9 @@ import {
   RECIEVE_SOCKET,
   CURRENT_CONVERSATION,
   OPEN_CHAT_BOX,
-  CLOSE_CHAT_BOX
+  CLOSE_CHAT_BOX,
+  ADD_NOTIFICATION,
+  REMOVE_NOTIFICATION
 } from './actionTypes';
 
 export function accessConversation(data) {
@@ -21,7 +23,8 @@ export function accessConversation(data) {
       .then(response => {
         /* If enter here, chat does not yet exist */
         console.log('Instantiating new conversation', response)
-        browserHistory.push(`/learner/${data.username}/conversations/${data.mentorId}/${response.data.id}`);
+        socket.emit('chat mounted', respone.data.id);
+        // browserHistory.push(`/learner/${data.username}/conversations/${data.mentorId}/${response.data.id}`);
         // dispatch({
         //   type: USER_CONVERSATIONS,
         //   payload: response.data
@@ -34,7 +37,8 @@ export function accessConversation(data) {
           let existingConvo = response.data.filter((convo) => {
             return convo.name == data.name;
           })
-        browserHistory.push(`/learner/${data.username}/conversations/${existingConvo[0].mentorId}/${existingConvo[0].id}`);
+          socket.emit('chat mounted', existingConvo[0].id);
+        // browserHistory.push(`/learner/${data.username}/conversations/${existingConvo[0].mentorId}/${existingConvo[0].id}`);
       })
     })
   };
@@ -102,10 +106,10 @@ export function receiveSocket(socketID) {
   }
 }
 
-export function currentConversation(conversationId) {
+export function currentConversation(convoObj) {
   return {
     type: CURRENT_CONVERSATION,
-    payload: conversationId
+    payload: convoObj
   }
 }
 
@@ -118,5 +122,19 @@ export function openChatBox() {
 export function closeChatBox() {
   return {
     type: CLOSE_CHAT_BOX
+  }
+}
+
+export function addNotification(data) {
+  return {
+    type: ADD_NOTIFICATION,
+    payload: data
+  }
+}
+
+export function removeNotification(data) {
+  return {
+    type: REMOVE_NOTIFICATION,
+    payload: data
   }
 }

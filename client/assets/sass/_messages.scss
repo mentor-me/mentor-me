@@ -31,7 +31,8 @@
 
   .msg-container {
     height: 70vh;
-    overflow-y: scroll !important;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 
   .msg-container::-webkit-scrollbar {

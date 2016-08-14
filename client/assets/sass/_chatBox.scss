@@ -53,7 +53,8 @@ div.chatBox {
     border-bottom: 1px solid $bootstrap-gray;
     padding: 7px;
     overflow-y: scroll;
-    word-wrap: break-word;
+    overflow-x: hidden;
+    word-break: break-all;
 
     div.left,
     div.right {
