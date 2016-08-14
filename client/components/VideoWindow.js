@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as actions from '../actions/actionTypes.js'
 
-
 export default class VideoWindow extends Component {
 
   componentDidMount() {

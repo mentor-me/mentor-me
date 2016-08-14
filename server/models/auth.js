@@ -3,6 +3,28 @@ var bcrypt = require('bcrypt');
 var async  = require('async');
 
 
+
+exports.userLogout = function(req, res, userId, avaiable){
+  db.User.update( {availability: avaiable }, {
+    where: {
+        id: userId
+    }, returning:true})
+    .then(function(result){
+      console.log("this is the user from the login router ", result[1])
+        res.status(200).send("You are logged out")
+
+    })
+    .catch(function(err){
+        res.status(500).send(err.message);
+    })
+
+
+};
+
+
+
+
+
 ///////////////////////////////////////////////////
 ///////////        LEARNER           //////////////
 ///////////////////////////////////////////////////
