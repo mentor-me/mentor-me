@@ -14,7 +14,7 @@ import { AUTH_USER }  from './actions/actionTypes.js';
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 const store = createStoreWithMiddleware(reducers, window.devToolsExtension ? window.devToolsExtension() : f => f, autoRehydrate());
-persistStore(store);
+persistStore(store, {blacklist: ['chatBox']});
 
 // const token = localStorage.getItem('token');
 //

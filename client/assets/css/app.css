@@ -221,8 +221,22 @@ button.input-group-btn-custom {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
 }
 
+.navbar .dropdown-menu li:first-child {
+  padding: 3px 4px;
+  color: black;
+  font-size: 12px;
+}
+
+.navbar .dropdown-menu li:first-child a {
+  color: #55595c;
+}
+
+.navbar .dropdown-menu li:first-child:hover {
+  background-color: transparent;
+}
+
 .navbar .dropdown-menu li {
-  padding: 10px 6px;
+  padding: 6px 4px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
@@ -439,11 +453,6 @@ div.mentor-profile h4.mentor-name {
 div.mentor-profile div.fixed-height {
   height: 250px;
   overflow: auto;
-}
-
-div.mentor-profile div.card-block {
-  display: table;
-  width: 100%;
 }
 
 div.mentor-profile img {
@@ -1333,7 +1342,6 @@ div.loader i.fa {
 .conversation .msg-container {
   height: 70vh;
   overflow-y: scroll;
-  overflow-x: hidden;
 }
 
 .conversation .msg-container::-webkit-scrollbar {
@@ -1618,7 +1626,7 @@ div.chatBox div.text-window::-webkit-scrollbar {
 }
 
 div.chatBox div.text-window::-webkit-scrollbar-thumb {
-  background-color: gray;
+  background-color: rgba(0, 0, 0, 0.125);
 }
 
 div.chatBox div.text-window::-webkit-scrollbar-track {
@@ -1634,5 +1642,6 @@ div.chatBox div.input-box {
 div.chatBox div.input-box #msg-input {
   width: 100%;
   border: none;
+  font-size: 14px;
   padding: 10px 10px;
 }

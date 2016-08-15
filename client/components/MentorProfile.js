@@ -21,11 +21,11 @@ componentWillMount() {
 }
 
 loadChatMessages(convo) {
-  let { chat } = this.props;
+  let { chat, currentMentor } = this.props;
   socket.emit('disconnect chat', chat.currentConversation.id);
   // socket.emit('chat mounted', convo.id);
   // this.props.currentConversation( convo.id );
-  this.props.accessConversation( convo );
+  this.props.accessConversation( convo, currentMentor.username );
   this.props.openChatBox();
 }
 
@@ -49,7 +49,7 @@ renderTopCard() {
                   Submit Review <i className="fa fa-pencil"/>
                 </button>
               </Link>
-              <button onClick={ () => this.props.loadChatMessages(convo) } className="btn-global pull-right">
+              <button onClick={ () => this.loadChatMessages(convo) } className="btn-global pull-right">
                 Send Message <i className="fa fa-envelope-o"/>
               </button>
               <Link to={`/learner/${auth.username}/videochat`} >
