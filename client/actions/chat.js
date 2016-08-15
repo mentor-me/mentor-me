@@ -16,7 +16,7 @@ import {
   REMOVE_NOTIFICATION
 } from './actionTypes';
 
-export function accessConversation(data) {
+export function accessConversation(data, username) {
   const endpoint = `/api/conversations/${data.uid}`;
   return dispatch => {
     axios.post(endpoint, data)
@@ -24,21 +24,23 @@ export function accessConversation(data) {
         /* If enter here, chat does not yet exist */
         console.log('Instantiating new conversation', response)
         socket.emit('chat mounted', respone.data.id);
-        // browserHistory.push(`/learner/${data.username}/conversations/${data.mentorId}/${response.data.id}`);
-        // dispatch({
-        //   type: USER_CONVERSATIONS,
-        //   payload: response.data
-        // });
       })
       .catch((err) => {
         /* If enter here, chat DOES already exist */
         console.log('Redirect to existing conversation');
-        axios.get(endpoint, data).then(response => {
+        axios.get(endpoint, data)
+        .then(response => {
           let existingConvo = response.data.filter((convo) => {
             return convo.name == data.name;
           })
+          console.log('this is existing convo: ', existingConvo[0])
+          /* Dispatch current conversation to message box updates
+          on recieve new props */
+          dispatch({
+            type: CURRENT_CONVERSATION,
+            payload: {id: existingConvo[0].id, recipient: username }
+          })
           socket.emit('chat mounted', existingConvo[0].id);
-        // browserHistory.push(`/learner/${data.username}/conversations/${existingConvo[0].mentorId}/${existingConvo[0].id}`);
       })
     })
   };

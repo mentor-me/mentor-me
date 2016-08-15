@@ -32,12 +32,10 @@ class Navbar extends Component {
     console.log('clicked conversation!')
     let { chat, auth } = this.props;
     let conversationWith = convo.name.replace(auth.currentUser.username, '')
-
     socket.emit('disconnect chat', chat.currentConversation);
     socket.emit('chat mounted', convo.id);
     this.props.currentConversation({ id: convo.id, recipient: conversationWith });
     this.props.openChatBox();
-
   }
 
   loadConversations() {
@@ -52,17 +50,13 @@ class Navbar extends Component {
         } else {
           notify = '';
         }
-        return <MenuItem eventKey={i} onClick={ () => this.loadChatMessages(convo) } > { conversationWith } {notify} </MenuItem>
+        return <MenuItem eventKey={i} key={i} onClick={ () => this.loadChatMessages(convo) } > { conversationWith } {notify} </MenuItem>
       })
     }
   }
 
-  // componentWillReceiveProps() {
-  //   this.loadConversations();
-  // }
-
   renderNavLinks() {
-    const { auth, signoutUser } = this.props;
+    const { auth, signoutUser, chat } = this.props;
     if (auth.authenticated) {
       // call fetch conversations!
       /* This is navbar for logged in LEARNER */
@@ -71,6 +65,7 @@ class Navbar extends Component {
           <ul className="nav navbar-nav pull-xs-right">
             <li className="nav-item">
               <DropdownButton eventKey="4" title={ <i className="fa fa-comments-o" /> } noCaret id="dropdown-no-caret">
+                <MenuItem>Conversations ({chat.conversations.length}) </MenuItem>
                 { this.loadConversations() }
               </DropdownButton>
             </li>
@@ -100,6 +95,7 @@ class Navbar extends Component {
           <ul className="nav navbar-nav pull-xs-right">
             <li className="nav-item">
               <DropdownButton eventKey="4" title={ <i className="fa fa-comments-o" /> } noCaret id="dropdown-no-caret">
+                <MenuItem>Conversations ({chat.conversations.length}) </MenuItem>
                 { this.loadConversations() }
               </DropdownButton>
             </li>

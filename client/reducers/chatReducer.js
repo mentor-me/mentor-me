@@ -9,8 +9,6 @@ import {
   CLEAR_MESSAGES,
   RECIEVE_SOCKET,
   CURRENT_CONVERSATION,
-  OPEN_CHAT_BOX,
-  CLOSE_CHAT_BOX,
   ADD_NOTIFICATION,
   REMOVE_NOTIFICATION
 } from '../actions/actionTypes';
@@ -21,7 +19,6 @@ const INITIAL_STATE = {
   currentConversation: {id: null, recipient: null },
   user: null,
   loading: false,
-  open: false,
   notifications: []
 };
 
@@ -45,10 +42,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, loading: true };
     case LOADING_MESSAGES_COMPLETE:
       return { ...state, loading: false };
-    case OPEN_CHAT_BOX:
-      return { ...state, open: true };
-    case CLOSE_CHAT_BOX:
-      return { ...state, open: false };
     // case REMOVE_NOTIFICATION:
     //   return { ...state, notifications: [
     //

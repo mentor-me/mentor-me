@@ -53,7 +53,6 @@ class ChatBox extends Component {
 
     let { auth } = this.props;
     // socket.emit('join global', auth.currentUser.username)
-
     this.setState({ loading: true })
     // let { currentChat } = this.props.params;
     let { currentConversation } = this.props.chat;
@@ -123,7 +122,7 @@ class ChatBox extends Component {
 
   render() {
 
-    let { open } = this.props.chat;
+    let { open } = this.props.chatBox;
     let show = open ? 'show' : 'hide';
     let chatBox = `chatBox ${show}`;
 
@@ -154,6 +153,7 @@ class ChatBox extends Component {
 function mapStateToProps(state) {
   return {
     chat: state.chat,
+    chatBox: state.chatBox,
     auth: state.auth
   };
 }

@@ -53,10 +53,22 @@
     border-radius: 0;
     box-shadow: 0 3px 10px rgba(0,0,0,0.4);
 
-    li {
-      padding: 10px 6px;
-      border-bottom: 1px solid $bootstrap-gray;
+    li:first-child {
+      padding: 3px 4px;
+      color: black;
+      font-size: 12px;
+      a {
+        color: $input-gray;
+      }
+    }
 
+    li:first-child:hover {
+      background-color: transparent;
+    }
+
+    li {
+      padding: 6px 4px;
+      border-bottom: 1px solid $bootstrap-gray;
     }
 
     li:hover {
