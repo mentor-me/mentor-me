@@ -28,7 +28,7 @@ import {
         })
          browserHistory.push(`/learner/${response.data.username}`);
         //  console.log()
-        socket.emit('join global', response.data.username)
+        // socket.emit('join global', response.data.username)
          getInitialConversations(response.data.id, dispatch);
        })
        .catch((err) => {
@@ -68,7 +68,7 @@ import {
            payload: response.data
          })
          browserHistory.push(`/learner/${data.username}`);
-         socket.emit('join global', response.data.username)
+        //  socket.emit('join global', response.data.username)
         //  getInitialConversations(response.data.id, dispatch);
        })
        .catch((err) => {
@@ -123,7 +123,7 @@ export function signupMentor(loginProps) {
           payload: response.data
         })
         browserHistory.push(`/mentor/${data.username}`);
-        socket.emit('join global', response.data.username)
+        // socket.emit('join global', response.data.username)
       })
       .catch((err) => {
         // dispatch AUTH_ERROR
@@ -147,7 +147,7 @@ export function loginMentor(loginProps) {
         })
         browserHistory.push(`/mentor/${response.data.username}`);
         getInitialConversations(response.data.id, dispatch);
-        socket.emit('join global', response.data.username)
+        // socket.emit('join global', response.data.username)
       })
       .catch((err) => {
         // dispatch AUTH_ERROR
