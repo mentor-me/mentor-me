@@ -1433,7 +1433,6 @@ div.learner-profile .show-drawer {
   height: 100%;
 }
 
-<<<<<<< HEAD
 .media-container, .media-container > video {
   max-width: 100%;
 }
@@ -1506,7 +1505,8 @@ div.learner-profile .show-drawer {
   background: 0 0;
   border-radius: 0;
   border: 1px solid #d94744;
-=======
+}
+
 div.chatBox {
   position: fixed;
   bottom: 0;
@@ -1618,5 +1618,4 @@ div.chatBox div.input-box #msg-input {
   width: 100%;
   border: none;
   padding: 10px 10px;
->>>>>>> revampChat
 }
