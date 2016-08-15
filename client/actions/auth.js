@@ -19,8 +19,8 @@ import {
    return dispatch => {
      axios.put('/api/login', obj)
        .then(response => {
-        // localStorage.setItem('token', response.headers.auth);
-        console.log("This is the response on login", response.data);
+         //replace line below
+        localStorage.setItem('token', "response.headers.auth");
         localStorage.setItem('user', JSON.stringify(response.data));
         dispatch({
           type: AUTH_USER,
@@ -61,6 +61,8 @@ import {
    return dispatch => {
      axios.post('/api/signup', data)
        .then(response => {
+         //replace line below
+         localStorage.setItem('token', "response.headers.auth");
          localStorage.setItem('user', JSON.stringify(response.data));
          console.log('sign up resp: ', response)
          dispatch({
@@ -82,7 +84,8 @@ import {
    //remove token
    return dispatch => {
      dispatch({ type: UNAUTH_USER });
-    //  localStorage.removeItem('token');
+     localStorage.removeItem('token');
+     localStorage.removeItem('user');
      browserHistory.push('/');
    }
  }
@@ -117,6 +120,8 @@ export function signupMentor(loginProps) {
   return dispatch => {
     axios.post('/api/mentor/signup', data)
       .then(response => {
+        //replace line below
+        localStorage.setItem('token', "response.headers.auth");
         localStorage.setItem('user', JSON.stringify(response.data));
         dispatch({
           type: AUTH_USER,
@@ -138,6 +143,8 @@ export function loginMentor(loginProps) {
   return dispatch => {
     axios.put('/api/mentor/login', obj)
       .then(response => {
+        //replace line below
+        localStorage.setItem('token', "response.headers.auth");
         localStorage.setItem('user', JSON.stringify(response.data));
         console.log(response.data)
        //  localStorage.setItem('token', response.headers.auth);
