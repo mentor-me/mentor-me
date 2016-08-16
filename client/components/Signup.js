@@ -12,14 +12,14 @@ class Signup extends Component {
   createLearnerStylePreferences() {
     const options = ['Visual', 'Academic'];
     return options.map((option, i) => {
-      return <option key={i}> {option} </option>;
+      return <option key={i} > {option} </option>;
     });
   }
 
   createMeetingFormatPreferences() {
     const options = ['Remote', 'In Person'];
     return options.map((option, i) => {
-      return <option key={i}> {option} </option>;
+      return <option key={i} > {option} </option>;
     });
   }
 
@@ -49,18 +49,22 @@ class Signup extends Component {
                   <div className={`form-group ${email.touched && email.error ? 'has-danger' : ''}`}>
                     <input type="text" className="form-control" placeholder="Zip Code" {...zipCode} />
                   </div>
-                  <div className="form-group">
-                    <select className="form-control" {...learnerStyle} >
-                    <option>Select your learner style...</option>
+
+                  <div className="error-message">{learnerStyle.touched && learnerStyle.error ? learnerStyle.error : ''}</div>
+                  <div className={`form-group ${learnerStyle.touched && learnerStyle.error ? 'has-danger' : ''}`}>
+                    <label ><small><strong>What is your prefered learning style.   </strong>   <em className="sub-form">Please hold command choose more than one</em></small></label>
+                    <select  className="form-control form-muti"  multiple{...learnerStyle} >
                       {this.createLearnerStylePreferences()}
                     </select>
                   </div>
-                  <div className="form-group">
-                    <select className="form-control" {...meetingFormat} >
-                    <option>Select a preferred meeting format...</option>
+                  <div className="error-message">{meetingFormat.touched && meetingFormat.error ? meetingFormat.error : ''}</div>
+                  <div className={`form-group ${meetingFormat.touched && meetingFormat.error ? 'has-danger' : ''}`}>
+                    <label ><small><strong>How would you like to meet.   </strong>  <em className="sub-form">Please hold command choose more than one</em></small></label>
+                    <select className="form-control form-muti" multiple{...meetingFormat} >
                       {this.createMeetingFormatPreferences()}
                     </select>
                   </div>
+
                   <div className={`form-group ${email.touched && email.error ? 'has-danger' : ''}`}>
                     <input type="text" className="form-control" placeholder="Email" {...email} />
                   </div>
@@ -88,6 +92,14 @@ class Signup extends Component {
 
 const validate = formProps => {
   const errors = {}
+
+  if(!formProps.learnerStyle) {
+        errors.learnerStyle = 'Required';
+  }
+  if(!formProps.meetingFormat) {
+        errors.meetingFormat = 'Required';
+  }
+
   if (!formProps.username) {
     errors.username = 'Required'
   } else if (formProps.username.length < 6) {
