@@ -27,8 +27,6 @@ import {
           payload: response.data
         })
          browserHistory.push(`/learner/${response.data.username}`);
-        //  console.log()
-        // socket.emit('join global', response.data.username)
          getInitialConversations(response.data.id, dispatch);
        })
        .catch((err) => {
@@ -70,8 +68,6 @@ import {
            payload: response.data
          })
          browserHistory.push(`/learner/${data.username}`);
-        //  socket.emit('join global', response.data.username)
-        //  getInitialConversations(response.data.id, dispatch);
        })
        .catch((err) => {
          // dispatch AUTH_ERROR
