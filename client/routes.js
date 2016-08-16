@@ -18,7 +18,7 @@ import Review from './components/Review';
 import Profile from './components/Profile';
 import MentorProfile from './components/MentorProfile';
 // still in testing
-import authUser from './components/auth_user';
+import authUser from './components/auth/auth_user';
 /* Mentor Related Components */
 import MentorSignup from './components/MentorSignup';
 import MentorLogin from './components/MentorLogin';
@@ -35,22 +35,22 @@ const routes = (
       <Route path="become/mentor" component={MentorSignup} />
       <Route path="become/login" component={MentorLogin} />
       <Route component={Learner} >
-        <Route path="learner/:username" component={LearnerDashboard} />
-        <Route path="learner/:username/mentor/:mentorUsername/calendar" component={Calendar} />}
+        <Route path="learner/:username" component={authUser(LearnerDashboard)} />
+        <Route path="learner/:username/mentor/:mentorUsername/calendar" component={authUser(Calendar)} />}
         <Route path="learner/:username/conversations" component={Conversations} />
-        <Route path="learner/:username/conversations/:userId/:conversationId" component={Messages} />
-        <Route path="learner/:username/profile" component={Profile} />
-        <Route path="learner/:username/mentor/:mentorUsername/profile" component={MentorProfile} />
-        <Route path="learner/:username/mentor/:mentorUsername/review" component={Review} />
-        <Route path="learner/:username/videochat/:uid" component={VideoChatPage} />
+        <Route path="learner/:username/conversations/:userId/:conversationId" component={authUser(Messages)} />
+        <Route path="learner/:username/profile" component={authUser(Profile)} />
+        <Route path="learner/:username/mentor/:mentorUsername/profile" component={authUser(MentorProfile)} />
+        <Route path="learner/:username/mentor/:mentorUsername/review" component={authUser(Review)} />
+        <Route path="learner/:username/videochat/:uid" component={authUser(VideoChatPage)} />
       </Route>
       <Route component={Mentor} >
-        <Route path="mentor/:username" component={MentorProfile} />
-        <Route path="mentor/:username/profile" component={Profile} />
-        <Route path="mentor/:username/calendar" component={Calendar} />
-        <Route path="mentor/:username/conversations" component={Conversations} />
-        <Route path="mentor/:username/videochat/:uid" component={VideoChatPage} />
-        <Route path="mentor/:username/conversations/:userId/:conversationId" component={Messages} />
+        <Route path="mentor/:username" component={authUser(MentorProfile)} />
+        <Route path="mentor/:username/profile" component={authUser(Profile)} />
+        <Route path="mentor/:username/calendar" component={authUser(Calendar)} />
+        <Route path="mentor/:username/conversations" component={authUser(Conversations)} />
+        <Route path="mentor/:username/videochat/:uid" component={authUser(VideoChatPage)} />
+        <Route path="mentor/:username/conversations/:userId/:conversationId" component={authUser(Messages)} />
       </Route>
     </Route>
 );

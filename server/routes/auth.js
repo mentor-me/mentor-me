@@ -11,7 +11,7 @@ var jwt            = require('jwt-simple');
 var requireAuth    = require('../config/middleware')
 
 router.get('/test', requireAuth.jwtLogin, function(req, res){
-  console.log("I'm auth");
+
   res.send({ hi: 'there' });
 });
 
