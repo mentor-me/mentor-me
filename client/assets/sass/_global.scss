@@ -120,12 +120,21 @@ a:hover {
 .border-danger {
   border-color: $danger-red;
 }
+select.form-control.form-muti {
+  width:100%;
+  max-height: 60px;
+}
 
 textarea.form-control,
 input.form-control,
 select.form-control {
   border-radius: 0;
   appearance: none;
+}
+
+.sub-form {
+  color: #7e7e7e;
+  margin-left: 5px;
 }
 
 textarea.form-control:focus,
