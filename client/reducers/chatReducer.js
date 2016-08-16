@@ -15,7 +15,7 @@ import {
 
 const INITIAL_STATE = {
   conversations: [],
-  messages: [],
+  messages: [ {conversationId: -1} ],
   currentConversation: {id: null, recipient: null },
   user: null,
   loading: false,
@@ -33,23 +33,22 @@ export default (state = INITIAL_STATE, action) => {
         messages: [ ...state.messages, action.payload ]
       };
     case CLEAR_MESSAGES:
-      return state;
+      return { ...state, messages: [] };
     case CURRENT_CONVERSATION:
-      return { ...state, currentConversation: action.payload };;
+      return { ...state, currentConversation: action.payload };
     case RECIEVE_SOCKET:
       return { ...state, user: action.payload };
     case LOADING_MESSAGES:
       return { ...state, loading: true };
     case LOADING_MESSAGES_COMPLETE:
       return { ...state, loading: false };
-    // case REMOVE_NOTIFICATION:
-    //   return { ...state, notifications: [
-    //
-    // ] };
+    case REMOVE_NOTIFICATION:
+      return { ...state, notifications: [
+        ...state.notifications.filter( id => { action.payload[0] !== id || action.payload[1] !== id } )
+      ]};
     case ADD_NOTIFICATION:
-      console.log(action.payload)
       return { ...state, notifications:
-        _.uniq([ ...state.notifications, action.payload ], (item, key, a) => item.a )
+        _.uniq([ ...state.notifications, action.payload ])
       };
     default:
       return state;

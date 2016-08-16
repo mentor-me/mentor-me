@@ -18,9 +18,6 @@ class ChatBox extends Component {
   }
 
   componentDidMount() {
-    // let user = JSON.parse(localStorage.getItem('user'));
-    // let { auth } = this.props;
-    // let { conversationId } = this.props.params;
     /* Notify backend of socket */
     let { currentConversation } = this.props.chat;
 
@@ -30,44 +27,30 @@ class ChatBox extends Component {
       console.log('RECIEVING SOCKET ID: ', socketID)
       this.props.receiveSocket(socketID)
     });
-    /* When client recives msg, save to redux */
-    // socket.on('message', msg => {
-    //   console.log('recieving message!', msg)
-    //   this.newMessage(msg);
-    //   // this.props.saveMessage(msg);
-    // })
+
     socket.on('message', msg => {
-      console.log('recieving message!', msg)
+      console.log('RECIEVING MESSAGE FROM SOCKET: ', msg)
       this.newMessage(msg);
-      // this.props.saveMessage(msg);
     })
 
     socket.on('notification', data => {
-      console.log('RECIEVING NOTIFICATION: ', data)
+      console.log('RECIEVING NOTIFICATION FROM SOCKET: ', data)
       this.props.addNotification(data)
     });
 
   }
 
-  componentWillReceiveProps() {
-
-    let { auth } = this.props;
-    // socket.emit('join global', auth.currentUser.username)
-    this.setState({ loading: true })
-    // let { currentChat } = this.props.params;
-    let { currentConversation } = this.props.chat;
-    const endpoint = `/api/conversations/${currentConversation.id}/messages`;
-    axios.get(endpoint)
-    .then(response => {
-      this.setState({
-        messages: response.data,
-        loading: false
-      }, () => this.scrollToBottom() )
-    })
-    .catch((err) => {
-      console.log('fetchConversations Error: ', err);
-    })
-  }
+  componentWillReceiveProps(nextProps) {
+    let { messages } = this.props;
+    if (nextProps.messages.length) {
+        if (nextProps.messages[0].conversationId !== messages[0].conversationId ) {
+          this.setState({
+            messages: [...nextProps.messages],
+            loading: false
+          }, () => this.scrollToBottom() )
+        }
+      }
+    }
 
   newMessage(msg) {
     this.setState({
@@ -117,11 +100,15 @@ class ChatBox extends Component {
   renderMessages() {
     let { messages } = this.state;
     // console.log('here are the messages', messages)
-    return messages.map((msg, i) => <Message msg={ msg } userId={22} key={ i } />)
+    if (messages) {
+      // TODO: don't hard-code userId!!!!!!!
+      return messages.map((msg, i) => <Message msg={ msg } userId={22} key={ i } />)
+    }
   }
 
   render() {
 
+    let { messages } = this.props;
     let { open } = this.props.chatBox;
     let show = open ? 'show' : 'hide';
     let chatBox = `chatBox ${show}`;
@@ -136,7 +123,9 @@ class ChatBox extends Component {
           </div>
         </div>
         <div className="text-window" ref="chatBox">
-          { this.state.loading ? <Loader /> : this.renderMessages() }
+          { messages.length ? this.renderMessages() : <Loader /> }
+          {/*{ this.state.messages.length ?  this.renderMessages() : <Loader /> }*/}
+
         </div>
         <div className="input-box">
           <form onSubmit={ this.handleSubmit.bind(this) }>
@@ -154,7 +143,8 @@ function mapStateToProps(state) {
   return {
     chat: state.chat,
     chatBox: state.chatBox,
-    auth: state.auth
+    auth: state.auth,
+    messages: state.chat.messages
   };
 }
 

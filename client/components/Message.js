@@ -15,7 +15,6 @@ export default class Message extends Component {
 
     let { msg, userId } = this.props;
 
-    /* TODO: Pull in actual emails for Gravatars!!!! */
     /* Match IDs in order to determine which side to render message inside chatbox */
     if(msg.userId == userId){
       return (
