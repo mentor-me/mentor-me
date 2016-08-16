@@ -31,6 +31,10 @@ a:hover {
   display: block;
 }
 
+.show-prompt {
+  display: inline-block !important;
+}
+
 .spacer30 {
   margin-top: 30px;
 }
@@ -1662,6 +1666,14 @@ div.chatBox div.utility-bar {
 div.chatBox div.utility-bar span.title {
   padding-left: 8px;
   font-size: 13px;
+}
+
+div.chatBox div.utility-bar a .fa {
+  color: #eee;
+}
+
+div.chatBox div.utility-bar a:visited .fa {
+  color: #eee;
 }
 
 div.chatBox div.utility-bar div.icon-container {

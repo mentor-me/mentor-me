@@ -5,6 +5,15 @@ import Gravatar from 'react-gravatar';
 
 export default class Message extends Component {
 
+  handleClick(msg) {
+    console.log('INSIDE CLICK!!!!!!')
+    if ( msg.indexOf('http') != -1 ){
+      let parts = msg.split('/');
+      console.log('clicked linnnkkk!!!!')
+      browserHistory.push(`/${parts[3]}/${parts[4]}/videochat/${parts[6]}`);
+    }
+  }
+
   render() {
 
     let TimeAgoStyles = {
@@ -18,7 +27,7 @@ export default class Message extends Component {
     /* Match IDs in order to determine which side to render message inside chatbox */
     if(msg.userId == userId){
       return (
-        <div className="left">
+        <div onClick={ () => this.handleClick(msg.content) } className="left">
           <div>
             <div className="msg"> { msg.content } </div>
             <TimeAgo style={ TimeAgoStyles } date={ msg.createdAt } />
@@ -27,7 +36,7 @@ export default class Message extends Component {
       );
     } else {
       return (
-        <div className="right">
+        <div onClick={ () => this.handleClick(msg.content) } className="right">
           <div>
             <div className="msg"> { msg.content } </div>
             <TimeAgo style={ TimeAgoStyles } date={ msg.createdAt } />

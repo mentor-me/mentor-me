@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import moment from 'moment';
+import Linkify from 'react-linkify';
+import { Link, browserHistory } from 'react-router';
 
 import { fetchMessages, postMessage, clearMessages, saveMessage, receiveSocket, closeChatBox, addNotification } from '../actions/chat';
 import Message from './Message';
@@ -94,7 +96,31 @@ class ChatBox extends Component {
   }
 
   startVideoChat() {
-    console.log('start video box');
+    //push history!
+    let { auth } = this.props;
+    let { currentConversation } = this.props.chat;
+    let user = JSON.parse(localStorage.getItem('user'));
+    let inviteeRole;
+    let invitorRole;
+    auth.currentUser.secondary_role == "2" ? inviteeRole = 'mentor' : inviteeRole = 'learner'
+    auth.currentUser.secondary_role == "2" ? invitorRole = 'learner' : invitorRole = 'mentor'
+    let videoLink = `Join video chat here: http://localhost:3000/${inviteeRole}/${user.username}/videochat/${user.id}`;
+    var newMessage = {
+      content: videoLink,
+      userId: user.id,
+      conversationId: currentConversation.id,
+      createdAt: moment().format()
+    }
+    socket.emit('new message', newMessage);
+    socket.emit('global message', {
+      id: currentConversation.id,
+      recipient: currentConversation.recipient,
+      from: user.id
+    });
+    // TODO: NOT POSTING TO DB!!!
+    // this.newMessage(newMessage);
+    browserHistory.push(`/${invitorRole}/${user.username}/videochat/${user.id}`)
+    // this.props.postMessage(currentConversation.id, newMessage);
   }
 
   renderMessages() {
@@ -108,6 +134,7 @@ class ChatBox extends Component {
 
   render() {
 
+    let user = JSON.parse(localStorage.getItem('user'));
     let { messages } = this.props;
     let { open } = this.props.chatBox;
     let show = open ? 'show' : 'hide';
@@ -118,7 +145,9 @@ class ChatBox extends Component {
         <div className="utility-bar">
           <span className="title">Chat</span>
           <div className="icon-container">
-            <i className="fa fa-video-camera" onClick={ this.startVideoChat.bind(this) } />
+            {/*<Link to={`/videochat/${user.username}/${user.id}`}>*/}
+              <i className="fa fa-video-camera" onClick={ this.startVideoChat.bind(this) } />
+            {/*</Link>*/}
             <i className="fa fa-close" onClick={ this.closeChatBox.bind(this) } />
           </div>
         </div>
