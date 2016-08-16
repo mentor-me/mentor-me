@@ -3,19 +3,15 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
-import { fetchConversations, currentConversation, openChatBox } from '../actions/chat';
+import { fetchConversations, currentConversation, openChatBox, removeNotification, fetchMessages, clearMessages } from '../actions/chat';
 import { signoutUser } from '../actions/auth';
 import _ from 'underscore';
 
 
 class Navbar extends Component {
 
-  componentWillMount() {
-    // let user = JSON.parse(localStorage.getItem('user'));
-    // let { auth } = this.props;
-    // if (auth.currentUser.id) {
-    //   this.props.fetchConversations(auth.currentUser.id);
-    // }
+  componentWillReceiveProps() {
+    this.loadConversations();
   }
 
   renderNavClass(){
@@ -30,28 +26,46 @@ class Navbar extends Component {
 
   loadChatMessages(convo) {
     console.log('clicked conversation!')
-    let { chat, auth } = this.props;
+    let { chat, auth, chatBox } = this.props;
     let conversationWith = convo.name.replace(auth.currentUser.username, '')
-    socket.emit('disconnect chat', chat.currentConversation);
+    socket.emit('disconnect chat', chat.currentConversation.id);
     socket.emit('chat mounted', convo.id);
+    // this.props.clearMessages();
     this.props.currentConversation({ id: convo.id, recipient: conversationWith });
-    this.props.openChatBox();
+    this.props.removeNotification( [convo.learnerId, convo.mentorId] );
+    if (!chatBox.open) {
+      this.props.openChatBox();
+    }
+    this.props.fetchMessages( convo.id );
+  }
+
+  notifyCheck(convoIDs) {
+    let { chat } = this.props;
+    let flag = false;
+    if (_.contains(chat.notifications, convoIDs[0]) || _.contains(chat.notifications, convoIDs[1])){
+      flag = true
+    }
+    return flag;
   }
 
   loadConversations() {
     let { chat, auth } = this.props;
+    var notify;
     if(chat) {
       return chat.conversations.map((convo, i) => {
-        let conversationWith = convo.name.replace(auth.currentUser.username, '')
-        // if conversationWith = a name in notifications, then yes
-        var notify;
-        if ( chat.notifications.forEach( item => { item.recipient == conversationWith })) {
-          notify = '-';
-        } else {
-          notify = '';
-        }
-        return <MenuItem eventKey={i} key={i} onClick={ () => this.loadChatMessages(convo) } > { conversationWith } {notify} </MenuItem>
-      })
+        let conversationWith = convo.name.replace(auth.currentUser.username, '');
+        // if (convo.id == chat.currentConversation.id){
+        //   notify = false;
+        //   return <MenuItem eventKey={i} key={i} onClick={ () => this.loadChatMessages(convo) } > { conversationWith } { notify ? <i className="fa fa-circle" /> : '' } </MenuItem>
+        // } else {
+          if (this.notifyCheck([convo.learnerId, convo.mentorId])) {
+            notify = true;
+          } else {
+            notify = false;
+          }
+          return <MenuItem eventKey={i} key={i} onClick={ () => this.loadChatMessages(convo) } > { conversationWith } { notify ? <i className="fa fa-comment-o" /> : '' } </MenuItem>
+        // }
+      }, this)
     }
   }
 
@@ -64,7 +78,7 @@ class Navbar extends Component {
         return (
           <ul className="nav navbar-nav pull-xs-right">
             <li className="nav-item">
-              <DropdownButton eventKey="4" title={ <i className="fa fa-comments-o" /> } noCaret id="dropdown-no-caret">
+              <DropdownButton eventKey="4" title={ chat.notifications.length ? <i className="fa fa-comments-o" /> : <i className="fa fa-comments-o none" /> } noCaret id="dropdown-no-caret">
                 <MenuItem>Conversations ({chat.conversations.length}) </MenuItem>
                 { this.loadConversations() }
               </DropdownButton>
@@ -94,7 +108,7 @@ class Navbar extends Component {
         return (
           <ul className="nav navbar-nav pull-xs-right">
             <li className="nav-item">
-              <DropdownButton eventKey="4" title={ <i className="fa fa-comments-o" /> } noCaret id="dropdown-no-caret">
+              <DropdownButton eventKey="4" title={ chat.notifications.length ? <i className="fa fa-comments-o" /> : <i className="fa fa-comments-o none" /> } noCaret id="dropdown-no-caret">
                 <MenuItem>Conversations ({chat.conversations.length}) </MenuItem>
                 { this.loadConversations() }
               </DropdownButton>
@@ -155,8 +169,9 @@ class Navbar extends Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
-    chat: state.chat
+    chat: state.chat,
+    chatBox: state.chatBox
   };
 }
 
-export default connect(mapStateToProps, { signoutUser, fetchConversations, currentConversation, openChatBox })(Navbar);
+export default connect(mapStateToProps, { signoutUser, fetchConversations, currentConversation, openChatBox, removeNotification, fetchMessages, clearMessages })(Navbar);
