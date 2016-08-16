@@ -62,7 +62,7 @@ export function fetchConversations(uid) {
   return dispatch => {
     axios.get(endpoint)
       .then(response => {
-        console.log('----user conversations!!!!!----', response.data)
+        // console.log('----user conversations!!!!!----', response.data)
         dispatch({
           type: USER_CONVERSATIONS,
           payload: response.data
@@ -77,15 +77,15 @@ export function fetchConversations(uid) {
 export function fetchMessages(conversationId) {
   const endpoint = `/api/conversations/${conversationId}/messages`;
   return dispatch => {
-    // dispatch({
-    //   type: LOADING_MESSAGES
-    // })
+    dispatch({
+      type: LOADING_MESSAGES
+    })
     axios.get(endpoint)
       .then(response => {
-        console.log('INSIDE FETCH MESSAGES------', response.data)
-        // dispatch({
-        //     type: LOADING_MESSAGES_COMPLETE
-        // })
+        // console.log('INSIDE FETCH MESSAGES------', response.data)
+        dispatch({
+            type: LOADING_MESSAGES_COMPLETE
+        })
         dispatch({
           type: CONVERSATION_MESSAGES,
           payload: response.data

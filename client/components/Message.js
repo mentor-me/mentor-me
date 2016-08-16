@@ -6,10 +6,8 @@ import Gravatar from 'react-gravatar';
 export default class Message extends Component {
 
   handleClick(msg) {
-    console.log('INSIDE CLICK!!!!!!')
     if ( msg.indexOf('http') != -1 ){
       let parts = msg.split('/');
-      console.log('clicked linnnkkk!!!!')
       browserHistory.push(`/${parts[3]}/${parts[4]}/videochat/${parts[6]}`);
     }
   }
@@ -24,7 +22,6 @@ export default class Message extends Component {
 
     let { msg, userId } = this.props;
 
-    /* Match IDs in order to determine which side to render message inside chatbox */
     if(msg.userId == userId){
       return (
         <div onClick={ () => this.handleClick(msg.content) } className="left">
