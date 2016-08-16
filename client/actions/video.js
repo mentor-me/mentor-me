@@ -38,7 +38,7 @@ return function(dispatch) {
             });
 
           function clientConnected() {
-              document.getElementById('invite-controls').style.display = 'block';
+              // document.getElementById('invite-controls').style.display = 'block';
               console.log("Connected to Twilio. Listening for incoming Invites as '" + conversationsClient.identity + "'");
 
               conversationsClient.on('invite', function(invite) {

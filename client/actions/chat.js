@@ -41,6 +41,16 @@ export function accessConversation(data, username) {
             payload: {id: existingConvo[0].id, recipient: username }
           })
           socket.emit('chat mounted', existingConvo[0].id);
+          axios.get(`/api/conversations/${existingConvo[0].id}/messages`)
+            .then(response => {
+              dispatch({
+                type: CONVERSATION_MESSAGES,
+                payload: response.data
+              });
+            })
+            .catch((err) => {
+              console.log('Failed to fetch messages in ACCESS CONVO: ', err)
+            })
       })
     })
   };
@@ -67,14 +77,15 @@ export function fetchConversations(uid) {
 export function fetchMessages(conversationId) {
   const endpoint = `/api/conversations/${conversationId}/messages`;
   return dispatch => {
-    dispatch({
-      type: LOADING_MESSAGES
-    })
+    // dispatch({
+    //   type: LOADING_MESSAGES
+    // })
     axios.get(endpoint)
       .then(response => {
-        dispatch({
-            type: LOADING_MESSAGES_COMPLETE
-        })
+        console.log('INSIDE FETCH MESSAGES------', response.data)
+        // dispatch({
+        //     type: LOADING_MESSAGES_COMPLETE
+        // })
         dispatch({
           type: CONVERSATION_MESSAGES,
           payload: response.data
@@ -128,9 +139,10 @@ export function closeChatBox() {
 }
 
 export function addNotification(data) {
+  console.log('ADD NOTIFICATION: ', data)
   return {
     type: ADD_NOTIFICATION,
-    payload: data
+    payload: data.from
   }
 }
 
@@ -138,5 +150,11 @@ export function removeNotification(data) {
   return {
     type: REMOVE_NOTIFICATION,
     payload: data
+  }
+}
+
+export function clearMessages(data) {
+  return {
+    type: CLEAR_MESSAGES
   }
 }

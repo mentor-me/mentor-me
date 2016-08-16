@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Learner extends Component {
+export default class Learner extends Component {
 
   componentDidMount() {
     let user = JSON.parse(localStorage.getItem('user'));

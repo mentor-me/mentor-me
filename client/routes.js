@@ -37,18 +37,18 @@ const routes = (
         <Route path="learner/:username/mentor/:mentorUsername/calendar" component={Calendar} />}
         <Route path="learner/:username/conversations" component={Conversations} />
         <Route path="learner/:username/conversations/:userId/:conversationId" component={Messages} />
-        <Route path="learner/:username/videochat" component={VideoChatPage} />
         <Route path="learner/:username/profile" component={Profile} />
         <Route path="learner/:username/mentor/:mentorUsername/profile" component={MentorProfile} />
         <Route path="learner/:username/mentor/:mentorUsername/review" component={Review} />
+        <Route path="learner/:username/videochat/:uid" component={VideoChatPage} />
       </Route>
       <Route component={Mentor} >
         <Route path="mentor/:username" component={MentorProfile} />
         <Route path="mentor/:username/profile" component={Profile} />
         <Route path="mentor/:username/calendar" component={Calendar} />
         <Route path="mentor/:username/conversations" component={Conversations} />
+        <Route path="mentor/:username/videochat/:uid" component={VideoChatPage} />
         <Route path="mentor/:username/conversations/:userId/:conversationId" component={Messages} />
-        <Route path="mentor/:username/videochat" component={VideoChatPage} />
       </Route>
     </Route>
 );

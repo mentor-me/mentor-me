@@ -31,6 +31,10 @@ a:hover {
   display: block;
 }
 
+.show-prompt {
+  display: inline-block !important;
+}
+
 .spacer30 {
   margin-top: 30px;
 }
@@ -205,6 +209,84 @@ button.input-group-btn-custom {
 
 .navbar i.fa-comments-o {
   margin-top: 4px;
+  -webkit-animation: pulse 1s infinite;
+          animation: pulse 1s infinite;
+}
+
+.navbar i.fa-comments-o.none {
+  margin-top: 4px;
+  -webkit-animation: none;
+          animation: none;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  30% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  40% {
+    -webkit-transform: scale(1.08);
+            transform: scale(1.08);
+  }
+  50% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  60% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  70% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05);
+  }
+  80% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  30% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  40% {
+    -webkit-transform: scale(1.08);
+            transform: scale(1.08);
+  }
+  50% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  60% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  70% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05);
+  }
+  80% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
 }
 
 .navbar #dropdown-no-caret::after {
@@ -236,12 +318,27 @@ button.input-group-btn-custom {
 }
 
 .navbar .dropdown-menu li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   padding: 6px 4px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 .navbar .dropdown-menu li:hover {
   background-color: rgba(0, 0, 0, 0.125);
+}
+
+.navbar .dropdown-menu i.fa-comment-o {
+  color: black;
+  font-size: 16px;
+  margin-left: 5px;
 }
 
 .navbar .dropdown-menu::-webkit-scrollbar {
@@ -1311,6 +1408,7 @@ div.loader {
 
 div.loader i.fa {
   margin-top: 20%;
+  color: rgba(0, 0, 0, 0.125);
 }
 
 .messages h4 {
@@ -1568,6 +1666,14 @@ div.chatBox div.utility-bar {
 div.chatBox div.utility-bar span.title {
   padding-left: 8px;
   font-size: 13px;
+}
+
+div.chatBox div.utility-bar a .fa {
+  color: #eee;
+}
+
+div.chatBox div.utility-bar a:visited .fa {
+  color: #eee;
 }
 
 div.chatBox div.utility-bar div.icon-container {

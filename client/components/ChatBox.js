@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import moment from 'moment';
+import Linkify from 'react-linkify';
+import { Link, browserHistory } from 'react-router';
 
 import { fetchMessages, postMessage, clearMessages, saveMessage, receiveSocket, closeChatBox, addNotification } from '../actions/chat';
 import Message from './Message';
@@ -18,9 +20,6 @@ class ChatBox extends Component {
   }
 
   componentDidMount() {
-    // let user = JSON.parse(localStorage.getItem('user'));
-    // let { auth } = this.props;
-    // let { conversationId } = this.props.params;
     /* Notify backend of socket */
     let { currentConversation } = this.props.chat;
 
@@ -30,44 +29,30 @@ class ChatBox extends Component {
       console.log('RECIEVING SOCKET ID: ', socketID)
       this.props.receiveSocket(socketID)
     });
-    /* When client recives msg, save to redux */
-    // socket.on('message', msg => {
-    //   console.log('recieving message!', msg)
-    //   this.newMessage(msg);
-    //   // this.props.saveMessage(msg);
-    // })
+
     socket.on('message', msg => {
-      console.log('recieving message!', msg)
+      console.log('RECIEVING MESSAGE FROM SOCKET: ', msg)
       this.newMessage(msg);
-      // this.props.saveMessage(msg);
     })
 
     socket.on('notification', data => {
-      console.log('RECIEVING NOTIFICATION: ', data)
+      console.log('RECIEVING NOTIFICATION FROM SOCKET: ', data)
       this.props.addNotification(data)
     });
 
   }
 
-  componentWillReceiveProps() {
-
-    let { auth } = this.props;
-    // socket.emit('join global', auth.currentUser.username)
-    this.setState({ loading: true })
-    // let { currentChat } = this.props.params;
-    let { currentConversation } = this.props.chat;
-    const endpoint = `/api/conversations/${currentConversation.id}/messages`;
-    axios.get(endpoint)
-    .then(response => {
-      this.setState({
-        messages: response.data,
-        loading: false
-      }, () => this.scrollToBottom() )
-    })
-    .catch((err) => {
-      console.log('fetchConversations Error: ', err);
-    })
-  }
+  componentWillReceiveProps(nextProps) {
+    let { messages } = this.props;
+    if (nextProps.messages.length) {
+        if (nextProps.messages[0].conversationId !== messages[0].conversationId ) {
+          this.setState({
+            messages: [...nextProps.messages],
+            loading: false
+          }, () => this.scrollToBottom() )
+        }
+      }
+    }
 
   newMessage(msg) {
     this.setState({
@@ -111,17 +96,46 @@ class ChatBox extends Component {
   }
 
   startVideoChat() {
-    console.log('start video box');
+    //push history!
+    let { auth } = this.props;
+    let { currentConversation } = this.props.chat;
+    let user = JSON.parse(localStorage.getItem('user'));
+    let inviteeRole;
+    let invitorRole;
+    auth.currentUser.secondary_role == "2" ? inviteeRole = 'mentor' : inviteeRole = 'learner'
+    auth.currentUser.secondary_role == "2" ? invitorRole = 'learner' : invitorRole = 'mentor'
+    let videoLink = `Join video chat here: http://localhost:3000/${inviteeRole}/${user.username}/videochat/${user.id}`;
+    var newMessage = {
+      content: videoLink,
+      userId: user.id,
+      conversationId: currentConversation.id,
+      createdAt: moment().format()
+    }
+    socket.emit('new message', newMessage);
+    socket.emit('global message', {
+      id: currentConversation.id,
+      recipient: currentConversation.recipient,
+      from: user.id
+    });
+    // TODO: NOT POSTING TO DB!!!
+    // this.newMessage(newMessage);
+    browserHistory.push(`/${invitorRole}/${user.username}/videochat/${user.id}`)
+    // this.props.postMessage(currentConversation.id, newMessage);
   }
 
   renderMessages() {
     let { messages } = this.state;
     // console.log('here are the messages', messages)
-    return messages.map((msg, i) => <Message msg={ msg } userId={22} key={ i } />)
+    if (messages) {
+      // TODO: don't hard-code userId!!!!!!!
+      return messages.map((msg, i) => <Message msg={ msg } userId={22} key={ i } />)
+    }
   }
 
   render() {
 
+    let user = JSON.parse(localStorage.getItem('user'));
+    let { messages } = this.props;
     let { open } = this.props.chatBox;
     let show = open ? 'show' : 'hide';
     let chatBox = `chatBox ${show}`;
@@ -131,12 +145,16 @@ class ChatBox extends Component {
         <div className="utility-bar">
           <span className="title">Chat</span>
           <div className="icon-container">
-            <i className="fa fa-video-camera" onClick={ this.startVideoChat.bind(this) } />
+            {/*<Link to={`/videochat/${user.username}/${user.id}`}>*/}
+              <i className="fa fa-video-camera" onClick={ this.startVideoChat.bind(this) } />
+            {/*</Link>*/}
             <i className="fa fa-close" onClick={ this.closeChatBox.bind(this) } />
           </div>
         </div>
         <div className="text-window" ref="chatBox">
-          { this.state.loading ? <Loader /> : this.renderMessages() }
+          { messages.length ? this.renderMessages() : <Loader /> }
+          {/*{ this.state.messages.length ?  this.renderMessages() : <Loader /> }*/}
+
         </div>
         <div className="input-box">
           <form onSubmit={ this.handleSubmit.bind(this) }>
@@ -154,7 +172,8 @@ function mapStateToProps(state) {
   return {
     chat: state.chat,
     chatBox: state.chatBox,
-    auth: state.auth
+    auth: state.auth,
+    messages: state.chat.messages
   };
 }
 
