@@ -98,7 +98,7 @@ export function fetchMessages(conversationId) {
 }
 
 export function postMessage(conversationId, data) {
-  console.log('INSIDE POST MESSAGE!')
+  console.log('Posting message.')
   const endpoint = `/api/conversations/${conversationId}/messages`;
   return dispatch => {
     axios.post(endpoint, data)
