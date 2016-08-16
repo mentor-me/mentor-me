@@ -52,11 +52,11 @@ renderTopCard() {
               <button onClick={ () => this.loadChatMessages(convo) } className="btn-global pull-right">
                 Send Message <i className="fa fa-envelope-o"/>
               </button>
-              <Link to={`/learner/${auth.username}/videochat`} >
+              {/*<Link to={`/learner/${auth.username}/videochat`} >
                 <button className="btn-global pull-right">
                   Start Video Chat <i className="fa fa-video-camera"/>
                 </button>
-              </Link>
+              </Link>*/}
             </div>
           </div>
         );

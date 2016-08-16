@@ -124,18 +124,17 @@ class ChatBox extends Component {
   }
 
   renderMessages() {
+    let user = JSON.parse(localStorage.getItem('user'));
     let { messages } = this.state;
-    // console.log('here are the messages', messages)
     if (messages) {
-      // TODO: don't hard-code userId!!!!!!!
-      return messages.map((msg, i) => <Message msg={ msg } userId={22} key={ i } />)
+      return messages.map((msg, i) => <Message msg={ msg } userId={user.id} key={ i } />)
     }
   }
 
   render() {
 
     let user = JSON.parse(localStorage.getItem('user'));
-    let { messages } = this.props;
+    let { messages, loading } = this.props;
     let { open } = this.props.chatBox;
     let show = open ? 'show' : 'hide';
     let chatBox = `chatBox ${show}`;
@@ -152,9 +151,8 @@ class ChatBox extends Component {
           </div>
         </div>
         <div className="text-window" ref="chatBox">
-          { messages.length ? this.renderMessages() : <Loader /> }
+          { loading ?  <Loader /> : this.renderMessages() }
           {/*{ this.state.messages.length ?  this.renderMessages() : <Loader /> }*/}
-
         </div>
         <div className="input-box">
           <form onSubmit={ this.handleSubmit.bind(this) }>
@@ -171,6 +169,7 @@ class ChatBox extends Component {
 function mapStateToProps(state) {
   return {
     chat: state.chat,
+    loading: state.chat.loading,
     chatBox: state.chatBox,
     auth: state.auth,
     messages: state.chat.messages

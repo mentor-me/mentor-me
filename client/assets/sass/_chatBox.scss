@@ -38,6 +38,10 @@ div.chatBox {
       color: #eee;
     }
 
+    i.fa:hover {
+      cursor: pointer;
+    }
+
     div.icon-container {
 
       padding-right: 8px;
@@ -48,7 +52,6 @@ div.chatBox {
 
       i.fa-close:hover {
         cursor: pointer;
-        // color: gray;
       }
     }
 
@@ -72,7 +75,7 @@ div.chatBox {
     div.msg {
       display: inline-block;
       padding: 2px 4px;
-      border-radius: 2px;
+      border-radius: 5px;
     }
 
     div.left {

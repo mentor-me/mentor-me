@@ -559,7 +559,7 @@ div.mentor-profile img {
 }
 
 div.mentor-profile button.btn-global {
-  margin: 10px 10px;
+  margin: 10px 15px;
   width: 215px;
 }
 
@@ -579,7 +579,7 @@ div.mentor-profile div.btn-container {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 10px;
+  padding: 10px 10px;
 }
 
 div.mentor-profile span.review-date {
@@ -1676,6 +1676,10 @@ div.chatBox div.utility-bar a:visited .fa {
   color: #eee;
 }
 
+div.chatBox div.utility-bar i.fa:hover {
+  cursor: pointer;
+}
+
 div.chatBox div.utility-bar div.icon-container {
   padding-right: 8px;
 }
@@ -1707,7 +1711,7 @@ div.chatBox div.text-window div.right {
 div.chatBox div.text-window div.msg {
   display: inline-block;
   padding: 2px 4px;
-  border-radius: 2px;
+  border-radius: 5px;
 }
 
 div.chatBox div.text-window div.left {
