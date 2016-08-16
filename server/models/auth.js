@@ -11,7 +11,9 @@ exports.userLogout = function(req, res, userId, avaiable){
     }, returning:true})
     .then(function(result){
       console.log("this is the user from the login router ", result[1])
-        res.status(200).send("You are logged out")
+        res.status(200)
+        .header('Auth', null)
+        .send("You are logged out")
 
     })
     .catch(function(err){
