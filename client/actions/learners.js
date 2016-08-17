@@ -34,7 +34,7 @@ export function newSearchQuery(query) {
   };
 }
 
-export function fetchPreferences(uid, zip) {
+export function fetchPreferences(uid, zip, radius) {
   const endpoint = `/api/learner/users/${1}/preferences`;
   return dispatch => {
     dispatch({
@@ -43,7 +43,7 @@ export function fetchPreferences(uid, zip) {
     axios.get(endpoint)
       .then(response => {
         let preferences = _.pick(response.data, 'id', 'academic', 'inPerson', 'visual', 'remote', 'radiusZip', 'radius');
-        preferences.radius = preferences.radius || 25;
+        preferences.radius = preferences.radius;
         preferences.radiusZip = zip;
         fetchModifiedMentors(uid, preferences, dispatch)
         dispatch({

@@ -13,7 +13,7 @@ class LearnerPreferences extends Component {
   /* This only fires when zip is submitted */
   handleZipSubmit() {
     /* Pass second argument here in order to filter on ZIP */
-    this.props.fetchPreferences(1, this.props.values.radiusZip);
+    this.props.fetchPreferences(1, this.props.values.radiusZip, this.props.values.radius);
   }
   resubmitZip(uid){
     this.props.fetchPreferences(uid);
@@ -88,8 +88,12 @@ class LearnerPreferences extends Component {
                       }
                     }
                     }>
+
+
+                    <input style={{marginBottom:"10px" }} className={`form-control radius ${showInput}`} type="text" ref="radius"  placeholder="Mile Radius" {...radius} />
                     <div className={`error-message  ${showInput}`}>{radiusZip.touched && radiusZip.error ? radiusZip.error : ''}</div>
                     <div className={`${showInput} input-group  ${radiusZip.touched && radiusZip.error ? 'has-danger' : ''}`}>
+
                     <input type="text" ref="zip" className="form-control" placeholder="Enter zip code" {...radiusZip} />
                     <span className="input-group-btn">
                         <button className={`btn btn-secondary input-group-btn-custom ${radiusZip.touched && radiusZip.error ? 'border-danger' : ''}`} type="submit"><i className="fa fa-map-marker" /></button>
@@ -110,7 +114,7 @@ const validate = formProps => {
   if(!formProps.radiusZip) {
     errors.radiusZip = 'Required';
   }
-  else if (!( /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(formProps.radiusZip))){
+    else if (!( /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(formProps.radiusZip))){
         errors.radiusZip = 'Invalid zipcode';
   }
 

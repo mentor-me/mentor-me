@@ -3,6 +3,7 @@ var _              = require('lodash');
 var Conversations  = require('../models/conversation');
 
 
+
 // get all conversations
 router.get('/conversations', function(req, res) {
   Conversations.fetchConversations(req, res);
@@ -33,3 +34,10 @@ router.post('/conversations', function(req, res) {
 })
 
 module.exports = router;
+
+// get an array of conversations and return those with unread emails
+
+router.put('/conversations/unread', function(req, res){
+    var convoArr = req.body.conversations;
+    Conversations.findAllUnreadMessages(req, res, convoArr);
+});
