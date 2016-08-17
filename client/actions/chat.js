@@ -50,11 +50,11 @@ export function accessConversation(data, username) {
             })
             .catch((err) => {
               console.log('Failed to fetch messages in ACCESS CONVO: ', err)
-            })
+          })
+        })
       })
-    })
-  };
-}
+    };
+  }
 
 export function fetchConversations(uid) {
   console.log(uid)

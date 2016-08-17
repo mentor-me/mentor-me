@@ -39,13 +39,13 @@ class LearnerDashboard extends Component {
   }
 
   render() {
-    let { loading } = this.props;
+    let { loading, auth } = this.props;
     return (
       <div className="spacer30">
         <div className="container-fluid learner">
           <div className="row">
             <div className="col-sm-3">
-              <LearnerPreferences id={ this.props.auth.id } />
+              { auth ? <LearnerPreferences id={ auth.id } /> : '' }
             </div>
             <div className="col-sm-9">
               <div className="row search">

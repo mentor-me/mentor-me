@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { getToken } from '../actions/video.js'
 import VideoWindow from './VideoWindow'
+import Loader from './Loader';
 
 export default class VideoChatPage extends Component {
 
@@ -50,6 +51,7 @@ export default class VideoChatPage extends Component {
 
     let user = JSON.parse(localStorage.getItem('user'));
     let show = this.props.params.uid == user.id ? 'hide' : 'show-prompt';
+    let inverseShow = this.props.params.uid == user.id ? 'show-prompt' : 'hide';
 
     return (
       <div className="row">
@@ -60,14 +62,13 @@ export default class VideoChatPage extends Component {
               <h2 className="header-tag">Video Chat</h2>
               <h1 className="sub-header">Start your <em>video chat</em> session now</h1>
               <div id="local-conversation" ref='localMedia'>
-
               </div>
               {/*<button className="btn-global" onClick={this.startChat.bind(this)}>Get Token</button>
               <button onClick={this.previewMyCamera.bind(this)} id="button-preview"><i className="fa fa-video-camera" aria-hidden="true"></i>Preview My Camera</button>*/}
             </div>
             <div className="clear"></div>
-
             <div id="invite-controls" className={show}>
+              <span className={inverseShow}> <Loader /> </span>
               {/*<p className="instructions">Invite another Video Client</p>*/}
               <input id="invite-to" type="text" ref="invitor" placeholder="Identity to send an invite to" readonly />
               <button id="button-invite">Click here to start now!</button>

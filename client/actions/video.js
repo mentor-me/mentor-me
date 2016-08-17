@@ -70,9 +70,16 @@ return function(dispatch) {
                 // Draw local video, if not already previewing
                 activeConversation = conversation;
 
+                // var videoLoader = document.getElementById('video-loader');
+                // videoLoader.classList.add('hide');
+
                 if (!previewMedia) {
                     ReactDOM.render(<VideoWindow conversation={conversation} />,
                     document.getElementById('local-conversation'));
+                    
+                    // var inviteControls = document.getElementById('invite-controls');
+                    // inviteControls.classList.add('hide');
+
                 }
 
               //  When a participant joins, draw their video on screen
