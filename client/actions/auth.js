@@ -5,7 +5,8 @@ import {
   AUTH_USER,
   UNAUTH_USER,
   CURRENT_MENTOR,
-  USER_CONVERSATIONS
+  USER_CONVERSATIONS,
+  CLOSE_CHAT_BOX
 } from './actionTypes';
 
 ////////////////////////////////////////////
@@ -77,9 +78,18 @@ import {
  }
 
  export function signoutUser() {
-   //remove token
+   //Remove token
    return dispatch => {
      dispatch({ type: UNAUTH_USER });
+     dispatch({ type: CLOSE_CHAT_BOX });
+     //Manually remove all reduxPersist on logout
+     localStorage.removeItem('reduxPersist:appointments');
+     localStorage.removeItem('reduxPersist:auth');
+     localStorage.removeItem('reduxPersist:chat');
+     localStorage.removeItem('reduxPersist:form');
+     localStorage.removeItem('reduxPersist:learner');
+     localStorage.removeItem('reduxPersist:mentor');
+     //Remove all other state
      localStorage.removeItem('token');
      localStorage.removeItem('user');
      browserHistory.push('/');
@@ -111,7 +121,6 @@ export function signupMentor(loginProps) {
      inPerson: loginProps.meetingFormat == "In Person" ? 'true' : 'false'
    }
  }
- console.log("This is data from sign up mentor",data)
 
   return dispatch => {
     axios.post('/api/mentor/signup', data)
@@ -124,7 +133,6 @@ export function signupMentor(loginProps) {
           payload: response.data
         })
         browserHistory.push(`/mentor/${data.username}`);
-        // socket.emit('join global', response.data.username)
       })
       .catch((err) => {
         // dispatch AUTH_ERROR
@@ -143,7 +151,6 @@ export function loginMentor(loginProps) {
         localStorage.setItem('token', "response.headers.auth");
         localStorage.setItem('user', JSON.stringify(response.data));
         console.log(response.data)
-       //  localStorage.setItem('token', response.headers.auth);
         dispatch({
           type: AUTH_USER,
           payload: response.data

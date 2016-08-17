@@ -1,6 +1,6 @@
 import {
   AUTH_USER,
-  UNAUTH_USER,
+  UNAUTH_USER
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = { currentUser: {}, authenticated: false, error: null };

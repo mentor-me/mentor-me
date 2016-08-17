@@ -1516,8 +1516,6 @@ div.loader i.fa {
 
 div.learner-profile .drawer {
   height: 68px;
-  -webkit-transition: height .5s;
-  transition: height .5s;
   overflow: hidden;
 }
 
@@ -1728,6 +1726,15 @@ div.chatBox div.text-window div.left div.msg {
 
 div.chatBox div.text-window div.right div.msg {
   background-color: lightsteelblue;
+}
+
+div.chatBox div.text-window span.faux-link {
+  color: black;
+  text-decoration: underline;
+}
+
+div.chatBox div.text-window span.faux-link:hover {
+  cursor: pointer;
 }
 
 div.chatBox div.text-window::-webkit-scrollbar {
