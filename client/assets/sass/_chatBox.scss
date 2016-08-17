@@ -94,6 +94,15 @@ div.chatBox {
       background-color: lightsteelblue;
     }
 
+    span.faux-link {
+      color: black;
+      text-decoration: underline;
+    }
+
+    span.faux-link:hover {
+      cursor: pointer;
+    }
+
   }
 
   div.text-window::-webkit-scrollbar {

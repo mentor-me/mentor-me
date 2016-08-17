@@ -1,6 +1,6 @@
 import {
   OPEN_CHAT_BOX,
-  CLOSE_CHAT_BOX,
+  CLOSE_CHAT_BOX
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = { open: false };
