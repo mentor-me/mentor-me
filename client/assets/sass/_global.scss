@@ -125,6 +125,7 @@ select.form-control.form-muti {
   max-height: 60px;
 }
 
+
 textarea.form-control,
 input.form-control,
 select.form-control {
@@ -173,3 +174,8 @@ button.input-group-btn-custom {
 //   background: $accent-darkred;
 //   color: $white;
 // }
+
+.form-control.radius {
+  width: 20;px;
+  margin-bottom: 10px;
+}
