@@ -26,15 +26,19 @@ loadChatMessages(convo) {
   // socket.emit('chat mounted', convo.id);
   // this.props.currentConversation( convo.id );
   this.props.accessConversation( convo, currentMentor.username );
-  this.props.openChatBox();
+  // this.props.openChatBox();
 }
 
 renderTopCard() {
-
     let { currentMentor, auth } = this.props;
-    let convo = { mentorId: currentMentor.id, name: `${auth.username}${currentMentor.username}`, private: true, username: auth.username, uid: auth.id }
-    /* If the person loggin in is a mentor (primary role 1) */
-    if (currentMentor) {
+    if (currentMentor && auth) {
+      let convo = {
+        mentorId: currentMentor.id,
+        name: `${auth.username}${currentMentor.username}`,
+        private: true,
+        username: auth.username,
+        uid: auth.id
+      };
       if (auth.secondary_role == 2) {
         return (
           <div className="card mentor-profile">
@@ -52,11 +56,6 @@ renderTopCard() {
               <button onClick={ () => this.loadChatMessages(convo) } className="btn-global pull-right">
                 Send Message <i className="fa fa-envelope-o"/>
               </button>
-              {/*<Link to={`/learner/${auth.username}/videochat`} >
-                <button className="btn-global pull-right">
-                  Start Video Chat <i className="fa fa-video-camera"/>
-                </button>
-              </Link>*/}
             </div>
           </div>
         );

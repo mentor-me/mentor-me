@@ -15,7 +15,7 @@ class Navbar extends Component {
   }
 
   renderNavClass(){
-    console.log("this is the auth ", this.props.auth.authenticated)
+    // console.log("this is the auth ", this.props.auth.authenticated)
     let divStyle = {backgroundColor:"transparent"}
     if(this.props.auth.authenticated){
       return;
@@ -30,19 +30,18 @@ class Navbar extends Component {
     let conversationWith = convo.name.replace(auth.currentUser.username, '')
     socket.emit('disconnect chat', chat.currentConversation.id);
     socket.emit('chat mounted', convo.id);
-    // this.props.clearMessages();
     this.props.currentConversation({ id: convo.id, recipient: conversationWith });
-    this.props.removeNotification( [convo.learnerId, convo.mentorId] );
+    this.props.removeNotification(convo.id);
     if (!chatBox.open) {
       this.props.openChatBox();
     }
     this.props.fetchMessages( convo.id );
   }
 
-  notifyCheck(convoIDs) {
+  notifyCheck(convoId) {
     let { chat } = this.props;
     let flag = false;
-    if (_.contains(chat.notifications, convoIDs[0]) || _.contains(chat.notifications, convoIDs[1])){
+    if (_.contains(chat.notifications, convoId)){
       flag = true
     }
     return flag;
@@ -58,7 +57,7 @@ class Navbar extends Component {
         //   notify = false;
         //   return <MenuItem eventKey={i} key={i} onClick={ () => this.loadChatMessages(convo) } > { conversationWith } { notify ? <i className="fa fa-circle" /> : '' } </MenuItem>
         // } else {
-          if (this.notifyCheck([convo.learnerId, convo.mentorId])) {
+          if (this.notifyCheck(convo.id)) {
             notify = true;
           } else {
             notify = false;
@@ -74,7 +73,7 @@ class Navbar extends Component {
     if (auth.authenticated && auth.currentUser) {
       // call fetch conversations!
       /* This is navbar for logged in LEARNER */
-      auth.currentUser.secondary_role =2;
+      // auth.currentUser.secondary_role = 2;
       if (auth.currentUser.secondary_role == "2") {
         return (
           <ul className="nav navbar-nav pull-xs-right">
@@ -95,7 +94,7 @@ class Navbar extends Component {
               </Link>
             </li>
             <li className="nav-item">
-              <a href="#" className="nav-link" onClick={() => signoutUser()}>
+              <a href="#" className="nav-link" onClick={() => signoutUser(auth.currentUser.id)}>
                 Log Out
               </a>
             </li>
@@ -125,7 +124,7 @@ class Navbar extends Component {
               </Link>
             </li>
             <li className="nav-item">
-              <a href="#" className="nav-link" onClick={() => signoutUser()}>
+              <a href="#" className="nav-link" onClick={() => signoutUser(auth.currentUser.id)}>
                 Log Out
               </a>
             </li>

@@ -13,12 +13,15 @@ import {
   OPEN_CHAT_BOX,
   CLOSE_CHAT_BOX,
   ADD_NOTIFICATION,
-  REMOVE_NOTIFICATION
+  REMOVE_NOTIFICATION,
 } from './actionTypes';
 
 export function accessConversation(data, username) {
   const endpoint = `/api/conversations/${data.uid}`;
   return dispatch => {
+    dispatch({
+      type: OPEN_CHAT_BOX
+    })
     axios.post(endpoint, data)
       .then(response => {
         /* If enter here, chat does not yet exist */
@@ -50,11 +53,11 @@ export function accessConversation(data, username) {
             })
             .catch((err) => {
               console.log('Failed to fetch messages in ACCESS CONVO: ', err)
-            })
+          })
+        })
       })
-    })
-  };
-}
+    };
+  }
 
 export function fetchConversations(uid) {
   console.log(uid)
@@ -139,10 +142,9 @@ export function closeChatBox() {
 }
 
 export function addNotification(data) {
-  console.log('ADD NOTIFICATION: ', data)
   return {
     type: ADD_NOTIFICATION,
-    payload: data.from
+    payload: Array.isArray(data) ? data : [data]
   }
 }
 

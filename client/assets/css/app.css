@@ -179,6 +179,11 @@ button.input-group-btn-custom {
   border-radius: 0;
 }
 
+.form-control.radius {
+  width: 20px;
+  margin-bottom: 10px;
+}
+
 .navbar #logo {
   width: 150px;
 }
@@ -518,20 +523,11 @@ div.mentor-card {
 
 div.mentor-card span.mentor-card-name {
   font-size: 1.2em;
-  margin-right: 15px;
+  margin-right: 5px;
 }
 
-div.mentor-card span.online-status {
-  font-style: italic;
-}
-
-div.mentor-card span.online-status > span {
-  color: #b3b3b3;
-}
-
-div.mentor-card i.fa {
-  font-size: 1.2em;
-  margin-right: 3px;
+div.mentor-card span.online-status i.fa-circle {
+  color: lightgreen;
 }
 
 div.mentor-profile div.picture-title {
@@ -1526,8 +1522,6 @@ div.loader i.fa {
 
 div.learner-profile .drawer {
   height: 68px;
-  -webkit-transition: height .5s;
-  transition: height .5s;
   overflow: hidden;
 }
 
@@ -1738,6 +1732,15 @@ div.chatBox div.text-window div.left div.msg {
 
 div.chatBox div.text-window div.right div.msg {
   background-color: lightsteelblue;
+}
+
+div.chatBox div.text-window span.faux-link {
+  color: black;
+  text-decoration: underline;
+}
+
+div.chatBox div.text-window span.faux-link:hover {
+  cursor: pointer;
 }
 
 div.chatBox div.text-window::-webkit-scrollbar {

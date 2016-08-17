@@ -1,22 +1,23 @@
 div.mentor-card {
+
   box-sizing: border-box;
-overflow-wrap: break-word;
+  overflow-wrap: break-word;
+
   span.mentor-card-name {
     font-size: 1.2em;
-    margin-right: 15px;
+    margin-right: 5px;
   }
 
   span.online-status {
-    font-style: italic;
-  }
 
-  span.online-status > span {
-    color: #b3b3b3;
-  }
+    i.fa-circle {
+      color: lightgreen;
+    }
 
-  i.fa {
-    font-size: 1.2em;
-    margin-right: 3px;
+    // i.fa-circle-o {
+    //   color: $bootstrap-gray;
+    // }
+
   }
 
 }
