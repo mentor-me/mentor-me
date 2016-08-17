@@ -68,3 +68,30 @@ exports.findOrCreateConvos = function(req, res, convInfo, convName) {
     });
 
 }
+
+exports.findAllUnreadMessages = function(req, res, convoArr) {
+
+      async.filter(convoArr, function(convoId, callback) {
+        db.Message.findAll({
+            where: {
+              $and: [
+                {conversationId: convoId},
+                {read: false}
+              ]
+
+            }
+        })
+        .then(function(messages){
+          console.log("this is the messages existance ", messages)
+          var bool = messages.length > 0;
+              callback(null, bool)
+        })
+
+
+    }, function(err, results) {
+      console.log("this is the results array ",results)
+      res.status(200).send(results)
+        // results now equals an array of the existing files
+    })
+
+}

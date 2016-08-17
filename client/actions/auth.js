@@ -37,6 +37,7 @@ import {
  }
 
  export function signupUser(loginProps) {
+     console.log("this is in signup Learner", loginProps.learnerStyle[0])
 
   let data = {
     username: loginProps.username,
@@ -49,10 +50,10 @@ import {
     secondary_role: "2",
     lastLogIn: new Date(),
     preferences: {
-      visual: loginProps.learnerStyle == "Visual" ? 'true' : 'false',
-      academic: loginProps.learnerStyle == "Academic" ? 'true' : 'false',
-      remote: loginProps.meetingFormat == "Remote" ? 'true' : 'false',
-      inPerson: loginProps.meetingFormat == "In Person" ? 'true' : 'false'
+      visual: loginProps.learnerStyle[0] == "Visual" ? 'true' : 'false',
+      academic: loginProps.learnerStyle[1] == "Academic" ? 'true' : 'false',
+      remote: loginProps.meetingFormat[0] == "Remote" ? 'true' : 'false',
+      inPerson: loginProps.meetingFormat[1] == "In Person" ? 'true' : 'false'
     }
   }
 
@@ -91,7 +92,7 @@ import {
 //////////////////////////////////////////
 
 export function signupMentor(loginProps) {
-  console.log("this is in singup mentor")
+  console.log("this is in singup mentor", loginProps.learnerStyle[0])
  let data = {
    username: loginProps.username,
    firstname: loginProps.firstname,
@@ -105,10 +106,10 @@ export function signupMentor(loginProps) {
    primary_role: "1",
    lastLogIn: new Date(),
    qualities: {
-     visual: loginProps.learnerStyle == "Visual" ? 'true' : 'false',
-     academic: loginProps.learnerStyle == "Academic" ? 'true' : 'false',
-     remote: loginProps.meetingFormat == "Remote" ? 'true' : 'false',
-     inPerson: loginProps.meetingFormat == "In Person" ? 'true' : 'false'
+     visual: loginProps.learnerStyle[0] == "Visual" ? 'true' : 'false',
+     academic: loginProps.learnerStyle[1] == "Academic" ? 'true' : 'false',
+     remote: loginProps.meetingFormat[0] == "Remote" ? 'true' : 'false',
+     inPerson: loginProps.meetingFormat[1] == "In Person" ? 'true' : 'false'
    }
  }
  console.log("This is data from sign up mentor",data)
