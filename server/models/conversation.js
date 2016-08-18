@@ -95,3 +95,25 @@ exports.findAllUnreadMessages = function(req, res, convoArr) {
     })
 
 }
+
+exports.markMessagesAsRead = function(req, res, convoId) {
+  db.Message.update({read: true},{
+      where: {
+        $and: [
+          {conversationId: convoId},
+          {read: false}
+        ]
+
+      }
+  })
+  .then(function(results){
+    console.log("this is the results from the update",results[0]);
+    var recordNums = results[0];
+    res.status(200).send("Number of messages updated to read " + recordNums)
+  })
+  .catch(function(err){
+    console.error('err', err.message);
+    res.status(500).send(err.message);
+  });
+
+}
