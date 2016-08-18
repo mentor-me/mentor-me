@@ -26,7 +26,7 @@ loadChatMessages(convo) {
   // socket.emit('chat mounted', convo.id);
   // this.props.currentConversation( convo.id );
   this.props.accessConversation( convo, currentMentor.username );
-  this.props.openChatBox();
+  // this.props.openChatBox();
 }
 
 renderTopCard() {

@@ -31,7 +31,7 @@ class LearnerPreferences extends Component {
     let inputClasses = `${showInput} input-group` ;
 
     return (
-      <div className="card">
+      <div className="card learner-preferences">
         <div className="card-header">Preferences</div>
           <ul className="list-group list-group-flush">
             <div>

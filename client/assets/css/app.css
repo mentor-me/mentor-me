@@ -1,6 +1,6 @@
 @charset "UTF-8";
 html, body {
-  background-color: #fbfbfb;
+  background-color: #FAFAFA;
   overflow-y: scroll;
 }
 
@@ -120,6 +120,14 @@ a:hover {
   font-style: italic;
 }
 
+.learner-preferences input.form-control {
+  border: 1px solid #eee;
+  border-radius: 0;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
 .error-message {
   color: #d9534f;
 }
@@ -133,24 +141,9 @@ select.form-control.form-muti {
   max-height: 60px;
 }
 
-textarea.form-control,
-input.form-control,
-select.form-control {
-  border-radius: 0;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-}
-
 .sub-form {
   color: #7e7e7e;
   margin-left: 5px;
-}
-
-textarea.form-control:focus,
-input.form-control:focus,
-select.form-control:focus {
-  border: 1px solid #55595c;
 }
 
 .redirect {
@@ -177,6 +170,56 @@ span.pills:nth-child(1) {
 
 button.input-group-btn-custom {
   border-radius: 0;
+}
+
+.form-control.radius {
+  width: 20px;
+  margin-bottom: 10px;
+}
+
+.card {
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), 0 0px 0px 1px rgba(0, 0, 0, 0.02);
+}
+
+textarea.form-control,
+input.form-control,
+select.form-control {
+  border: none;
+  border-radius: 0px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), 0 0px 0px 1px rgba(0, 0, 0, 0.02);
+  -webkit-transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+textarea.form-control:hover,
+input.form-control:hover,
+select.form-control:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15), 0 0px 0px 1px rgba(0, 0, 0, 0.03);
+}
+
+.form-control {
+  border: none;
+}
+
+.card-header {
+  border: none;
+  border-radius: none;
+  background-color: #f2f2f2;
+}
+
+.card-header:first-child {
+  border-radius: none;
+}
+
+.learner-preferences input.form-control,
+.learner-preferences .btn {
+  border: 1px solid #eee;
+  box-shadow: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
 }
 
 .navbar #logo {
@@ -304,7 +347,7 @@ button.input-group-btn-custom {
 }
 
 .navbar .dropdown-menu {
-  padding: 8px;
+  padding: 0px;
   height: 250px;
   width: 200px;
   margin-top: 5px;
@@ -314,7 +357,7 @@ button.input-group-btn-custom {
 }
 
 .navbar .dropdown-menu li:first-child {
-  padding: 3px 4px;
+  padding: 5px 8px;
   color: black;
   font-size: 12px;
 }
@@ -337,12 +380,12 @@ button.input-group-btn-custom {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  padding: 6px 4px;
+  padding: 6px 8px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 .navbar .dropdown-menu li:hover {
-  background-color: rgba(0, 0, 0, 0.125);
+  background-color: #eee;
 }
 
 .navbar .dropdown-menu i.fa-comment-o {
@@ -518,20 +561,60 @@ div.mentor-card {
 
 div.mentor-card span.mentor-card-name {
   font-size: 1.2em;
-  margin-right: 15px;
+  margin-right: 5px;
 }
 
-div.mentor-card span.online-status {
-  font-style: italic;
+div.mentor-card span.online-status i.fa-circle {
+  color: lightgreen;
+  -webkit-animation: pulse 1s infinite;
+          animation: pulse 1s infinite;
 }
 
-div.mentor-card span.online-status > span {
-  color: #b3b3b3;
-}
-
-div.mentor-card i.fa {
-  font-size: 1.2em;
-  margin-right: 3px;
+@keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  10% {
+    -webkit-transform: scale(1.01);
+            transform: scale(1.01);
+  }
+  20% {
+    -webkit-transform: scale(1.02);
+            transform: scale(1.02);
+  }
+  30% {
+    -webkit-transform: scale(1.03);
+            transform: scale(1.03);
+  }
+  40% {
+    -webkit-transform: scale(1.04);
+            transform: scale(1.04);
+  }
+  50% {
+    -webkit-transform: scale(1.06);
+            transform: scale(1.06);
+  }
+  60% {
+    -webkit-transform: scale(1.06);
+            transform: scale(1.06);
+  }
+  70% {
+    -webkit-transform: scale(1.04);
+            transform: scale(1.04);
+  }
+  80% {
+    -webkit-transform: scale(1.03);
+            transform: scale(1.03);
+  }
+  90% {
+    -webkit-transform: scale(1.02);
+            transform: scale(1.02);
+  }
+  100% {
+    -webkit-transform: scale(1.01);
+            transform: scale(1.01);
+  }
 }
 
 div.mentor-profile div.picture-title {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-import TimeAgo from 'react-timeago';
+// import TimeAgo from 'react-timeago';
 import StarRatingComponent from 'react-star-rating-component';
 
 import MentorProfile from './MentorProfile';
@@ -34,9 +34,7 @@ class MentorCard extends Component {
                 {mentor.firstname} {mentor.lastname}
               </span>
               <span className="online-status">
-                <span>
-                  <TimeAgo date={ mentor.lastLogIn } />
-                </span>
+                { mentor.availability ? <i className="fa fa-circle" /> : '' }
               </span>
               <span className="mentor-card-rating pull-right">
                 <StarRatingComponent

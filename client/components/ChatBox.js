@@ -27,7 +27,7 @@ class ChatBox extends Component {
     socket.emit('chat mounted', currentConversation.id);
     /* Register socket ID */
     socket.on('receive socket', socketID => {
-      console.log('RECIEVING SOCKET ID: ', socketID)
+      // console.log('RECIEVING SOCKET ID: ', socketID)
       this.props.receiveSocket(socketID)
     });
 
@@ -38,7 +38,7 @@ class ChatBox extends Component {
 
     socket.on('notification', data => {
       console.log('RECIEVING NOTIFICATION FROM SOCKET: ', data)
-      this.props.addNotification(data)
+      this.props.addNotification(data.id)
     });
 
   }
