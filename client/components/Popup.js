@@ -32,7 +32,6 @@ export default class Popup extends Component {
       modalIsOpen: false,
       event: this.props.event
     };
-
   }
 
   componentWillReceiveProps(nextProps){
@@ -46,7 +45,7 @@ export default class Popup extends Component {
   handleFormSubmit(formProps) {
     let user = JSON.parse(localStorage.getItem('user'));
     let userId = user.id
-    //let userId = this.props.auth.currentUser.id
+
     let mentorId = this.props.mentor.id
 
     this.props.createAppointment(formProps, userId, mentorId)

@@ -3,7 +3,8 @@ import {
   SELECTED_APPOINTMENT,
   CREATE_APPOINTMENT,
   DELETE_APPOINTMENT,
-  FETCH_APPOINTMENTS
+  FETCH_APPOINTMENTS,
+  UPDATE_APPOINTMENT
 
 } from '../actions/actionTypes';
 
@@ -22,7 +23,25 @@ export default function (state = INITIAL_STATE, action){
         ...state.appointments.concat(action.payload)]
       }
       case FETCH_APPOINTMENTS:
-        return { ...state, appointments: action.payload };
+        return { ...state, appointments: [
+          ...action.payload.map(appt => {
+              let obj = appt;
+              obj.startTime = new Date(appt.startTime)
+              return obj;
+            })
+        ] };
+
+      case UPDATE_APPOINTMENT:
+          return { ...state, appointments: [
+                ...state.appointments.map(appt => {
+                      if (appt.id === action.payload.id){
+                        return action.payload
+                      }
+                      return appt;
+                  }
+                )
+              ]};
+
       case DELETE_APPOINTMENT:
         return { ...state, appointments: [
               ...state.appointments.filter(

@@ -19,8 +19,8 @@ var cookieParser  = require('cookie-parser');
 var session       = require('express-session');
 var config        = require('./config/config');
 // sockets
-
-var server        = https.createServer(app);
+var server        = http.createServer(app);
+// var server        = https.createServer(app);
 var socketIo      = require('socket.io')
 
 // Utilities
@@ -49,7 +49,7 @@ app.get('*', function (request, response){
 var io = new socketIo(server)
 require('./sockets/socketEvents')(io);
 
-app.set('port', 443);
+app.set('port', 3000);
 server.listen(app.get('port'), function() {
   // db.ensureSchema();
   console.log(moment().format('h:mm:ss a') + ': Express Server listening on port', app.get('port'));
