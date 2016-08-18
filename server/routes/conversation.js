@@ -41,3 +41,8 @@ router.put('/conversations/unread', function(req, res){
     var convoArr = req.body.conversations;
     Conversations.findAllUnreadMessages(req, res, convoArr);
 });
+
+router.put('/conversations/:convoId', function(req, res){
+    var convoId = req.params.convoId;
+    Conversations.markMessagesAsRead(req, res, convoId);
+});
