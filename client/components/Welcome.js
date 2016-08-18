@@ -8,7 +8,7 @@ export default class Welcome extends Component {
         <div id="banner">
          <div className="banner_content">
            <p className="animated fadeInUp">Find the Perfect Mentor.</p>
-           <Link to={"/signup"}><button className="btn-global" type="submit"> Sign Up </button></Link>
+           <Link to={"/signup"}><button className="btn-global" > Sign Up </button></Link>
          </div>
         </div>
         <div className="container-fluid welcome">
@@ -46,7 +46,7 @@ export default class Welcome extends Component {
         </div>
         <div id="become_mentor" >
           <h1>Give back by becoming a mentor. Sign up today and help someone change thier life</h1>
-          <Link to={"/become"}><button className="btn-accent" type="submit"> Sign Up </button></Link>
+          <Link to={"/become"}><button className="btn-accent" > Sign Up </button></Link>
         </div>
         <footer>
             <p>

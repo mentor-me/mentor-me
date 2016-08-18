@@ -5,8 +5,20 @@ import {
   AUTH_USER,
   UNAUTH_USER,
   CURRENT_MENTOR,
-  USER_CONVERSATIONS
+  USER_CONVERSATIONS,
+  AUTH_ERROR
 } from './actionTypes';
+
+
+
+
+export function authError(error) {
+  console.log("I'm in authError")
+  return {
+    type: AUTH_ERROR,
+    payload: error
+  };
+}
 
 ////////////////////////////////////////////
 ////////// LEARNER RELATED ACTIONS ////////
@@ -29,9 +41,10 @@ import {
          browserHistory.push(`/learner/${response.data.username}`);
          getInitialConversations(response.data.id, dispatch);
        })
-       .catch((err) => {
+       .catch(() => {
          // dispatch AUTH_ERROR
-         console.log("Login bad", err);
+        //  console.log("this is the response error",response)
+         dispatch(authError("The email and Password do not match"));
        });
    }
  }
@@ -70,9 +83,9 @@ import {
          })
          browserHistory.push(`/learner/${data.username}`);
        })
-       .catch((err) => {
+       .catch(() => {
          // dispatch AUTH_ERROR
-         console.log("Sign up bad", err);
+         dispatch(authError("Email and/or Username currently in Use "));
        });
    }
  }
@@ -127,9 +140,9 @@ export function signupMentor(loginProps) {
         browserHistory.push(`/mentor/${data.username}`);
         // socket.emit('join global', response.data.username)
       })
-      .catch((err) => {
+      .catch(() => {
         // dispatch AUTH_ERROR
-        console.log("Mentor sign up bad", err);
+        dispatch(authError("Email and/or Username currently in Use "));
       });
   }
 }
@@ -153,9 +166,9 @@ export function loginMentor(loginProps) {
         getInitialConversations(response.data.id, dispatch);
         // socket.emit('join global', response.data.username)
       })
-      .catch((err) => {
+      .catch(() => {
         // dispatch AUTH_ERROR
-        console.log("Login bad", err);
+        dispatch(authError("The email and Password do not match"));
       });
   }
 }
