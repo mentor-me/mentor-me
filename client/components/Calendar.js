@@ -26,12 +26,16 @@ export default class Calendar extends Component {
 
   }
 
+
   componentWillMount() {
     // console.log(this.props.auth.currentUser.id)
     //TODO: change this back to currentUser ID once Localstorage solution in place
-    if(this.props.mentor.id){
+    let user = JSON.parse(localStorage.getItem('user'));
+    let userId = user.id
+    console.log(userId, "user id calendar")
+    if(userId){
 
-      this.props.fetchAppointments(this.props.mentor.id);
+      this.props.fetchAppointments(userId);
     }
   }
 
@@ -66,7 +70,7 @@ export default class Calendar extends Component {
 
     })
 
-    this.props.fetchAppointments(this.props.auth.currentUser.id);
+    // this.props.fetchAppointments(this.props.auth.currentUser.id);
     // setTimeout(() => {
     //   console.log(this.state.modalIsOpen)
     // }, 300)
@@ -148,7 +152,7 @@ export default class Calendar extends Component {
 
 function mapStateToProps(state) {
   return {
-    appointments: state.learner.appointments,
+    appointments: state.appointments.appointments,
     auth: state.auth,
     mentor: state.learner.currentMentor,
   };

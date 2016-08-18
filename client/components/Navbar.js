@@ -71,9 +71,11 @@ class Navbar extends Component {
 
   renderNavLinks() {
     const { auth, signoutUser, chat } = this.props;
-    if (auth.authenticated) {
+
+    if (auth.authenticated && auth.currentUser) {
       // call fetch conversations!
       /* This is navbar for logged in LEARNER */
+      // auth.currentUser.secondary_role = 2
       if (auth.currentUser.secondary_role == "2") {
         return (
           <ul className="nav navbar-nav pull-xs-right">

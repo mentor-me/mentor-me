@@ -44,7 +44,9 @@ export default class Popup extends Component {
   }
 
   handleFormSubmit(formProps) {
-    let userId = this.props.auth.currentUser.id
+    let user = JSON.parse(localStorage.getItem('user'));
+    let userId = user.id
+    //let userId = this.props.auth.currentUser.id
     let mentorId = this.props.mentor.id
 
     this.props.createAppointment(formProps, userId, mentorId)
@@ -54,7 +56,7 @@ export default class Popup extends Component {
   }
 
 render(){
-  
+
   // if(!this.props.isOpen){
   //     return <noscript/>
   //   }

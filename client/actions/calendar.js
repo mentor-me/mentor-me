@@ -42,30 +42,32 @@ export function selectedAppointment(event){
     }
 }
 
-
 export function deleteAppointment(userId, mentorId, appId) {
-     console.log("inside delete action")
-  // const endpoint = `/api/learner/users/${userId}/appointment/${appId}`;
-  const endpoint = `/api/learner/users/22/appointment/${appId}`;
+  console.log("inside delete action", appId)
+
+  const endpoint = `/api/learner/users/${userId}/appointment/${appId}`;
 
   return function (dispatch) {
 
+        dispatch({
+          type: DELETE_APPOINTMENT,
+          payload: appId
+       });
+
     axios.delete(endpoint)
       .then(response => {
-        dispatch({ type: DELETE_APPOINTMENT });
          console.log("appointment deleted!")
       })
       .catch(() => {
 
-        console.log('in catch err ');
+         console.log('in catch err ');
       });
   };
 }
 
 export function updateAppointment(formProps, userId, mentorId, appId) {
 
-  // const endpoint = `/api/learner/users/${userId}/appointment/${appId}`;
-  const endpoint = `/api/learner/users/22/appointment/${appId}`;
+  const endpoint = `/api/learner/users/${userId}/appointment/${appId}`;
 
   let appointment = {
       notes          : formProps.notes,
@@ -90,14 +92,9 @@ export function updateAppointment(formProps, userId, mentorId, appId) {
   };
 }
 
-
-export function createAppointment(formProps, mentorId, userId) {
-
-  // browserHistory.push(`/learner/${learnerUsername}/mentor/${mentorUsername}/profile`);
+export function createAppointment(formProps, userId, mentorId) {
 
   const endpoint = `/api/learner/users/${userId}/appointment`;
-
-  console.log("formProps.title", formProps.title)
 
   let appointment = {
       notes          : formProps.notes,
@@ -108,14 +105,18 @@ export function createAppointment(formProps, mentorId, userId) {
       subject        : formProps.title,
   }
 
-
-  // console.log('inside action post appt', appointment)
-
   return function (dispatch) {
 
     axios.post(endpoint, appointment)
       .then(response => {
-        dispatch({ type: CREATE_APPOINTMENT });
+        let data = response.data
+        console.log("CREATE APPT response.data", response.data)
+
+        dispatch({
+          type: CREATE_APPOINTMENT,
+          payload: Array.isArray(data) ? data : [data]
+            });
+
          console.log("appointment created!")
       })
       .catch(() => {
@@ -129,9 +130,7 @@ export function fetchAppointments(userId) {
 
 console.log("inside appointment fetch", userId)
 
-  // const endpoint = `/api/learner/users/${userId}/appointments`;
-  const endpoint = `/api/learner/users/22/appointments`;
-
+  const endpoint = `/api/learner/users/${userId}/appointments`;
 
   return dispatch => {
     axios.get(endpoint)
@@ -139,7 +138,7 @@ console.log("inside appointment fetch", userId)
           console.log("appointments fetched!", response.data)
             dispatch({
               type: FETCH_APPOINTMENTS,
-              payload: response.data,
+              payload: response.data
 
             });
       });
