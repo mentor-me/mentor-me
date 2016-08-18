@@ -10,13 +10,23 @@ overflow-wrap: break-word;
     font-style: italic;
   }
 
-  span.online-status > span {
-    color: #b3b3b3;
+    i.fa-circle {
+      color: lightgreen;
+      animation: pulse 1s infinite;
+    }
+
   }
 
-  i.fa {
-    font-size: 1.2em;
-    margin-right: 3px;
+  @keyframes pulse {
+    0% { transform: scale(1.00); }
+    10% { transform: scale(1.01); }
+    20% { transform: scale(1.02); }
+    30% { transform: scale(1.03); }
+    40% { transform: scale(1.04); }
+    50% { transform: scale(1.06); }
+    60% { transform: scale(1.06); }
+    70% { transform: scale(1.04); }
+    80% { transform: scale(1.03); }
+    90% { transform: scale(1.02); }
+    100% { transform: scale(1.01); }
   }
-
-}
