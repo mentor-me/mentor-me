@@ -14,9 +14,14 @@ export default class Welcome extends Component {
             <h2 className="header-tag">give back</h2>
             <h1 className="sub-header animated fadeInUp">And become a mentor <em>today</em>.</h1>
             <p className="become-p" > Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-            <Link to={"become/mentor"}>
-              <button className="btn-global" type="submit"> Start Mentoring </button>
-            </Link>
+            <div className="btn-container">
+              <Link to={"become/mentor"}>
+                <button className="btn-global" > Start Mentoring </button>
+              </Link>
+              <Link to={"become/login"}>
+                <button className="btn-global" > Login </button>
+              </Link>
+            </div>
             </div>
             </div>
           </div>
@@ -63,7 +68,7 @@ export default class Welcome extends Component {
       <div id="become_mentor_action" >
         <h1>Signing up is easy just fill out a form with your information and answer a few simple questions.</h1>
       <Link to={"become/mentor"}>
-        <button className="btn-accent" type="submit"> Sign Up </button>
+        <button className="btn-accent" > Sign Up </button>
       </Link>
       </div>
 

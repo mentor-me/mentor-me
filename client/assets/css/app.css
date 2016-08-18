@@ -157,6 +157,10 @@ select.form-control:focus {
   padding-top: 10px;
 }
 
+.redirect p {
+  margin-bottom: 2px;
+}
+
 .redirect a:hover {
   color: #d94744;
 }
@@ -1342,6 +1346,8 @@ button.rbc-input::-moz-focus-inner {
 
 #become button.btn-global {
   background: transparent;
+  float: left;
+  margin-right: 10px;
 }
 
 #become button.btn-global:hover {
