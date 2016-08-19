@@ -125,7 +125,6 @@ exports.learnerFetchQualities = function(req, res, userId){
           .catch(function (err) {
                   console.error("Mentor Quality", err.message);
                   res.status(500).send(err.message);
-
           })
         })
         .catch(function (err) {

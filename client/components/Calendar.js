@@ -12,8 +12,6 @@ BigCalendar.setLocalizer(
 );
 
 export default class Calendar extends Component {
-
-
   constructor(props) {
     super(props);
 
@@ -21,23 +19,42 @@ export default class Calendar extends Component {
         events: [],
         modalIsOpen: false,
         editModalIsOpen: false
-
       };
-
   }
 
-  componentWillMount() {
-    // console.log(this.props.auth.currentUser.id)
-    //TODO: change this back to currentUser ID once Localstorage solution in place
-    if(this.props.mentor.id){
+componentWillReceiveProps(nextProps){
+  console.log('nextProps', nextProps)
+}
 
-      this.props.fetchAppointments(this.props.mentor.id);
+  // shouldComponentUpdate (nextProps, nextState) {
+  //
+  //   console.log('nextProps', nextProps)
+  //
+  //   // return this.props.appt !== nextProps.appt;
+  //
+  // }
+
+  componentWillMount() {
+
+    const { auth } = this.props;
+
+    let user = JSON.parse(localStorage.getItem('user'));
+    let userId = user.id
+    console.log(userId, "user id calendar")
+
+    if (auth.authenticated && auth.currentUser) {
+      if (auth.currentUser.secondary_role == "2") {
+            console.log( "*******auth.currentUser.secondary_role = 2")
+        this.props.fetchAppointments(userId);
+    }  else if (auth.currentUser.secondary_role == "1"){
+        this.props.fetchMentorAppointments(userId);
+    }
     }
   }
 
   openEdit(event) {
 
-        console.log("openEdit console log event = ", event);
+    console.log("openEdit console log event = ", event);
 
     this.props.selectedAppointment(event)
 
@@ -55,7 +72,6 @@ export default class Calendar extends Component {
     this.setState({
       editModalIsOpen: false,
       modalIsOpen: true
-
     });
   }
 
@@ -63,19 +79,16 @@ export default class Calendar extends Component {
      this.setState({
       modalIsOpen: false,
       editModalIsOpen: false,
-
     })
-
-    this.props.fetchAppointments(this.props.auth.currentUser.id);
-    // setTimeout(() => {
-    //   console.log(this.state.modalIsOpen)
-    // }, 300)
   }
-
 
   appointmentFormat() {
 
+    // if (this.props.appointments){
+
     return this.props.appointments.map((appointment, i) => {
+
+    console.log("this.props.appointments.map", appointment);
 
         let obj =   {
             key: i,
@@ -89,6 +102,7 @@ export default class Calendar extends Component {
           }
           return obj;
     });
+    // }
   }
 
   eventStyleGetter (event) {
@@ -105,6 +119,7 @@ export default class Calendar extends Component {
         border: '0px',
         display: 'block'
     };
+
     return {
         style: style
     };
@@ -130,17 +145,18 @@ export default class Calendar extends Component {
 
           )}
         />
+
       <AppointmentEdit
               isOpen={this.state.editModalIsOpen}
               close={this.close.bind(this)}
-              event={this.state.current}
+
 
                   />
       <Popup
             isOpen={this.state.modalIsOpen}
             close={this.close.bind(this)}
-            event={this.state.current}
-                />
+
+                  />
       </div>
     );
   }
@@ -148,7 +164,8 @@ export default class Calendar extends Component {
 
 function mapStateToProps(state) {
   return {
-    appointments: state.learner.appointments,
+    appointments: state.appointments.appointments,
+    appt: state.appointments.event,
     auth: state.auth,
     mentor: state.learner.currentMentor,
   };
