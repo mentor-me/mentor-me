@@ -1893,11 +1893,6 @@ button.input-group-btn-custom {
   border-radius: 0;
 }
 
-.form-control.radius {
-  width: 20px;
-  margin-bottom: 10px;
-}
-
 .card {
   border: none;
   border-radius: 2px;
