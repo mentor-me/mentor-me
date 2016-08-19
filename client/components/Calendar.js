@@ -22,6 +22,18 @@ export default class Calendar extends Component {
       };
   }
 
+componentWillReceiveProps(nextProps){
+  console.log('nextProps', nextProps)
+}
+
+  // shouldComponentUpdate (nextProps, nextState) {
+  //
+  //   console.log('nextProps', nextProps)
+  //
+  //   // return this.props.appt !== nextProps.appt;
+  //
+  // }
+
   componentWillMount() {
 
     const { auth } = this.props;
@@ -153,6 +165,7 @@ export default class Calendar extends Component {
 function mapStateToProps(state) {
   return {
     appointments: state.appointments.appointments,
+    appt: state.appointments.event,
     auth: state.auth,
     mentor: state.learner.currentMentor,
   };

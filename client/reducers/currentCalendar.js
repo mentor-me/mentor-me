@@ -22,6 +22,7 @@ export default function (state = INITIAL_STATE, action){
         return { ...state, appointments: [
         ...state.appointments.concat(action.payload)]
       }
+
       case FETCH_APPOINTMENTS:
         return { ...state, appointments: [
           ...action.payload.map(appt => {

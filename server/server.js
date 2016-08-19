@@ -23,6 +23,39 @@ var server        = http.createServer(app);
 // var server        = https.createServer(app);
 var socketIo      = require('socket.io')
 
+//Sendgrid
+
+// var username = 'chadd1783';
+// var password = 'Password123';
+//
+// var sendgrid      = require('sendgrid')(username, password)
+var router    = require("express").Router();
+
+var sendgrid = require('sendgrid')("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");
+console.log(sendgrid)
+
+var email = new sendgrid.Email();
+
+email.addTo("chadd.d.bennett@gmail.com");
+email.setFrom("chadd1783@gmail.com");
+email.setSubject("Sending with SendGrid is Fun");
+email.setHtml("and easy to do anywhere, even with Node.js");
+
+sendgrid.send(email);
+
+// router.get('/', function(req, res){
+// 	sendgrid.send({
+// 		to: 'chadd.d.bennett@gmail.com',
+// 		from: 'chadd1783@gmail.com',
+// 		subject: 'hello world',
+// 		text: 'dafsdasaf'
+// 	}, function(err, json){
+// 		if(err){ return res.send('aaaahhhhhh!');}
+// 		res.send('wooo hooo!')
+// 	})
+// })
+
+
 // Utilities
 require('./config/passport')(passport);
 app.use(cookieParser());

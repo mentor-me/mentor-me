@@ -103,12 +103,34 @@ export function updateAppointment(formProps, userId, mentorId, appId) {
       appId          : appId
   }
 
-  return function (dispatch) {
-      dispatch({
-        type: UPDATE_APPOINTMENT,
-        payload: appointment
 
-       });
+  let appointmentForUpdate = {
+      notes          : formProps.notes,
+      startTime      : formProps.date + " " + formProps.startTime,
+      endTime        : formProps.date + " " + formProps.endTime,
+      location       : formProps.location,
+      mentorId       : mentorId,
+      subject        : formProps.title,
+      id             : appId,
+      learnerId      : userId
+  }
+  return function (dispatch) {
+
+
+    dispatch({
+      type: DELETE_APPOINTMENT,
+      payload: appId
+   });
+
+   dispatch({
+     type: CREATE_APPOINTMENT,
+     payload: Array.isArray(appointmentForUpdate) ? appointmentForUpdate : [appointmentForUpdate]
+   });
+      // dispatch({
+      //   type: UPDATE_APPOINTMENT,
+      //   payload: appointment
+      //
+      //  });
     axios.put(endpoint, appointment)
       .then(response => {
 
