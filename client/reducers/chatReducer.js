@@ -15,7 +15,7 @@ import {
 
 const INITIAL_STATE = {
   conversations: [],
-  messages: [ {conversationId: -1} ],
+  messages: [ {conversationId: 0} ],
   currentConversation: {id: null, recipient: null },
   user: null,
   loading: false,
@@ -33,7 +33,7 @@ export default (state = INITIAL_STATE, action) => {
         messages: [ ...state.messages, action.payload ]
       };
     case CLEAR_MESSAGES:
-      return { ...state, messages: [] };
+      return { ...state, messages: [ {conversationId: 0} ] };
     case CURRENT_CONVERSATION:
       return { ...state, currentConversation: action.payload };
     case RECIEVE_SOCKET:

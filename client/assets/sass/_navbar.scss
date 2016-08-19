@@ -71,6 +71,20 @@
     border-radius: 0;
     box-shadow: 0 3px 10px rgba(0,0,0,0.4);
 
+    li {
+      padding: 6px 8px;
+      border-bottom: 1px solid $bootstrap-gray;
+    }
+
+    li a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    li div {
+      display: inline-block;
+    }
 
     li:first-child {
       padding: 5px 8px;
@@ -85,22 +99,19 @@
       background-color: transparent;
     }
 
-    li {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 6px 8px;
-      border-bottom: 1px solid $bootstrap-gray;
-    }
-
     li:hover {
       background-color: #eee;
     }
 
     i.fa-comment-o {
-      color: black;
+      color: inherit;
       font-size: 16px;
       margin-left: 5px;
+    }
+
+    i.fa-circle {
+      color: lightgreen;
+      font-size: 16px;
     }
 
   }

@@ -21,11 +21,18 @@ componentWillMount() {
 }
 
 loadChatMessages(convo) {
-  let { chat, currentMentor } = this.props;
+  let { chat, currentMentor, auth } = this.props;
   socket.emit('disconnect chat', chat.currentConversation.id);
   // socket.emit('chat mounted', convo.id);
   // this.props.currentConversation( convo.id );
-  this.props.accessConversation( convo, currentMentor.username );
+  let data = {
+    recipient: currentMentor.username,
+    name: `${auth.username}${currentMentor.username}`,
+    private: true,
+    mentorId: currentMentor.id,
+    learnerId: auth.id
+  }
+  this.props.accessConversation( data );
   // this.props.openChatBox();
 }
 
@@ -64,9 +71,8 @@ renderTopCard() {
         return (
           <div className="card mentor-profile">
             <div className="card-block">
-              {/*<Gravatar email={currentMentor.email} https />*/}
               <h3 className="card-title mentor-name"> {currentMentor.firstname} {currentMentor.lastname} </h3>
-              <div className="btn-global pull-right">Your Avg. Rating: {currentMentor.rating ? currentMentor.rating : 'N/A'}</div>
+              <div className="btn-global pull-right">Your Avg. Rating: {currentMentor.rating ? (currentMentor.rating / 100) : 'N/A'}</div>
             </div>
           </div>
         )
@@ -83,7 +89,7 @@ renderTopCard() {
           <div className="card-block">
             <div className="picture-title">
               <Gravatar email={currentMentor.email} https />
-              <h4 className="mentor-name"> Your Profile </h4>
+              <h4 className="mentor-name"> {currentMentor.firstname} {currentMentor.lastname} </h4>
             </div>
             <div className="card-text">
             { currentMentor.description }

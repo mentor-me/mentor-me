@@ -5,7 +5,6 @@ import dateFormat from 'dateformat';
 export default class ReviewEntry extends Component {
   render() {
     let { mentor, review } = this.props;
-    console.log(review)
     return (
       <div className="col-sm-12">
         <div className="card">

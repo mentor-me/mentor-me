@@ -65,7 +65,7 @@ div.chatBox {
     padding: 7px;
     overflow-y: scroll;
     overflow-x: hidden;
-    word-break: break-all;
+    word-break: keep-all;
 
     div.left,
     div.right {
@@ -87,7 +87,7 @@ div.chatBox {
     }
 
     div.left div.msg {
-      background-color: lightgreen;
+      background-color: #b0dbde;
     }
 
     div.right div.msg {

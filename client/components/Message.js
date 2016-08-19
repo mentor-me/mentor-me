@@ -14,6 +14,10 @@ export default class Message extends Component {
 
   render() {
 
+    // Default message time stamp if no message history
+    // This time stamp will hide TimeAgo
+    let nullTime = '1988-08-12T23:03:54.355Z';
+
     let TimeAgoStyles = {
       'fontSize': '0.65em',
       'color': 'lightgray',
@@ -23,8 +27,6 @@ export default class Message extends Component {
     let { msg, userId } = this.props;
     let modifiedMessage = 'Click here to join video chat.';
 
-    // if (msg.content) {
-
       var text;
       if (msg.content && msg.content.includes('Click here to join video chat')) {
         text = <VideoLink />;
@@ -32,14 +34,16 @@ export default class Message extends Component {
         text = msg.content;
       }
 
-      if(msg.userId == userId){
+      // -1 is the default userId if no message history exists
+      // Allows for default message to be on left side
+      if(msg.userId == userId || -1){
         return (
           <div onClick={ () => this.handleClick(msg.content) } className="left">
             <div>
               <div className="msg">
                 { text }
               </div>
-              <TimeAgo style={ TimeAgoStyles } date={ msg.createdAt } />
+              { msg.createdAt != nullTime ? <TimeAgo style={ TimeAgoStyles } date={ msg.createdAt } /> : '' }
             </div>
           </div>
         );
@@ -50,11 +54,10 @@ export default class Message extends Component {
               <div className="msg">
                 { text }
               </div>
-              <TimeAgo style={ TimeAgoStyles } date={ msg.createdAt } />
+              { msg.createdAt != nullTime ? <TimeAgo style={ TimeAgoStyles } date={ msg.createdAt } /> : '' }
             </div>
           </div>
         );
       }
-    // }
+    }
   }
-}

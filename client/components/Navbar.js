@@ -25,7 +25,7 @@ class Navbar extends Component {
   }
 
   loadChatMessages(convo) {
-    console.log('clicked conversation!')
+    console.log('clicked conversation!', convo)
     let { chat, auth, chatBox } = this.props;
     let conversationWith = convo.name.replace(auth.currentUser.username, '')
     socket.emit('disconnect chat', chat.currentConversation.id);
@@ -38,32 +38,27 @@ class Navbar extends Component {
     this.props.fetchMessages( convo.id );
   }
 
-  notifyCheck(convoId) {
-    let { chat } = this.props;
-    let flag = false;
-    if (_.contains(chat.notifications, convoId)){
-      flag = true
-    }
-    return flag;
+  onlineList() {
+    let { mentorList } = this.props;
+    return mentorList.filter(mentor => mentor.availability).map(mentor => mentor.username);
   }
 
   loadConversations() {
     let { chat, auth } = this.props;
-    var notify;
+    let onlineList = this.onlineList();
     if(chat) {
       return chat.conversations.map((convo, i) => {
+        var notify = false;
+        var online = false;
         let conversationWith = convo.name.replace(auth.currentUser.username, '');
-        // if (convo.id == chat.currentConversation.id){
-        //   notify = false;
-        //   return <MenuItem eventKey={i} key={i} onClick={ () => this.loadChatMessages(convo) } > { conversationWith } { notify ? <i className="fa fa-circle" /> : '' } </MenuItem>
-        // } else {
-          if (this.notifyCheck(convo.id)) {
-            notify = true;
-          } else {
-            notify = false;
-          }
-          return <MenuItem eventKey={i} key={i} onClick={ () => this.loadChatMessages(convo) } > { conversationWith } { notify ? <i className="fa fa-comment-o" /> : '' } </MenuItem>
-        // }
+          if (_.contains(chat.notifications, convo.id)) { notify = true; }
+          if (_.contains(onlineList, conversationWith)) { online = true; }
+          return (<MenuItem
+                    eventKey={i}
+                    key={i}
+                    onClick={ () => this.loadChatMessages(convo) } >
+                    <div> { conversationWith } { notify ? <i className="fa fa-comment-o" /> : '' }</div> <div className="online-status">{ online ? <i className="fa fa-circle" /> : '' }</div>
+                  </MenuItem>);
       }, this)
     }
   }
@@ -168,6 +163,7 @@ class Navbar extends Component {
 
 function mapStateToProps(state) {
   return {
+    mentorList: state.learner.modifiedMentors,
     auth: state.auth,
     chat: state.chat,
     chatBox: state.chatBox
