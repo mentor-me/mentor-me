@@ -12,18 +12,22 @@ class LearnerPreferences extends Component {
 
   /* This only fires when zip is submitted */
   handleZipSubmit() {
+    let { id } = this.props.auth
     /* Pass second argument here in order to filter on ZIP */
-    this.props.fetchPreferences(uid, this.props.values.radiusZip, this.props.values.radius);
+    this.props.fetchPreferences(id, this.props.values.radiusZip, this.props.values.radius);
   }
-  resubmitZip(uid){
-    this.props.fetchPreferences(uid);
+
+  resubmitZip(){
+    let { id } = this.props.auth
+    this.props.fetchPreferences(id);
   }
 
   handleCheckChange() {
-    this.props.changePreferences(uid, this.props.prefs);
+    let { id } = this.props.auth
+    this.props.changePreferences(id, this.props.prefs);
   }
 
-  render() {``
+  render() {
 
     const { handleSubmit, fields: { visual, academic, remote, inPerson, radiusZip, radius }, prefs } = this.props;
     /* Toggle ZIP Code input depending on selection of local vs remote */
