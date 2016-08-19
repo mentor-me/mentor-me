@@ -26,13 +26,6 @@ componentWillReceiveProps(nextProps){
   console.log('nextProps', nextProps)
 }
 
-  // shouldComponentUpdate (nextProps, nextState) {
-  //
-  //   console.log('nextProps', nextProps)
-  //
-  //   // return this.props.appt !== nextProps.appt;
-  //
-  // }
 
   componentWillMount() {
 
@@ -43,12 +36,13 @@ componentWillReceiveProps(nextProps){
     console.log(userId, "user id calendar")
 
     if (auth.authenticated && auth.currentUser) {
-      if (auth.currentUser.secondary_role == "2") {
+      if (auth.currentUser.secondary_role === "2") {
             console.log( "*******auth.currentUser.secondary_role = 2")
         this.props.fetchAppointments(userId);
-    }  else if (auth.currentUser.secondary_role == "1"){
+    }  else if (auth.currentUser.primary_role === "1"){
+            console.log( "*******auth.currentUser.primary_role = 1")
         this.props.fetchMentorAppointments(userId);
-    }
+        }
     }
   }
 
@@ -84,8 +78,6 @@ componentWillReceiveProps(nextProps){
 
   appointmentFormat() {
 
-    // if (this.props.appointments){
-
     return this.props.appointments.map((appointment, i) => {
 
     console.log("this.props.appointments.map", appointment);
@@ -102,7 +94,7 @@ componentWillReceiveProps(nextProps){
           }
           return obj;
     });
-    // }
+
   }
 
   eventStyleGetter (event) {

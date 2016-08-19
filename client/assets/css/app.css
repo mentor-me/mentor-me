@@ -1520,6 +1520,13 @@ div.learner-profile .show-drawer {
   color: #DDD;
 }
 
+.video-login #controls #invite-controls button#button-disconnect {
+  color: #d94744;
+  background: 0 0;
+  border-radius: 0;
+  border: 1px solid #d94744;
+}
+
 .video-login #controls #invite-controls button#button-invite {
   color: #d94744;
   background: 0 0;
