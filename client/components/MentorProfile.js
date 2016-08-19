@@ -23,14 +23,13 @@ componentWillMount() {
 loadChatMessages(convo) {
   let { chat, currentMentor, auth } = this.props;
   socket.emit('disconnect chat', chat.currentConversation.id);
-  // socket.emit('chat mounted', convo.id);
-  // this.props.currentConversation( convo.id );
   let data = {
     recipient: currentMentor.username,
     name: `${auth.username}${currentMentor.username}`,
     private: true,
     mentorId: currentMentor.id,
-    learnerId: auth.id
+    learnerId: auth.id,
+    availability: currentMentor.availability
   }
   this.props.accessConversation( data );
 }

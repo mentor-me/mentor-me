@@ -25,16 +25,17 @@ class Navbar extends Component {
   }
 
   loadChatMessages(convo) {
-    console.log('clicked conversation!', convo)
+    console.log('clicked conversation!', convo);
     let { chat, auth, chatBox } = this.props;
-    let conversationWith = convo.name.replace(auth.currentUser.username, '')
+    let conversationWith = convo.name.replace(auth.currentUser.username, '');
     socket.emit('disconnect chat', chat.currentConversation.id);
     socket.emit('chat mounted', convo.id);
-    this.props.currentConversation({ id: convo.id, recipient: conversationWith });
+    this.props.currentConversation({
+      id: convo.id,
+      recipient: conversationWith
+    });
     this.props.removeNotification(convo.id);
-    if (!chatBox.open) {
-      this.props.openChatBox();
-    }
+    if (!chatBox.open) { this.props.openChatBox(); }
     this.props.fetchMessages( convo.id );
   }
 

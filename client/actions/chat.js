@@ -26,19 +26,19 @@ var emptyChat = {
 export function accessConversation(data) {
   const endpoint = `/api/conversations`;
   return dispatch => {
-    dispatch({
-      type: OPEN_CHAT_BOX
-    })
-    dispatch({
-      type: LOADING_MESSAGES
-    })
+    dispatch({ type: OPEN_CHAT_BOX });
+    dispatch({ type: LOADING_MESSAGES });
     axios.post(endpoint, data)
       .then(response => {
         socket.emit('chat mounted', response.data.id);
         dispatch({
           type: CURRENT_CONVERSATION,
-          payload: {id: response.data.id, recipient: data.recipient }
-        })
+          payload: {
+            id: response.data.id, 
+            recipient: data.recipient,
+            availability: data.availability
+          }
+        });
         // Now get the messages for that conversation
         axios.get(`/api/conversations/${response.data.id}/messages`)
           .then(response => {
@@ -46,7 +46,7 @@ export function accessConversation(data) {
             // If message history, dispatch conversation messages
               dispatch({
                 type: LOADING_MESSAGES_COMPLETE
-              })
+              });
               dispatch({
                 type: CONVERSATION_MESSAGES,
                 payload: response.data.length ? response.data : [emptyChat]
