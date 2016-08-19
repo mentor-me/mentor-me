@@ -13,14 +13,14 @@ class LearnerPreferences extends Component {
   /* This only fires when zip is submitted */
   handleZipSubmit() {
     /* Pass second argument here in order to filter on ZIP */
-    this.props.fetchPreferences(1, this.props.values.radiusZip, this.props.values.radius);
+    this.props.fetchPreferences(uid, this.props.values.radiusZip, this.props.values.radius);
   }
   resubmitZip(uid){
     this.props.fetchPreferences(uid);
   }
 
   handleCheckChange() {
-    this.props.changePreferences(1, this.props.prefs);
+    this.props.changePreferences(uid, this.props.prefs);
   }
 
   render() {``

@@ -12,46 +12,68 @@ class BecomeMentor extends Component {
     this.props.updateLearner(formProps, this.props.auth);
   }
 
-    createQualitiesStyleQualities() {
-      const options = ['Visual', 'Academic'];
-      return options.map((option, i) => {
-        return <option key={i}> {option} </option>;
-      });
-    }
+  createLearnerStylePreferences() {
+    const options = ['Visual', 'Academic'];
+    return options.map((option, i) => {
+      return <option key={i} > {option} </option>;
+    });
+  }
 
-    createMeetingFormatQualities() {
-      const options = ['Remote', 'In Person'];
-      return options.map((option, i) => {
-        return <option key={i}> {option} </option>;
-      });
-    }
+  createMeetingFormatPreferences() {
+    const options = ['Remote', 'In Person'];
+    return options.map((option, i) => {
+      return <option key={i} > {option} </option>;
+    });
+  }
 
   render() {
-    const { handleSubmit, fields: { teachingStyle, meetingFormat} } = this.props;
+    const { handleSubmit, fields: { learnerStyle, meetingFormat} } = this.props;
     console.log("this is in the render ", this.props.auth)
     return (
       <form className="form-control profile-form" onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        <div className="form-group">
-          <select className="form-control" {...teachingStyle} >
-          <option>Select your learner style...</option>
-            {this.createQualitiesStyleQualities()}
+
+
+        <div className="error-message">{learnerStyle.touched && learnerStyle.error ? learnerStyle.error : ''}</div>
+        <div className={`form-group ${learnerStyle.touched && learnerStyle.error ? 'has-danger' : ''}`}>
+          <label ><small><strong>What is your prefered learning style.   </strong>   <em className="sub-form">Please hold command choose more than one</em></small></label>
+          <select  className="form-control form-muti"  multiple{...learnerStyle} >
+            {this.createLearnerStylePreferences()}
           </select>
         </div>
-        <div className="form-group">
-          <select className="form-control" {...meetingFormat} >
-          <option>Select a preferred meeting format...</option>
-            {this.createMeetingFormatQualities()}
+        <div className="error-message">{meetingFormat.touched && meetingFormat.error ? meetingFormat.error : ''}</div>
+        <div className={`form-group ${meetingFormat.touched && meetingFormat.error ? 'has-danger' : ''}`}>
+          <label ><small><strong>How would you like to meet.   </strong>  <em className="sub-form">Please hold command choose more than one</em></small></label>
+          <select className="form-control form-muti" multiple{...meetingFormat} >
+            {this.createMeetingFormatPreferences()}
           </select>
-          <button className="btn-global" type="submit"> Sign Up </button>
         </div>
+
+
+    <button className="btn-global" type="submit"> Sign Up </button>
+
+
+
+
+
+
+
+
       </form>
 
     );
   }
 }
 
+const validate = formProps => {
+  const errors = {}
 
-
+  if(!formProps.learnerStyle) {
+        errors.learnerStyle = 'Required';
+  }
+  if(!formProps.meetingFormat) {
+        errors.meetingFormat = 'Required';
+  }
+}
 
 
 function mapStateToProps(state) {
@@ -61,5 +83,6 @@ function mapStateToProps(state) {
 }
 export default reduxForm({
   form: 'becomeMentor',
-  fields: [ 'teachingStyle', 'meetingFormat']
+  fields: [ 'learnerStyle', 'meetingFormat'],
+  validate
 }, mapStateToProps, { updateLearner })(BecomeMentor);

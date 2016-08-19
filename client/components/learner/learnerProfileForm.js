@@ -11,7 +11,7 @@ class BecomeMentor extends Component {
     this.props.updateMentor(formProps, this.props.auth);
   }
 
-    createQualitiesStyleQualities() {
+    createQualitiesStyle() {
       const options = ['Visual', 'Academic'];
       return options.map((option, i) => {
         return <option key={i}> {option} </option>;
@@ -38,19 +38,29 @@ class BecomeMentor extends Component {
         <div className="form-group">
           <input type="text" className="form-control" placeholder="Your Skills" {...skills} />
         </div>
-        <div className="form-group">
-          <select className="form-control" {...teachingStyle} >
-          <option>Select your learner style...</option>
-            {this.createQualitiesStyleQualities()}
+
+        <div className="error-message">{teachingStyle.touched && teachingStyle.error ? teachingStyle.error : ''}</div>
+        <div className={`form-group ${teachingStyle.touched && teachingStyle.error ? 'has-danger' : ''}`}>
+          <label ><small><strong>What is your prefered learning style.   </strong>   <em className="sub-form">Please hold command choose more than one</em></small></label>
+          <select  className="form-control form-muti"  multiple{...teachingStyle} >
+            {this.createQualitiesStyle()}
           </select>
         </div>
-        <div className="form-group">
-          <select className="form-control" {...meetingFormat} >
-          <option>Select a preferred meeting format...</option>
+        <div className="error-message">{meetingFormat.touched && meetingFormat.error ? meetingFormat.error : ''}</div>
+        <div className={`form-group ${meetingFormat.touched && meetingFormat.error ? 'has-danger' : ''}`}>
+          <label ><small><strong>How would you like to meet.   </strong>  <em className="sub-form">Please hold command choose more than one</em></small></label>
+          <select className="form-control form-muti" multiple{...meetingFormat} >
             {this.createMeetingFormatQualities()}
           </select>
-          <button className="btn-global" type="submit"> Sign Up </button>
         </div>
+
+
+
+
+
+
+          <button className="btn-global" type="submit"> Sign Up </button>
+
       </form>
 
     );
@@ -60,6 +70,13 @@ class BecomeMentor extends Component {
 
 const validate = formProps => {
   const errors = {}
+
+  if(!formProps.teachingStyle) {
+        errors.teachingStyle = 'Required';
+  }
+  if(!formProps.meetingFormat) {
+        errors.meetingFormat = 'Required';
+  }
   if (formProps.description) {
     if(formProps.description.length < 100){
       errors.description = 'Your description should be at least 100 characters long.'
