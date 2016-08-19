@@ -22,7 +22,6 @@ class LearnerDashboard extends Component {
   renderMentors() {
     let { mentors, auth } = this.props;
     if(mentors.length === 0 ) {
-      console.log("inhere")
       return <div className="message-info">We did not find anyone matching your search terms </div>
     }
     /* Wait until mentors prop exists  */
@@ -39,13 +38,13 @@ class LearnerDashboard extends Component {
   }
 
   render() {
-    let { loading } = this.props;
+    let { loading, auth } = this.props;
     return (
       <div className="spacer30">
         <div className="container-fluid learner">
           <div className="row">
             <div className="col-sm-3">
-              <LearnerPreferences id={ this.props.auth.id } />
+              { auth ? <LearnerPreferences id={ auth.id } /> : '' }
             </div>
             <div className="col-sm-9">
               <div className="row search">

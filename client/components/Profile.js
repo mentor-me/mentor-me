@@ -12,7 +12,7 @@ class Profile extends Component {
   }
 
   renderForm(){
-    console.log(this.props.auth.primary_role,this.props.auth.secondary_role )
+    // console.log(this.props.auth.primary_role,this.props.auth.secondary_role )
     if(this.props.auth.primary_role === "1" && this.props.auth.secondary_role === "2" ){
       return (
         <div>
@@ -37,25 +37,14 @@ class Profile extends Component {
               <i onClick={ () => this.setState({ showDrawer: !this.state.showDrawer }) } className="fa fa-plus-square-o pull-right"></i>
               <LearnerProfileForm />
           </div>
-
       )
-
     }
-
-
-
   }
 
   render() {
 
     let drawer = this.state.showDrawer ? 'card drawer show-drawer' : 'card drawer';
-    console.log(this.props.auth)
     const { auth } = this.props;
-    /* TODO: Do state check on whether user has Primary / Seconary Role */
-    /* If not, render ability to sign up for other role. If yes, then hide. */
-
-
-
 
       return (
 

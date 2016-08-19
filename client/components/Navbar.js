@@ -15,7 +15,7 @@ class Navbar extends Component {
   }
 
   renderNavClass(){
-    console.log("this is the auth ", this.props.auth.authenticated)
+    // console.log("this is the auth ", this.props.auth.authenticated)
     let divStyle = {backgroundColor:"transparent"}
     if(this.props.auth.authenticated){
       return;
@@ -25,46 +25,46 @@ class Navbar extends Component {
   }
 
   loadChatMessages(convo) {
-    console.log('clicked conversation!')
+    console.log('clicked conversation!', convo)
     let { chat, auth, chatBox } = this.props;
     let conversationWith = convo.name.replace(auth.currentUser.username, '')
     socket.emit('disconnect chat', chat.currentConversation.id);
     socket.emit('chat mounted', convo.id);
-    // this.props.clearMessages();
     this.props.currentConversation({ id: convo.id, recipient: conversationWith });
-    this.props.removeNotification( [convo.learnerId, convo.mentorId] );
+    this.props.removeNotification(convo.id);
     if (!chatBox.open) {
       this.props.openChatBox();
     }
     this.props.fetchMessages( convo.id );
   }
 
-  notifyCheck(convoIDs) {
-    let { chat } = this.props;
-    let flag = false;
-    if (_.contains(chat.notifications, convoIDs[0]) || _.contains(chat.notifications, convoIDs[1])){
-      flag = true
-    }
-    return flag;
+  onlineList() {
+    let { mentorList } = this.props;
+    return mentorList.filter(mentor => mentor.availability).map(mentor => mentor.username);
   }
 
   loadConversations() {
     let { chat, auth } = this.props;
-    var notify;
+    let onlineList = this.onlineList();
     if(chat) {
       return chat.conversations.map((convo, i) => {
+        var notify = false;
+        var online = false;
         let conversationWith = convo.name.replace(auth.currentUser.username, '');
-        // if (convo.id == chat.currentConversation.id){
-        //   notify = false;
-        //   return <MenuItem eventKey={i} key={i} onClick={ () => this.loadChatMessages(convo) } > { conversationWith } { notify ? <i className="fa fa-circle" /> : '' } </MenuItem>
-        // } else {
-          if (this.notifyCheck([convo.learnerId, convo.mentorId])) {
-            notify = true;
-          } else {
-            notify = false;
-          }
-          return <MenuItem eventKey={i} key={i} onClick={ () => this.loadChatMessages(convo) } > { conversationWith } { notify ? <i className="fa fa-comment-o" /> : '' } </MenuItem>
-        // }
+          if (_.contains(chat.notifications, convo.id)) { notify = true; }
+          if (_.contains(onlineList, conversationWith)) { online = true; }
+          return (<MenuItem
+                    eventKey={i}
+                    key={i}
+                    onClick={ () => this.loadChatMessages(convo) } >
+                    <div>
+                      { conversationWith }
+                      { notify ? <i className="fa fa-comment-o" /> : '' }
+                    </div>
+                    <div className="online-status">
+                      { online ? <i className="fa fa-circle" /> : '' }
+                    </div>
+                  </MenuItem>);
       }, this)
     }
   }
@@ -74,7 +74,7 @@ class Navbar extends Component {
     if (auth.authenticated && auth.currentUser) {
       // call fetch conversations!
       /* This is navbar for logged in LEARNER */
-      auth.currentUser.secondary_role =2;
+      // auth.currentUser.secondary_role = 2;
       if (auth.currentUser.secondary_role == "2") {
         return (
           <ul className="nav navbar-nav pull-xs-right">
@@ -95,7 +95,7 @@ class Navbar extends Component {
               </Link>
             </li>
             <li className="nav-item">
-              <a href="#" className="nav-link" onClick={() => signoutUser()}>
+              <a href="#" className="nav-link" onClick={() => signoutUser(auth.currentUser.id)}>
                 Log Out
               </a>
             </li>
@@ -125,7 +125,12 @@ class Navbar extends Component {
               </Link>
             </li>
             <li className="nav-item">
-              <a href="#" className="nav-link" onClick={() => signoutUser()}>
+              <Link to={`/mentor/${auth.currentUser.username}`} className="nav-link">
+                <i className="fa fa-user" />
+              </Link>
+            </li>
+            <li className="nav-item">
+              <a href="#" className="nav-link" onClick={() => signoutUser(auth.currentUser.id)}>
                 Log Out
               </a>
             </li>
@@ -169,6 +174,7 @@ class Navbar extends Component {
 
 function mapStateToProps(state) {
   return {
+    mentorList: state.learner.modifiedMentors,
     auth: state.auth,
     chat: state.chat,
     chatBox: state.chatBox

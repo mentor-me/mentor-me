@@ -17,6 +17,7 @@ class ChatBox extends Component {
       messages: [],
       loading: false
     }
+    this.scrollToBottom = this.scrollToBottom.bind(this)
   }
 
   componentDidMount() {
@@ -26,7 +27,7 @@ class ChatBox extends Component {
     socket.emit('chat mounted', currentConversation.id);
     /* Register socket ID */
     socket.on('receive socket', socketID => {
-      console.log('RECIEVING SOCKET ID: ', socketID)
+      // console.log('RECIEVING SOCKET ID: ', socketID)
       this.props.receiveSocket(socketID)
     });
 
@@ -37,22 +38,20 @@ class ChatBox extends Component {
 
     socket.on('notification', data => {
       console.log('RECIEVING NOTIFICATION FROM SOCKET: ', data)
-      this.props.addNotification(data)
+      this.props.addNotification(data.id)
     });
 
   }
 
   componentWillReceiveProps(nextProps) {
     let { messages } = this.props;
-    if (nextProps.messages.length) {
-        if (nextProps.messages[0].conversationId !== messages[0].conversationId ) {
-          this.setState({
-            messages: [...nextProps.messages],
-            loading: false
-          }, () => this.scrollToBottom() )
-        }
-      }
+    if (nextProps.messages[0].conversationId !== messages[0].conversationId ) {
+      this.setState({
+        messages: [...nextProps.messages],
+        loading: false
+      }, () => this.scrollToBottom() )
     }
+  }
 
   newMessage(msg) {
     this.setState({
@@ -99,15 +98,15 @@ class ChatBox extends Component {
     //push history!
     let { auth } = this.props;
     let { currentConversation } = this.props.chat;
-    let user = JSON.parse(localStorage.getItem('user'));
+    // let user = JSON.parse(localStorage.getItem('user'));
     let inviteeRole;
     let invitorRole;
     auth.currentUser.secondary_role == "2" ? inviteeRole = 'mentor' : inviteeRole = 'learner'
     auth.currentUser.secondary_role == "2" ? invitorRole = 'learner' : invitorRole = 'mentor'
-    let videoLink = `Join video chat here: http://localhost:3000/${inviteeRole}/${user.username}/videochat/${user.id}`;
+    let videoLink = `Click here to join video chat: http://localhost:3000/${inviteeRole}/${auth.currentUser.username}/videochat/${auth.currentUser.id}`;
     var newMessage = {
       content: videoLink,
-      userId: user.id,
+      userId: auth.currentUser.id,
       conversationId: currentConversation.id,
       createdAt: moment().format()
     }
@@ -115,26 +114,25 @@ class ChatBox extends Component {
     socket.emit('global message', {
       id: currentConversation.id,
       recipient: currentConversation.recipient,
-      from: user.id
+      from: auth.currentUser.id
     });
     // TODO: NOT POSTING TO DB!!!
     // this.newMessage(newMessage);
-    browserHistory.push(`/${invitorRole}/${user.username}/videochat/${user.id}`)
+    browserHistory.push(`/${invitorRole}/${auth.currentUser.username}/videochat/${auth.currentUser.id}`)
     // this.props.postMessage(currentConversation.id, newMessage);
   }
 
   renderMessages() {
-    let user = JSON.parse(localStorage.getItem('user'));
+    // let user = JSON.parse(localStorage.getItem('user'));
+    let { auth } = this.props;
     let { messages } = this.state;
-    if (messages) {
-      return messages.map((msg, i) => <Message msg={ msg } userId={user.id} key={ i } />)
+    if (messages.length && auth.currentUser.id) {
+      return messages.map((msg, i) => <Message msg={ msg } userId={auth.currentUser.id} key={ i } />)
     }
   }
 
   render() {
-
-    let user = JSON.parse(localStorage.getItem('user'));
-    let { messages, loading } = this.props;
+    let { messages, loading, currentConversation } = this.props;
     let { open } = this.props.chatBox;
     let show = open ? 'show' : 'hide';
     let chatBox = `chatBox ${show}`;
@@ -142,20 +140,18 @@ class ChatBox extends Component {
     return (
       <div className={ chatBox }>
         <div className="utility-bar">
-          <span className="title">Chat</span>
+          <span className="title"> { currentConversation.recipient } </span>
           <div className="icon-container">
-            {/*<Link to={`/videochat/${user.username}/${user.id}`}>*/}
-              <i className="fa fa-video-camera" onClick={ this.startVideoChat.bind(this) } />
-            {/*</Link>*/}
+            <i className="fa fa-video-camera" onClick={ this.startVideoChat.bind(this) } />
             <i className="fa fa-close" onClick={ this.closeChatBox.bind(this) } />
           </div>
         </div>
         <div className="text-window" ref="chatBox">
-          { loading ?  <Loader /> : this.renderMessages() }
+          { loading && messages ?  <Loader /> : this.renderMessages() }
           {/*{ this.state.messages.length ?  this.renderMessages() : <Loader /> }*/}
         </div>
         <div className="input-box">
-          <form onSubmit={ this.handleSubmit.bind(this) }>
+          <form onSubmit={ this.handleSubmit.bind(this) } >
             <div className="form-group">
               <input className="form-control" ref="msg" autoComplete="off" type="text" id="msg-input" />
             </div>
@@ -168,6 +164,7 @@ class ChatBox extends Component {
 
 function mapStateToProps(state) {
   return {
+    currentConversation: state.chat.currentConversation,
     chat: state.chat,
     loading: state.chat.loading,
     chatBox: state.chatBox,

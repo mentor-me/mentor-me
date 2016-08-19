@@ -47,7 +47,7 @@ exports.mentorSortPrefs = function(preferences, mentors) {
     var reviewScore = getScore(reviewCount, rating);
     var appointmentScore   = total_appointments !== 0 ? (reviewCount / total_appointments) : 0 ;
     score = Math.floor((score + reviewScore + appointmentScore) * 1000);
-    console.log("score for user ", score, mentor.firstname)
+    //console.log("score for user ", score, mentor.firstname)
 
     //console.log("this is the score after:: ",score)
     var exists = false;
@@ -70,7 +70,7 @@ exports.mentorSortPrefs = function(preferences, mentors) {
   var keySortArr = keyArr.sort(function(a, b) {
     return b - a;
   });
-  console.log("this is the sorted array", keySortArr)
+  //console.log("this is the sorted array", keySortArr)
   _.forEach(keySortArr, function(key){
     _.forEach(sortedList, function(scoreObj){
       // //console.log("This scoreObj",JSON.stringify(scoreObj, null , 4));
@@ -82,14 +82,14 @@ exports.mentorSortPrefs = function(preferences, mentors) {
     })
 
   })
-  console.log("this is the return form SORT :: ",mentorBySortScore)
+  //console.log("this is the return form SORT :: ",mentorBySortScore)
   return mentorBySortScore;
 }
 
 exports.mentorSearchByTerm = function(mentors, term){
   // //console.log("line 58: list of found mentors by term", mentors);
   term = term.toLowerCase();
-  console.log("this is term", term);
+  //console.log("this is term", term);
   var filterMentor = _.filter(mentors, function(mentor){
     var found = false;
     if(mentor.firstname && mentor.lastname &&_.includes((mentor.firstname + " " + mentor.lastname).toLowerCase(), term)){

@@ -13,48 +13,54 @@ import {
   OPEN_CHAT_BOX,
   CLOSE_CHAT_BOX,
   ADD_NOTIFICATION,
-  REMOVE_NOTIFICATION
+  REMOVE_NOTIFICATION,
 } from './actionTypes';
 
-export function accessConversation(data, username) {
-  const endpoint = `/api/conversations/${data.uid}`;
+var emptyChat = {
+  content: 'This conversation has no message history yet.',
+  read: true,
+  createdAt: '1988-08-12T23:03:54.355Z',
+  userId: -1
+}
+
+export function accessConversation(data) {
+  const endpoint = `/api/conversations`;
   return dispatch => {
+    dispatch({
+      type: OPEN_CHAT_BOX
+    })
+    dispatch({
+      type: LOADING_MESSAGES
+    })
     axios.post(endpoint, data)
       .then(response => {
-        /* If enter here, chat does not yet exist */
-        console.log('Instantiating new conversation', response)
-        socket.emit('chat mounted', respone.data.id);
-      })
-      .catch((err) => {
-        /* If enter here, chat DOES already exist */
-        console.log('Redirect to existing conversation');
-        axios.get(endpoint, data)
-        .then(response => {
-          let existingConvo = response.data.filter((convo) => {
-            return convo.name == data.name;
-          })
-          console.log('this is existing convo: ', existingConvo[0])
-          /* Dispatch current conversation to message box updates
-          on recieve new props */
-          dispatch({
-            type: CURRENT_CONVERSATION,
-            payload: {id: existingConvo[0].id, recipient: username }
-          })
-          socket.emit('chat mounted', existingConvo[0].id);
-          axios.get(`/api/conversations/${existingConvo[0].id}/messages`)
-            .then(response => {
+        socket.emit('chat mounted', response.data.id);
+        dispatch({
+          type: CURRENT_CONVERSATION,
+          payload: {id: response.data.id, recipient: data.recipient }
+        })
+        // Now get the messages for that conversation
+        axios.get(`/api/conversations/${response.data.id}/messages`)
+          .then(response => {
+            console.log('messages from newly initiated conversation', response.data);
+            // If message history, dispatch conversation messages
+              dispatch({
+                type: LOADING_MESSAGES_COMPLETE
+              })
               dispatch({
                 type: CONVERSATION_MESSAGES,
-                payload: response.data
+                payload: response.data.length ? response.data : [emptyChat]
               });
-            })
-            .catch((err) => {
-              console.log('Failed to fetch messages in ACCESS CONVO: ', err)
-            })
-      })
-    })
-  };
-}
+          })
+          .catch(err => {
+            console.log('Failed to fetch messages in ACCESS CONVO: ', err)
+          })
+        })
+        .catch(err => {
+          console.log('Failed to access conversation: ', err)
+        })
+      }
+    }
 
 export function fetchConversations(uid) {
   console.log(uid)
@@ -82,13 +88,13 @@ export function fetchMessages(conversationId) {
     })
     axios.get(endpoint)
       .then(response => {
-        // console.log('INSIDE FETCH MESSAGES------', response.data)
+        console.log('INSIDE FETCH MESSAGES------', response.data)
         dispatch({
             type: LOADING_MESSAGES_COMPLETE
         })
         dispatch({
           type: CONVERSATION_MESSAGES,
-          payload: response.data
+          payload: response.data.length ? response.data : [emptyChat]
         });
       })
       .catch((err) => {
@@ -139,10 +145,9 @@ export function closeChatBox() {
 }
 
 export function addNotification(data) {
-  console.log('ADD NOTIFICATION: ', data)
   return {
     type: ADD_NOTIFICATION,
-    payload: data.from
+    payload: Array.isArray(data) ? data : [data]
   }
 }
 
