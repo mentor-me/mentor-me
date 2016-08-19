@@ -29,7 +29,7 @@ loadChatMessages(convo) {
     private: true,
     mentorId: currentMentor.id,
     learnerId: auth.id,
-    availability: currentMentor.availability
+    availability: currentMentor.availability ? true : false
   }
   this.props.accessConversation( data );
 }

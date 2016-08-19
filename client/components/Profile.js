@@ -62,9 +62,9 @@ class Profile extends Component {
                 <div className="card-block">
                   <h4 className="card-title"> Profile Information </h4>
                   <div>
-                    <p className="card-text"><span>Username:</span> {auth.username} </p>
-                    <p className="card-text"><span>Name:</span> {auth.firstname} </p>
-                    <p className="card-text"><span>Email:</span> {auth.email} </p>
+                    <p className="card-text"><span>Your Username:</span> {auth.username} </p>
+                    <p className="card-text"><span>Your Name:</span> {auth.firstname} {auth.lastname} </p>
+                    <p className="card-text"><span>Your Email:</span> {auth.email} </p>
                   </div>
               </div>
             </div>

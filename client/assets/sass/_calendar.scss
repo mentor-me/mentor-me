@@ -8,7 +8,7 @@
     display: flex;
     align-items: center;;
     justify-content: space-around;
-  
+
 }
 
 .edit-modal-buttons {
@@ -534,4 +534,18 @@ button.rbc-input::-moz-focus-inner {
 }
 .rbc-time-content > .rbc-day-slot {
   width: 100%;
+}
+
+////////////////////////
+////////////////////////
+////////////////////////
+// CUSTOM CHANGES //////
+///////////////////////
+
+.rbc-event {
+  background-color: $accent-darkred;
+}
+
+div.ReactModal__Content {
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.4) !important;
 }

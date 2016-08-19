@@ -14,6 +14,7 @@ import {
   CLOSE_CHAT_BOX,
   ADD_NOTIFICATION,
   REMOVE_NOTIFICATION,
+  MARK_AS_READ,
 } from './actionTypes';
 
 var emptyChat = {
@@ -34,7 +35,7 @@ export function accessConversation(data) {
         dispatch({
           type: CURRENT_CONVERSATION,
           payload: {
-            id: response.data.id, 
+            id: response.data.id,
             recipient: data.recipient,
             availability: data.availability
           }
@@ -74,7 +75,7 @@ export function fetchConversations(uid) {
           payload: response.data
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('fetchConversations Error: ', err);
     })
   };
@@ -97,26 +98,38 @@ export function fetchMessages(conversationId) {
           payload: response.data.length ? response.data : [emptyChat]
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('fetchConversations Error: ', err);
     })
   };
 }
 
 export function postMessage(conversationId, data) {
-  console.log('Posting message.')
+  // console.log('Posting message.')
   const endpoint = `/api/conversations/${conversationId}/messages`;
   return dispatch => {
     axios.post(endpoint, data)
     .then(response => {
       console.log('message successfully posted to db', response)
     })
-    .catch((err) => {
-      console.log('fetchConversations Error: ', err);
-    })
+    .catch(err => {
+      console.log('postMessage Error: ', err);
+    });
   }
 }
 
+export function markAsRead(conversationId) {
+  const endpoint = `/api/conversations/${conversationId}`;
+  return dispatch => {
+    axios.put(endpoint)
+    .then(response => {
+      console.log('all messages in this convo now marked as read');
+    })
+    .catch(err => {
+      console.log('mark msgs as read Error: ', err);
+    });
+  }
+}
 
 export function receiveSocket(socketID) {
   return {

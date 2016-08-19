@@ -16,7 +16,7 @@ import {
 const INITIAL_STATE = {
   conversations: [],
   messages: [ {conversationId: 0} ],
-  currentConversation: {id: null, recipient: null },
+  currentConversation: {id: null, recipient: null, availability: null },
   user: null,
   loading: false,
   notifications: []

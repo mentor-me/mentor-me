@@ -1188,6 +1188,14 @@ button.rbc-input::-moz-focus-inner {
   width: 100%;
 }
 
+.rbc-event {
+  background-color: #cc4d4b;
+}
+
+div.ReactModal__Content {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4) !important;
+}
+
 .dv-star-rating label {
   margin-bottom: 0;
 }
