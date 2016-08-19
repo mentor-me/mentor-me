@@ -6,6 +6,7 @@ var morgan        = require('morgan');
 var path          = require('path');
 var jwt           = require('jsonwebtoken');
 var http          = require('http');
+var https         = require('https');
 var formidable    = require('formidable');
 var mentorsRoutes = require("./routes/mentors");
 var learnerRoutes = require("./routes/learners");
@@ -18,8 +19,10 @@ var cookieParser  = require('cookie-parser');
 var session       = require('express-session');
 var config        = require('./config/config');
 // sockets
-var socketIo      = require('socket.io');
 var server        = http.createServer(app);
+// var server        = https.createServer(app);
+var socketIo      = require('socket.io')
+
 
 // Utilities
 require('./config/passport')(passport);

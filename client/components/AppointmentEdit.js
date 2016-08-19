@@ -43,11 +43,13 @@ export default class AppointmentEdit extends Component {
   }
 
 
-  handleDelete (){
-    let userId = this.props.auth.currentUser.id
+  handleDelete (e){
+    e.preventDefault()
+    let user = JSON.parse(localStorage.getItem('user'));
+    let userId = user.id
+    // let userId = this.props.auth.currentUser.id
     let mentorId = this.props.mentor.id
     let appId = this.props.appt.id
-
     this.props.deleteAppointment(userId, mentorId, appId);
     this.props.close()
 
@@ -56,7 +58,8 @@ export default class AppointmentEdit extends Component {
   handleFormSubmit(formProps) {
 
     console.log('formProps create appt', formProps)
-    let userId = this.props.auth.currentUser.id
+    let userId = JSON.parse(localStorage.getItem('user'));
+    // let userId = this.props.auth.currentUser.id
     let mentorId = this.props.mentor.id
     let appId = this.props.appt.id
 

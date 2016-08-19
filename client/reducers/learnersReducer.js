@@ -2,7 +2,6 @@ import {
   MENTORS,
   LEARNER_PREFERENCES,
   CURRENT_MENTOR,
-  FETCH_APPOINTMENTS,
   CURRENT_MENTOR_REVIEWS,
   CLEAR_MENTOR,
   CLEAR_MENTOR_REVIEWS,
@@ -12,6 +11,7 @@ import {
   LOADING_MENTOR,
   LOADING_LEARNER_DASHBOARD,
   LOADING_LEARNER_DASHBOARD_COMPLETE
+
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
@@ -28,8 +28,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, currentMentor: action.payload };
     case CLEAR_MENTOR:
       return { ...state, currentMentor: {} };
-    case FETCH_APPOINTMENTS:
-      return { ...state, appointments: action.payload };
     case CURRENT_MENTOR_REVIEWS:
       return { ...state, currentMentorReviews: action.payload };
     case CLEAR_MENTOR_REVIEWS:
