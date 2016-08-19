@@ -76,12 +76,15 @@ return function(dispatch) {
                 if (!previewMedia) {
                     ReactDOM.render(<VideoWindow conversation={conversation} />,
                     document.getElementById('local-conversation'));
-                    
+
                     // var inviteControls = document.getElementById('invite-controls');
                     // inviteControls.classList.add('hide');
-
                 }
 
+                document.getElementById('button-disconnect').onclick = function() {
+                ReactDOM.unmountComponentAtNode(document.getElementById('local-conversation'));
+                activeConversation = null;
+                }
               //  When a participant joins, draw their video on screen
                 conversation.on('participantConnected', function(participant) {
                     console.log("Participant '" + participant.identity + "' connected");
