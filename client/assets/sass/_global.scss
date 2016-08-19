@@ -146,6 +146,9 @@ select.form-control:focus {
 
 .redirect {
   padding-top: 10px;
+  p {
+    margin-bottom:2px;
+  }
 
   a:hover {
     color: $accent-red;

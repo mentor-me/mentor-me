@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { reduxForm } from 'redux-form';
-import { loginUser } from '../actions/auth.js';
+import { loginUser, authError } from '../actions/auth.js';
 
 class Login extends Component {
 
+  componentWillMount() {
+    this.props.authError("");
+  }
+
   handleFormSubmit(formProps) {
     this.props.loginUser(formProps);
+  }
+
+  renderMessageAlert() {
+    console.log("this is in the render")
+    if (this.props.errorMessage) {
+      return (
+        <div className="message-info">
+          {this.props.errorMessage}
+        </div>
+        );
+      }
   }
 
   render() {
@@ -21,6 +36,7 @@ class Login extends Component {
                 <h2 className="header-tag">login</h2>
                 <h1 className="sub-header">Move your career <em>foward</em> today.</h1>
                 <div className="spacer30"></div>
+                  {this.renderMessageAlert()}
                   <div className="form-group">
                     <input type="text" className="form-control" placeholder="Email" {...email} />
                   </div>
@@ -30,7 +46,8 @@ class Login extends Component {
                   <button className="btn-global" type="submit"> Log In </button>
                 </form>
                 <div className="redirect">
-                  Don't have an account? <Link to={"/signup"}>SIGN UP</Link>
+                  <p>Dont have an account? <Link to={"/signup"}>SIGN UP</Link></p>
+                  <p>Are you a Mentor, <Link to={"become/login"}>LOGIN</Link> here !</p>
                 </div>
             </div>
           </div>
@@ -41,7 +58,12 @@ class Login extends Component {
   }
 }
 
+
+function mapStateToProps(state) {
+  return { errorMessage: state.auth.error };
+}
+
 export default reduxForm({
   form: 'login',
   fields: ['email', 'password'],
-}, null, { loginUser })(Login);
+}, mapStateToProps, { loginUser, authError })(Login);

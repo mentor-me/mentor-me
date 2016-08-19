@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { reduxForm } from 'redux-form';
-import { signupUser } from '../actions/auth.js';
+import { signupUser, authError } from '../actions/auth.js';
 
 class Signup extends Component {
+  
+  componentWillMount() {
+    this.props.authError("");
+  }
 
   handleFormSubmit(formProps) {
     this.props.signupUser(formProps);
@@ -22,6 +26,17 @@ class Signup extends Component {
       return <option key={i} > {option} </option>;
     });
   }
+  renderMessageAlert() {
+    console.log("this is in the render")
+    if (this.props.errorMessage) {
+      return (
+        <div className="message-info">
+          {this.props.errorMessage}
+        </div>
+        );
+      }
+  }
+
 
   render() {
     const { handleSubmit, fields: { username, firstname, lastname, zipCode, learnerStyle, meetingFormat, email, password, passwordConfirm } } = this.props;
@@ -35,6 +50,7 @@ class Signup extends Component {
                 <h2 className="header-tag">signup</h2>
                 <h1 className="sub-header">Your ideal <em>mentor</em> is waiting for you.</h1>
                 <div className="spacer30"></div>
+                  {this.renderMessageAlert()}
                   <div className="error-message">{username.touched && username.error ? username.error : ''}</div>
                   <div className={`form-group ${username.touched && username.error ? 'has-danger' : ''}`}>
                     <input type="text" className="form-control" placeholder="Username" {...username} />
@@ -128,8 +144,12 @@ const validate = formProps => {
   return errors
 }
 
+function mapStateToProps(state) {
+  return { errorMessage: state.auth.error };
+}
+
 export default reduxForm({
   form: 'signup',
   fields: ['username', 'firstname', 'zipCode', 'lastname', 'learnerStyle', 'meetingFormat', 'email', 'password', 'passwordConfirm'],
   validate
-}, null, { signupUser })(Signup);
+}, mapStateToProps, { signupUser, authError })(Signup);

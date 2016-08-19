@@ -49,12 +49,17 @@
   }
   button.btn-global {
     background: transparent;
+    float: left;
+    margin-right: 10px;
     &:hover {
       border: 1px solid white;;
     }
   }
 
 }
+
+
+
 
 #become_mentor_action {
   min-height: 300px;
