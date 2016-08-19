@@ -4,7 +4,6 @@ export const UNAUTH_USER = 'unauth_user';
 export const AUTH_ERROR = 'auth_error'
 
 /* API/LEARNER */
-export const MENTORS = 'mentors';
 export const LEARNER_PREFERENCES = 'learner_preferences';
 export const CURRENT_MENTOR = 'current_mentor';
 export const CLEAR_MENTOR = 'clear_mentor';

@@ -1,11 +1,10 @@
 import axios from 'axios';
-import _  from 'lodash' ;
+import _ from 'lodash';
 import { browserHistory } from 'react-router';
 import { mentorSortPrefs, mentorSearchByTerm } from '../utils/utils';
 
 import {
   ROOT_URL,
-  MENTORS,
   LEARNER_PREFERENCES,
   CURRENT_MENTOR,
   CURRENT_MENTOR_REVIEWS,
