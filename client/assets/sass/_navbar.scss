@@ -71,6 +71,21 @@
     border-radius: 0;
     box-shadow: 0 3px 10px rgba(0,0,0,0.4);
 
+    li {
+      padding: 6px 8px;
+      border-bottom: 1px solid $bootstrap-gray;
+    }
+
+    li a {
+      display: flex;
+      flex-flow: row no-wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    li div {
+      display: block;
+    }
 
     li:first-child {
       padding: 5px 8px;
@@ -86,9 +101,6 @@
     }
 
     li {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       padding: 6px 8px;
       border-bottom: 1px solid $bootstrap-gray;
     }
@@ -98,9 +110,14 @@
     }
 
     i.fa-comment-o {
-      color: black;
+      color: inherit;
       font-size: 16px;
       margin-left: 5px;
+    }
+
+    i.fa-circle {
+      color: lightgreen;
+      font-size: 16px;
     }
 
   }

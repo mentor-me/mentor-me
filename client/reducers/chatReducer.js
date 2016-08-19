@@ -15,7 +15,7 @@ import {
 
 const INITIAL_STATE = {
   conversations: [],
-  messages: [ {conversationId: -1} ],
+  messages: [ {conversationId: 0} ],
   currentConversation: {id: null, recipient: null },
   user: null,
   loading: false,
@@ -33,7 +33,7 @@ export default (state = INITIAL_STATE, action) => {
         messages: [ ...state.messages, action.payload ]
       };
     case CLEAR_MESSAGES:
-      return { ...state, messages: [] };
+      return { ...state, messages: [ {conversationId: 0} ] };
     case CURRENT_CONVERSATION:
       return { ...state, currentConversation: action.payload };
     case RECIEVE_SOCKET:
@@ -44,11 +44,11 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, loading: false };
     case REMOVE_NOTIFICATION:
       return { ...state, notifications: [
-        ...state.notifications.filter( id => { action.payload[0] !== id || action.payload[1] !== id } )
+        ...state.notifications.filter( id => id !== action.payload )
       ]};
     case ADD_NOTIFICATION:
       return { ...state, notifications:
-        _.uniq([ ...state.notifications, action.payload ])
+        _.uniq([ ...state.notifications, ...action.payload ])
       };
     default:
       return state;

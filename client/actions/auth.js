@@ -7,7 +7,8 @@ import {
   CURRENT_MENTOR,
   USER_CONVERSATIONS,
   AUTH_ERROR,
-  CLOSE_CHAT_BOX
+  CLOSE_CHAT_BOX,
+  ADD_NOTIFICATION,
 } from './actionTypes';
 
 export function authError(error) {
@@ -25,7 +26,7 @@ export function authError(error) {
  export function loginUser(loginProps) {
    var updatedInfo = { lastLogIn: new Date(), availability: true };
    var obj = {...loginProps, ...updatedInfo};
-   console.log("this is the obj ", obj)
+  //  console.log("this is the obj ", obj)
    return dispatch => {
      axios.put('/api/login', obj)
        .then(response => {
@@ -88,12 +89,12 @@ export function authError(error) {
    }
  }
 
- export function signoutUser() {
-   //Remove token
+
+export function signoutUser(uid) {
    return dispatch => {
      dispatch({ type: UNAUTH_USER });
      dispatch({ type: CLOSE_CHAT_BOX });
-     //Manually remove all reduxPersist on logout
+     // Manually remove all reduxPersist on logout
      localStorage.removeItem('reduxPersist:appointments');
      localStorage.removeItem('reduxPersist:auth');
      localStorage.removeItem('reduxPersist:chat');
@@ -103,7 +104,12 @@ export function authError(error) {
      //Remove all other state
      localStorage.removeItem('token');
      localStorage.removeItem('user');
+     // Redirect to home page
      browserHistory.push('/');
+     axios.put(`/api/logout/${uid}`)
+     .then(response => {
+       console.log('Successfully signed out user.')
+     })
    }
  }
 
@@ -145,7 +151,7 @@ export function signupMentor(loginProps) {
         })
         browserHistory.push(`/mentor/${data.username}`);
       })
-      .catch(() => {
+      .catch( err => {
         // dispatch AUTH_ERROR
         dispatch(authError("Email and/or Username currently in Use "));
       });
@@ -168,7 +174,6 @@ export function loginMentor(loginProps) {
         })
         browserHistory.push(`/mentor/${response.data.username}`);
         getInitialConversations(response.data.id, dispatch);
-        // socket.emit('join global', response.data.username)
       })
       .catch(() => {
         // dispatch AUTH_ERROR
@@ -204,7 +209,7 @@ export function updateMentor(formProps, currentUser){
       })
       browserHistory.push(`/mentor/${response.data.username}`)
     })
-    .catch((err) => {
+    .catch( err => {
       console.log("You could NOT become a mentor", err);
     });
 
@@ -231,7 +236,7 @@ export function updateLearner(formProps, currentUser){
       })
       browserHistory.push(`/mentor/${response.data.username}`)
     })
-    .catch((err) => {
+    .catch( err => {
       console.log("You could not become a learner", err);
 
     });
@@ -243,13 +248,34 @@ function getInitialConversations(uid, dispatch) {
   const endpoint = `/api/conversations/${uid}`;
   axios.get(endpoint)
     .then(response => {
-      console.log('----user conversations!!!!!----', response.data)
+      console.log('User conversations----', response.data)
       dispatch({
         type: USER_CONVERSATIONS,
         payload: response.data
       });
+      let convoIdArr = response.data.map( convo => convo.id );
+      return convoIdArr;
     })
-    .catch((err) => {
+    .then( convoIdArr => {
+      console.log('convoIdArr', convoIdArr)
+      convosWithUnreadMessages(convoIdArr, dispatch);
+    })
+    .catch( err => {
       console.log('fetchConversations Error: ', err);
+  })
+}
+
+function convosWithUnreadMessages(convoIdArr, dispatch) {
+  const endpoint = `/api/conversations/unread`;
+  axios.put(endpoint, convoIdArr)
+    .then(response => {
+      console.log('convosWithUnreadMessages----', response.data)
+      dispatch({
+        type: ADD_NOTIFICATION,
+        payload: response.data
+      })
+    })
+    .catch(err => {
+      console.log('convosWithUnreadMessages Error: ', err);
   })
 }

@@ -27,7 +27,7 @@ class ChatBox extends Component {
     socket.emit('chat mounted', currentConversation.id);
     /* Register socket ID */
     socket.on('receive socket', socketID => {
-      console.log('RECIEVING SOCKET ID: ', socketID)
+      // console.log('RECIEVING SOCKET ID: ', socketID)
       this.props.receiveSocket(socketID)
     });
 
@@ -38,22 +38,20 @@ class ChatBox extends Component {
 
     socket.on('notification', data => {
       console.log('RECIEVING NOTIFICATION FROM SOCKET: ', data)
-      this.props.addNotification(data)
+      this.props.addNotification(data.id)
     });
 
   }
 
   componentWillReceiveProps(nextProps) {
     let { messages } = this.props;
-    if (nextProps.messages.length && messages[0].conversationId) {
-        if (nextProps.messages[0].conversationId !== messages[0].conversationId ) {
-          this.setState({
-            messages: [...nextProps.messages],
-            loading: false
-          }, () => this.scrollToBottom() )
-        }
-      }
+    if (nextProps.messages[0].conversationId !== messages[0].conversationId ) {
+      this.setState({
+        messages: [...nextProps.messages],
+        loading: false
+      }, () => this.scrollToBottom() )
     }
+  }
 
   newMessage(msg) {
     this.setState({
@@ -134,8 +132,7 @@ class ChatBox extends Component {
   }
 
   render() {
-
-    let { messages, loading } = this.props;
+    let { messages, loading, currentConversation } = this.props;
     let { open } = this.props.chatBox;
     let show = open ? 'show' : 'hide';
     let chatBox = `chatBox ${show}`;
@@ -143,7 +140,7 @@ class ChatBox extends Component {
     return (
       <div className={ chatBox }>
         <div className="utility-bar">
-          <span className="title">Chat</span>
+          <span className="title"> { currentConversation.recipient } </span>
           <div className="icon-container">
             <i className="fa fa-video-camera" onClick={ this.startVideoChat.bind(this) } />
             <i className="fa fa-close" onClick={ this.closeChatBox.bind(this) } />
@@ -154,7 +151,7 @@ class ChatBox extends Component {
           {/*{ this.state.messages.length ?  this.renderMessages() : <Loader /> }*/}
         </div>
         <div className="input-box">
-          <form onSubmit={ this.handleSubmit.bind(this) }>
+          <form onSubmit={ this.handleSubmit.bind(this) } >
             <div className="form-group">
               <input className="form-control" ref="msg" autoComplete="off" type="text" id="msg-input" />
             </div>
@@ -167,6 +164,7 @@ class ChatBox extends Component {
 
 function mapStateToProps(state) {
   return {
+    currentConversation: state.chat.currentConversation,
     chat: state.chat,
     loading: state.chat.loading,
     chatBox: state.chatBox,
