@@ -45,16 +45,12 @@ class ChatBox extends Component {
 
   componentWillReceiveProps(nextProps) {
     let { messages } = this.props;
-    // if (messages.length && nextProps.messages.length) {
-      // if (nextProps.messages[0].conversationId && messages[0].conversationId) {
-        if (nextProps.messages[0].conversationId !== messages[0].conversationId ) {
-          this.setState({
-            messages: [...nextProps.messages],
-            loading: false
-          }, () => this.scrollToBottom() )
-        }
-      // }
-    // }
+    if (nextProps.messages[0].conversationId !== messages[0].conversationId ) {
+      this.setState({
+        messages: [...nextProps.messages],
+        loading: false
+      }, () => this.scrollToBottom() )
+    }
   }
 
   newMessage(msg) {
@@ -156,7 +152,7 @@ class ChatBox extends Component {
           {/*{ this.state.messages.length ?  this.renderMessages() : <Loader /> }*/}
         </div>
         <div className="input-box">
-          <form onSubmit={ this.handleSubmit.bind(this) }>
+          <form onSubmit={ this.handleSubmit.bind(this) } >
             <div className="form-group">
               <input className="form-control" ref="msg" autoComplete="off" type="text" id="msg-input" />
             </div>

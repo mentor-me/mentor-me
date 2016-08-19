@@ -13,8 +13,8 @@ import { accessConversation, currentConversation, openChatBox } from '../actions
 class MentorProfile extends Component {
 
 componentWillMount() {
+  // local storage IS available at this stage
   let user = JSON.parse(localStorage.getItem('user'));
-  // let { auth } = this.props;
   if (user.primary_role == 1) {
     this.props.fetchMentorReviews(user.id)
   }
@@ -33,7 +33,6 @@ loadChatMessages(convo) {
     learnerId: auth.id
   }
   this.props.accessConversation( data );
-  // this.props.openChatBox();
 }
 
 renderTopCard() {
@@ -70,33 +69,51 @@ renderTopCard() {
       } else {
         return (
           <div className="card mentor-profile">
-            <div className="card-block">
-              <h3 className="card-title mentor-name"> {currentMentor.firstname} {currentMentor.lastname} </h3>
-              <div className="btn-global pull-right">Your Avg. Rating: {currentMentor.rating ? (currentMentor.rating / 100) : 'N/A'}</div>
+            <div className="card-block btn-container">
+              <div className="mentor-meta">
+                Total No. of Reviews: { auth.reviewCount ? auth.reviewCount : 'N/A' }
+              </div>
+              <div className="mentor-meta">
+                Your Avg. Rating: { auth.rating ? (auth.rating / 100) : 'N/A' }
+              </div>
             </div>
           </div>
-        )
+        );
       }
     }
   }
 
   renderAboutCard() {
-
     let { currentMentor, auth } = this.props;
     if (currentMentor) {
+    if (auth.secondary_role == 2) {
       return (
         <div className="card fixed-height">
           <div className="card-block">
             <div className="picture-title">
-              <Gravatar email={currentMentor.email} https />
+              <Gravatar email={ currentMentor.email } https />
               <h4 className="mentor-name"> {currentMentor.firstname} {currentMentor.lastname} </h4>
             </div>
             <div className="card-text">
-            { currentMentor.description }
+              { currentMentor.description }
             </div>
           </div>
         </div>
       );
+    } else {
+      return (
+        <div className="card fixed-height">
+          <div className="card-block">
+            <h4 className="card-title">
+              {auth.firstname} {auth.lastname}
+            </h4>
+            <div className="card-text">
+              { auth.description }
+            </div>
+          </div>
+        </div>
+        );
+      }
     }
   }
 
@@ -105,7 +122,7 @@ renderTopCard() {
     let { Skills } = this.props.currentMentor;
     // TODO: DO NOT HARD CODE THIS - FIND DIFF WAY TO ACCESS
     // CURRENT MENTOR SKILLS FOR MENTOR!!!!
-    let tempPills = [{title: 'coffee'}, {title: 'tea'}];
+    let tempPills = [ {title: 'coffee'}, {title: 'tea'} ];
       let pills = tempPills.map((skill, i) => {
         return <SkillPill skill={ skill.title } key={ i } />
       })
@@ -113,28 +130,30 @@ renderTopCard() {
         <div className="card fixed-height">
           <div className="card-block">
             <h4 className="card-title">
-            Areas of Expertise
+              Areas of Expertise
             </h4>
             <div className="card-text">
-            { pills }
+              { pills }
             </div>
           </div>
         </div>
       );
-  }
+    }
 
   renderReview() {
     let { currentMentorReviews, currentMentor, mentor, auth } = this.props;
     let reviews = auth.secondary_role == 2 ? currentMentorReviews : mentor.reviews;
-      return reviews.map((review, i) => {
-        return <ReviewEntry mentor={currentMentor} review={review} key={i} />
-      })
+    return reviews.map((review, i) => {
+      return <ReviewEntry mentor={currentMentor} review={review} key={i} />
+    })
   }
 
   render() {
     let { loading } = this.props;
     if (loading) {
-      return (<Loader />)
+      return (
+        <Loader />
+      );
     } else {
       return (
         <div className="spacer30 mentor-profile">

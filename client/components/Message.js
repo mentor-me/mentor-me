@@ -36,7 +36,7 @@ export default class Message extends Component {
 
       // -1 is the default userId if no message history exists
       // Allows for default message to be on left side
-      if(msg.userId == userId || -1){
+      if(msg.userId == userId || msg.userId == -1){
         return (
           <div onClick={ () => this.handleClick(msg.content) } className="left">
             <div>

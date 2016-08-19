@@ -428,6 +428,21 @@ div.mentor-profile i.fa {
   margin-left: 5px;
 }
 
+div.mentor-profile .mentor-meta {
+  text-align: center;
+  padding: 8px 20px;
+  display: block;
+  border: 1px solid #eee;
+  color: #d94744;
+  border-radius: none;
+  background: #fff;
+  width: 250px;
+}
+
+div.mentor-profile .mentor-meta:first-child {
+  margin-right: 20px;
+}
+
 .modal-header {
   text-align: right;
   color: #d94744;
