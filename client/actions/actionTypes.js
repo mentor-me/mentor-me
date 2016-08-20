@@ -53,3 +53,4 @@ export const OPEN_CHAT_BOX = 'open_chat_box';
 export const CLOSE_CHAT_BOX = 'close_chat_box';
 export const ADD_NOTIFICATION = 'add_notification';
 export const REMOVE_NOTIFICATION = 'remove_notification';
+export const MARK_AS_READ = 'mark_as_read';

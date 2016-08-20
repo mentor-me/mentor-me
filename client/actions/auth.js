@@ -19,6 +19,13 @@ export function authError(error) {
   };
 }
 
+function removeSensitiveUserData(data) {
+  delete data.passwordHash;
+  delete data.salt;
+  delete data.password;
+  return data;
+}
+
 ////////////////////////////////////////////
 ////////// LEARNER RELATED ACTIONS ////////
 //////////////////////////////////////////
@@ -26,23 +33,20 @@ export function authError(error) {
  export function loginUser(loginProps) {
    var updatedInfo = { lastLogIn: new Date(), availability: true };
    var obj = {...loginProps, ...updatedInfo};
-  //  console.log("this is the obj ", obj)
    return dispatch => {
      axios.put('/api/login', obj)
        .then(response => {
-         //replace line below
+        let data = removeSensitiveUserData(response.data);
         localStorage.setItem('token', "response.headers.auth");
-        localStorage.setItem('user', JSON.stringify(response.data));
+        localStorage.setItem('user', JSON.stringify(data));
         dispatch({
           type: AUTH_USER,
-          payload: response.data
+          payload: data
         })
          browserHistory.push(`/learner/${response.data.username}`);
          getInitialConversations(response.data.id, dispatch);
        })
        .catch(() => {
-         // dispatch AUTH_ERROR
-        //  console.log("this is the response error",response)
          dispatch(authError("The email and Password do not match"));
        });
    }
@@ -72,13 +76,13 @@ export function authError(error) {
    return dispatch => {
      axios.post('/api/signup', data)
        .then(response => {
-         //replace line below
+         let data = removeSensitiveUserData(response.data);
          localStorage.setItem('token', "response.headers.auth");
-         localStorage.setItem('user', JSON.stringify(response.data));
+         localStorage.setItem('user', JSON.stringify(data));
          console.log('sign up resp: ', response)
          dispatch({
            type: AUTH_USER,
-           payload: response.data
+           payload: data
          })
          browserHistory.push(`/learner/${data.username}`);
        })
@@ -142,17 +146,16 @@ export function signupMentor(loginProps) {
   return dispatch => {
     axios.post('/api/mentor/signup', data)
       .then(response => {
-        //replace line below
+        let data = removeSensitiveUserData(response.data);
         localStorage.setItem('token', "response.headers.auth");
-        localStorage.setItem('user', JSON.stringify(response.data));
+        localStorage.setItem('user', JSON.stringify(data));
         dispatch({
           type: AUTH_USER,
-          payload: response.data
+          payload: data
         })
         browserHistory.push(`/mentor/${data.username}`);
       })
       .catch( err => {
-        // dispatch AUTH_ERROR
         dispatch(authError("Email and/or Username currently in Use "));
       });
   }
@@ -165,12 +168,13 @@ export function loginMentor(loginProps) {
     axios.put('/api/mentor/login', obj)
       .then(response => {
         //replace line below
+        let data = removeSensitiveUserData(response.data);
         localStorage.setItem('token', "response.headers.auth");
-        localStorage.setItem('user', JSON.stringify(response.data));
+        localStorage.setItem('user', JSON.stringify(data));
         console.log(response.data)
         dispatch({
           type: AUTH_USER,
-          payload: response.data
+          payload: data
         })
         browserHistory.push(`/mentor/${response.data.username}`);
         getInitialConversations(response.data.id, dispatch);
@@ -234,7 +238,7 @@ export function updateLearner(formProps, currentUser){
         type: AUTH_USER,
         payload: response.data
       })
-      browserHistory.push(`/mentor/${response.data.username}`)
+      browserHistory.push(`/mentor/${response.data.username}`);
     })
     .catch( err => {
       console.log("You could not become a learner", err);

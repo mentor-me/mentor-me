@@ -486,15 +486,19 @@ div.mentor-profile .mentor-meta {
   text-align: center;
   padding: 8px 20px;
   display: block;
-  border: 1px solid #eee;
+  border: 1px solid #d94744;
   color: #d94744;
   border-radius: none;
   background: #fff;
   width: 250px;
 }
 
+div.mentor-profile .mentor-meta {
+  margin-left: 20px;
+}
+
 div.mentor-profile .mentor-meta:first-child {
-  margin-right: 20px;
+  margin-left: 0;
 }
 
 .modal-header {
@@ -634,7 +638,7 @@ button.rbc-input::-moz-focus-inner {
   background-image: none;
   border: 1px solid #ccc;
   padding: .375rem 1rem;
-  border-radius: 4px;
+  border-radius: 0;
   line-height: normal;
   white-space: nowrap;
 }
@@ -1186,6 +1190,28 @@ button.rbc-input::-moz-focus-inner {
 
 .rbc-time-content > .rbc-day-slot {
   width: 100%;
+}
+
+.rbc-event {
+  background-color: #cc4d4b;
+}
+
+div.ReactModal__Content {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4) !important;
+  padding: 15px;
+}
+
+i.fa-remove {
+  font-size: 18px;
+}
+
+i.fa-remove:hover {
+  cursor: pointer;
+}
+
+.modal-header {
+  border-bottom: 0;
+  padding: 0;
 }
 
 .dv-star-rating label {
