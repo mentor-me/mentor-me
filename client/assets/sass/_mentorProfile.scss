@@ -62,15 +62,19 @@ div.mentor-profile {
     text-align: center;
     padding: 8px 20px;
     display: block;
-    border: 1px solid #eee;
+    border: 1px solid $accent-red;
     color: $accent-red;
     border-radius: none;
     background: $white;
     width: 250px;
   }
 
+  .mentor-meta {
+    margin-left: 20px;
+  }
+
   .mentor-meta:first-child {
-    margin-right: 20px;
+    margin-left: 0;
   }
 
 }

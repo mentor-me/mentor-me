@@ -114,7 +114,7 @@ button.rbc-input::-moz-focus-inner {
   background-image: none;
   border: 1px solid #ccc;
   padding: .375rem 1rem;
-  border-radius: 4px;
+  border-radius: 0;
   line-height: normal;
   white-space: nowrap;
 }
@@ -548,4 +548,18 @@ button.rbc-input::-moz-focus-inner {
 
 div.ReactModal__Content {
   box-shadow: 0px 4px 10px rgba(0,0,0,0.4) !important;
+  padding: 15px;
+}
+
+i.fa-remove {
+  font-size: 18px;
+}
+
+i.fa-remove:hover {
+  cursor: pointer;
+}
+
+.modal-header {
+  border-bottom: 0;
+  padding: 0;
 }

@@ -85,7 +85,7 @@ return (
 
     <div className="modal-header">
 
-      <i className="fa fa-times-circle-o fa-2x" aria-hidden="true" onClick={this.props.close}></i>
+      <i className="fa fa-remove fa-2x" aria-hidden="true" onClick={this.props.close}></i>
     </div>
 
     <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
