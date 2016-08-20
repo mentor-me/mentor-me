@@ -19,10 +19,9 @@ var cookieParser  = require('cookie-parser');
 var session       = require('express-session');
 var config        = require('./config/config');
 // sockets
-var server        = http.createServer(app);
-// var server        = https.createServer(app);
-var socketIo      = require('socket.io')
 
+var server        = http.createServer(app);
+var socketIo      = require('socket.io')
 
 // Utilities
 require('./config/passport')(passport);

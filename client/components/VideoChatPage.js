@@ -70,8 +70,9 @@ export default class VideoChatPage extends Component {
             <div id="invite-controls" className={show}>
               <span className={inverseShow}> <Loader /> </span>
               {/*<p className="instructions">Invite another Video Client</p>*/}
-              <input id="invite-to" type="text" ref="invitor" placeholder="Identity to send an invite to" readonly />
+              <input id="invite-to" type="text" ref="invitor" placeholder="Identity to send an invite to" />
               <button id="button-invite">Click here to start now!</button>
+              <button id="button-disconnect">Click here to disconnect now!</button>
             </div>
           </div>
           </div>
