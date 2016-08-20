@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
-
-import { fetchConversations, currentConversation, openChatBox, removeNotification, fetchMessages, clearMessages } from '../actions/chat';
 import { signoutUser } from '../actions/auth';
 import _ from 'underscore';
-
+import { fetchConversations,
+         currentConversation,
+         openChatBox,
+         removeNotification,
+         fetchMessages,
+         clearMessages,
+         markAsRead
+       } from '../actions/chat';
 
 class Navbar extends Component {
 
@@ -26,15 +31,18 @@ class Navbar extends Component {
 
   loadChatMessages(convo) {
     console.log('clicked conversation!', convo);
-    let { chat, auth, chatBox } = this.props;
+    let { chat, auth, chatBox, mentorList } = this.props;
     let conversationWith = convo.name.replace(auth.currentUser.username, '');
     socket.emit('disconnect chat', chat.currentConversation.id);
     socket.emit('chat mounted', convo.id);
+    let mentorObj = mentorList.filter(mentor => mentor.username == conversationWith);
     this.props.currentConversation({
       id: convo.id,
-      recipient: conversationWith
+      recipient: conversationWith,
+      availability: mentorObj[0].availability ? true : false
     });
     this.props.removeNotification(convo.id);
+    this.props.markAsRead(convo.id);
     if (!chatBox.open) { this.props.openChatBox(); }
     this.props.fetchMessages( convo.id );
   }
@@ -182,4 +190,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { signoutUser, fetchConversations, currentConversation, openChatBox, removeNotification, fetchMessages, clearMessages })(Navbar);
+export default connect(mapStateToProps, { signoutUser, fetchConversations, currentConversation, openChatBox, removeNotification, fetchMessages, clearMessages, markAsRead })(Navbar);

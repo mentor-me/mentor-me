@@ -28,15 +28,14 @@ class ChatBox extends Component {
       this.props.receiveSocket(socketID);
     });
     socket.on('message', msg => {
-      console.log('RECIEVING MESSAGE FROM SOCKET: ', msg);
+      // console.log('RECIEVING MESSAGE FROM SOCKET: ', msg);
       this.newMessage(msg);
     });
 
     socket.on('notification', data => {
       console.log('RECIEVING NOTIFICATION FROM SOCKET: ', data);
       let { id } = this.props.currentConversation;
-      /* Only provide notification if msg not from person
-      you're currently chatting with */
+      /* Only add notification if msg not from user you're currently chatting to */
       if (data.id != id) {
         this.props.addNotification(data.id);
       }
@@ -65,7 +64,7 @@ class ChatBox extends Component {
   }
 
   handleSubmit(e) {
-    console.log('submitted message');
+    // console.log('submitted message');
     let { currentConversation } = this.props.chat;
     let { auth } = this.props;
     let text = ReactDOM.findDOMNode(this.refs.msg).value;
@@ -73,7 +72,8 @@ class ChatBox extends Component {
       content: text.trim(),
       userId: auth.currentUser.id,
       conversationId: currentConversation.id,
-      createdAt: moment().format()
+      createdAt: moment().format(),
+      read: currentConversation.availability
     }
     e.preventDefault();
     if (text.length) {

@@ -7,7 +7,7 @@ import SkillPill from './SkillPill';
 import ReviewEntry from './ReviewEntry';
 import Loader from './Loader';
 
-import { fetchMentorReviews } from '../actions/mentors';
+import { fetchMentorReviews, incrementTotalVisits } from '../actions/mentors';
 import { accessConversation, currentConversation, openChatBox } from '../actions/chat';
 
 class MentorProfile extends Component {
@@ -15,9 +15,10 @@ class MentorProfile extends Component {
 componentWillMount() {
   // local storage IS available at this stage
   let user = JSON.parse(localStorage.getItem('user'));
-  if (user.primary_role == 1) {
-    this.props.fetchMentorReviews(user.id)
-  }
+  this.props.fetchMentorReviews(user.id);
+  // if (user.secondary_role == 2) {
+    this.props.incrementTotalVisits(user.id);
+  // }
 }
 
 loadChatMessages(convo) {
@@ -29,7 +30,7 @@ loadChatMessages(convo) {
     private: true,
     mentorId: currentMentor.id,
     learnerId: auth.id,
-    availability: currentMentor.availability
+    availability: currentMentor.availability ? true : false
   }
   this.props.accessConversation( data );
 }
@@ -74,6 +75,9 @@ renderTopCard() {
               </div>
               <div className="mentor-meta">
                 Your Avg. Rating: { auth.rating ? (auth.rating / 100) : 'N/A' }
+              </div>
+              <div className="mentor-meta">
+                Total Profile Views: { auth.totalVisit ? auth.totalVisit : 'N/A' }
               </div>
             </div>
           </div>
@@ -190,4 +194,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { accessConversation, fetchMentorReviews, currentConversation, openChatBox })(MentorProfile);
+export default connect(mapStateToProps, { accessConversation, fetchMentorReviews, currentConversation, openChatBox, incrementTotalVisits })(MentorProfile);
