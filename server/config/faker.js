@@ -6,7 +6,7 @@ var userId = Math.floor(Math.random() * 50) + 1
 var mentorId = Math.floor(Math.random() * 4) + 1
 
 // buildLearnerUser(10)
-// buildMentorUser(3)
+ buildMentorUser(3)
 // buildAppointmentData(5)
 // buildReviewData(5)
 
@@ -23,17 +23,23 @@ function getAppointmentDummyObj() {
   return appointment;
 };
 
+
+
 function getMentorDummyObj() {
 
   var mentorUser = {
       username       : faker.Internet.userName(),
       firstname      : faker.Name.firstNameFemale(),
       lastname       : faker.Name.lastName(),
+      availability    : true,
       email          : faker.Internet.email(),
       password       : faker.Internet.userName(),
-      role           : 1,
-      skills         : faker.Lorem.words(),
-      preferences    : {
+      description    : " some description",
+      skills         : ["lovemaking", "riding dirty"],
+      zip            : faker.Address.zipCode,
+      primary_role   : "1",
+      lastLogIn      : faker.Date.recent,
+      qualities    : {
           visual     : true,
           academic   : false,
           remote     : true,
@@ -44,15 +50,36 @@ function getMentorDummyObj() {
 
 };
 
+
+let data = {
+  username: loginProps.username,
+  firstname: loginProps.firstname,
+  lastname: loginProps.lastname,
+  availability: true,
+  email: loginProps.email,
+  password: loginProps.password,
+  zip: loginProps.zipCode,
+  secondary_role: "2",
+  lastLogIn: new Date(),
+  preferences: {
+    visual: loginProps.learnerStyle[0] == "Visual" ? 'true' : 'false',
+    academic: loginProps.learnerStyle[1] == "Academic" ? 'true' : 'false',
+    remote: loginProps.meetingFormat[0] == "Remote" ? 'true' : 'false',
+    inPerson: loginProps.meetingFormat[1] == "In Person" ? 'true' : 'false'
+  }
+}
+
 function getLearnerDummyObj() {
 
   var learnerUser = {
         username       : faker.Internet.userName(),
         firstname      : faker.Name.firstNameFemale(),
         lastname       : faker.Name.lastName(),
+        availability   : true,
         email          : faker.Internet.email(),
         password       : faker.Internet.userName(),
-        role           : 2,
+        secondary_role : "2",
+        lastLogIn      : new Date(),
         skills         : faker.Lorem.words(),
         preferences    : {
             visual     : true,
@@ -146,13 +173,14 @@ function buildLearnerUser(qty) {
 function buildMentorUser(qty) {
     for (var i = 0; i < qty; i++) {
 
+    console.log('created dummy data mentor users', mentorObj);
     var mentorObj = getMentorDummyObj()
 
-    const endpoint=`http://localhost:3000/api/signup`;
+    const endpoint=`http://localhost:3000/api/mentor/signup`;
 
       axios.post(endpoint, mentorObj)
         .then(response => {
-          console.log('created dummy data mentor users');
+          console.log('actually created dummy data mentor users');
         })
         .catch((error) => {
           console.log('in catch err ', error);
