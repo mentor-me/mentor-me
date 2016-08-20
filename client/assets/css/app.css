@@ -407,6 +407,12 @@ div.mentor-card span.mentor-card-name {
   }
 }
 
+input[type="checkbox"] {
+  /* change "blue" browser chrome to yellow */
+  -webkit-filter: grayscale(100%) brightness(1.1);
+          filter: grayscale(100%) brightness(1.1);
+}
+
 div.mentor-profile div.picture-title {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1969,4 +1975,9 @@ select.form-control:hover {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
+}
+
+input[type="checkbox"] {
+  -webkit-filter: grayscale(100%) brightness(1.2);
+          filter: grayscale(100%) brightness(1.2);
 }

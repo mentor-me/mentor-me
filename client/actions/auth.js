@@ -72,7 +72,6 @@ function removeSensitiveUserData(data) {
       inPerson: loginProps.meetingFormat[1] == "In Person" ? 'true' : 'false'
     }
   }
-
    return dispatch => {
      axios.post('/api/signup', data)
        .then(response => {
@@ -92,7 +91,6 @@ function removeSensitiveUserData(data) {
        });
    }
  }
-
 
 export function signoutUser(uid) {
    return dispatch => {
@@ -123,7 +121,6 @@ export function signoutUser(uid) {
 
 export function signupMentor(loginProps) {
   // console.log("this is in singup mentor", loginProps.learnerStyle[0])
-  var
  let data = {
    username: loginProps.username,
    firstname: loginProps.firstname,
@@ -143,7 +140,6 @@ export function signupMentor(loginProps) {
      inPerson: loginProps.meetingFormat[1] == "In Person" ? 'true' : 'false'
    }
  }
-
   return dispatch => {
     axios.post('/api/mentor/signup', data)
       .then(response => {

@@ -17,6 +17,7 @@ import {
   MARK_AS_READ,
 } from './actionTypes';
 
+/* Default message obj for empty chat */
 var emptyChat = {
   content: 'This conversation has no message history yet.',
   read: true,
@@ -40,31 +41,29 @@ export function accessConversation(data) {
             availability: data.availability
           }
         });
-        // Now get the messages for that conversation
+        /* Now get the messages for that conversation */
         axios.get(`/api/conversations/${response.data.id}/messages`)
           .then(response => {
-            console.log('messages from newly initiated conversation', response.data);
-            // If message history, dispatch conversation messages
-              dispatch({
-                type: LOADING_MESSAGES_COMPLETE
-              });
+            // console.log('messages from newly initiated conversation', response.data);
+            /* If message history, dispatch conversation messages */
+              dispatch({ type: LOADING_MESSAGES_COMPLETE });
               dispatch({
                 type: CONVERSATION_MESSAGES,
                 payload: response.data.length ? response.data : [emptyChat]
               });
           })
           .catch(err => {
-            console.log('Failed to fetch messages in ACCESS CONVO: ', err)
+            console.log('Failed to fetch messages in ACCESS CONVO: ', err);
           })
         })
         .catch(err => {
-          console.log('Failed to access conversation: ', err)
+          console.log('Failed to access conversation: ', err);
         })
       }
     }
 
 export function fetchConversations(uid) {
-  console.log(uid)
+  // console.log(uid)
   const endpoint = `/api/conversations/${uid}`;
   return dispatch => {
     axios.get(endpoint)
@@ -84,15 +83,11 @@ export function fetchConversations(uid) {
 export function fetchMessages(conversationId) {
   const endpoint = `/api/conversations/${conversationId}/messages`;
   return dispatch => {
-    dispatch({
-      type: LOADING_MESSAGES
-    })
+    dispatch({ type: LOADING_MESSAGES });
     axios.get(endpoint)
       .then(response => {
-        console.log('INSIDE FETCH MESSAGES------', response.data)
-        dispatch({
-            type: LOADING_MESSAGES_COMPLETE
-        })
+        // console.log('INSIDE FETCH MESSAGES------', response.data)
+        dispatch({ type: LOADING_MESSAGES_COMPLETE });
         dispatch({
           type: CONVERSATION_MESSAGES,
           payload: response.data.length ? response.data : [emptyChat]

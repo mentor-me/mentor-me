@@ -30,7 +30,7 @@ class Navbar extends Component {
   }
 
   loadChatMessages(convo) {
-    console.log('clicked conversation!', convo);
+    // console.log('clicked conversation!', convo);
     let { chat, auth, chatBox, mentorList } = this.props;
     let conversationWith = convo.name.replace(auth.currentUser.username, '');
     socket.emit('disconnect chat', chat.currentConversation.id);
@@ -74,23 +74,26 @@ class Navbar extends Component {
                       { online ? <i className="fa fa-circle" /> : '' }
                     </div>
                   </MenuItem>);
-      }, this)
+      }, this);
     }
   }
 
   renderNavLinks() {
     const { auth, signoutUser, chat } = this.props;
     if (auth.authenticated && auth.currentUser) {
-      // call fetch conversations!
       /* This is navbar for logged in LEARNER */
-      // auth.currentUser.secondary_role = 2
       if (auth.currentUser.secondary_role == "2") {
         return (
           <ul className="nav navbar-nav pull-xs-right">
-            <li className="nav-item">
-              <DropdownButton eventKey="4" title={ chat.notifications.length ? <i className="fa fa-comments-o" /> : <i className="fa fa-comments-o none" /> } noCaret id="dropdown-no-caret">
-                <MenuItem>Conversations ({chat.conversations.length}) </MenuItem>
-                { this.loadConversations() }
+            <li className="nav-item" onClick={ () => console.log('clicked messages!') } >
+              <DropdownButton
+                eventKey="4"
+                title={ chat.notifications.length ? <i className="fa fa-comments-o" /> : <i className="fa fa-comments-o none" /> }
+                noCaret id="dropdown-no-caret">
+                  <MenuItem>
+                    Conversations ({chat.conversations.length})
+                  </MenuItem>
+                  { this.loadConversations() }
               </DropdownButton>
             </li>
             <li className="nav-item">
@@ -112,8 +115,6 @@ class Navbar extends Component {
         );
       }
       /* This is navbar for logged in MENTOR */
-      /* Need to clarify what secondary role is */
-      // if (auth.currentUser.secondary_role) {
       else {
         return (
           <ul className="nav navbar-nav pull-xs-right">

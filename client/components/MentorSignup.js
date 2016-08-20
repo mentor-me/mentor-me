@@ -73,14 +73,14 @@ class SignupMentor extends Component {
                   </div>
                   <div className="error-message">{learnerStyle.touched && learnerStyle.error ? learnerStyle.error : ''}</div>
                   <div className={`form-group ${learnerStyle.touched && learnerStyle.error ? 'has-danger' : ''}`}>
-                    <label><small><strong>What is your Qualities learning style.</strong><em className="sub-form">Please hold command choose more than one</em></small></label>
+                    <label><small><strong>What is your learning style?</strong><em className="sub-form">Please hold command to choose more than one.</em></small></label>
                     <select  className="form-control form-muti"  multiple {...learnerStyle} >
                       {this.createLearnerStylePreferences()}
                     </select>
                   </div>
                   <div className="error-message">{meetingFormat.touched && meetingFormat.error ? meetingFormat.error : ''}</div>
                   <div className={`form-group ${meetingFormat.touched && meetingFormat.error ? 'has-danger' : ''}`}>
-                    <label ><small><strong>How would you like to meet.   </strong>  <em className="sub-form">Please hold command choose more than one</em></small></label>
+                    <label ><small><strong>How would you like to meet?</strong><em className="sub-form">Please hold command to choose more than one.</em></small></label>
                     <select className="form-control form-muti" multiple {...meetingFormat} >
                       {this.createMeetingFormatPreferences()}
                     </select>
