@@ -12,7 +12,7 @@ import {
 } from './actionTypes';
 
 export function authError(error) {
-  console.log("I'm in authError")
+  // console.log("I'm in authError")
   return {
     type: AUTH_ERROR,
     payload: error
@@ -122,7 +122,8 @@ export function signoutUser(uid) {
 //////////////////////////////////////////
 
 export function signupMentor(loginProps) {
-  console.log("this is in singup mentor", loginProps.learnerStyle[0])
+  // console.log("this is in singup mentor", loginProps.learnerStyle[0])
+  var
  let data = {
    username: loginProps.username,
    firstname: loginProps.firstname,
@@ -131,7 +132,7 @@ export function signupMentor(loginProps) {
    email: loginProps.email,
    password: loginProps.password,
    description: loginProps.description,
-   skills: loginProps.skills.split(' '),
+   skills: loginProps.skills.split(',').map(skill => skill.trim()),
    zip: loginProps.zipCode,
    primary_role: "1",
    lastLogIn: new Date(),
