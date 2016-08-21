@@ -407,6 +407,12 @@ div.mentor-card span.mentor-card-name {
   }
 }
 
+input[type="checkbox"] {
+  /* change "blue" browser chrome to yellow */
+  -webkit-filter: grayscale(100%) brightness(1.1);
+          filter: grayscale(100%) brightness(1.1);
+}
+
 div.mentor-profile div.picture-title {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -472,6 +478,10 @@ div.mentor-profile span.review-date {
 
 div.mentor-profile .left-card {
   padding-right: 7.5px;
+}
+
+div.mentor-profile .left-card-compensate {
+  padding-right: 15px;
 }
 
 div.mentor-profile .right-card {
@@ -1647,10 +1657,12 @@ div.chatBox div.text-window div.msg {
 
 div.chatBox div.text-window div.left {
   text-align: left;
+  margin-right: 40px;
 }
 
 div.chatBox div.text-window div.right {
   text-align: right;
+  margin-left: 40px;
 }
 
 div.chatBox div.text-window div.left div.msg {
@@ -1969,4 +1981,9 @@ select.form-control:hover {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
+}
+
+input[type="checkbox"] {
+  -webkit-filter: grayscale(100%) brightness(1.2);
+          filter: grayscale(100%) brightness(1.2);
 }

@@ -14,7 +14,7 @@ class Login extends Component {
   }
 
   renderMessageAlert() {
-    console.log("this is in the render")
+    // console.log("this is in the render")
     if (this.props.errorMessage) {
       return (
         <div className="message-info">
@@ -34,7 +34,7 @@ class Login extends Component {
     			  	<div className="col-xs-12 col-sm-12 offset-md-1 col-md-10 offset-lg-2 col-lg-8">
                 <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} >
                 <h2 className="header-tag">login</h2>
-                <h1 className="sub-header">Move your career <em>foward</em> today.</h1>
+                <h1 className="sub-header">Move your career<em>foward</em> today.</h1>
                 <div className="spacer30"></div>
                   {this.renderMessageAlert()}
                   <div className="form-group">

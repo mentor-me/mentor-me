@@ -4,7 +4,7 @@ import { reduxForm } from 'redux-form';
 import { signupUser, authError } from '../actions/auth.js';
 
 class Signup extends Component {
-  
+
   componentWillMount() {
     this.props.authError("");
   }
@@ -27,7 +27,7 @@ class Signup extends Component {
     });
   }
   renderMessageAlert() {
-    console.log("this is in the render")
+    // console.log("this is in the render")
     if (this.props.errorMessage) {
       return (
         <div className="message-info">
@@ -68,14 +68,14 @@ class Signup extends Component {
 
                   <div className="error-message">{learnerStyle.touched && learnerStyle.error ? learnerStyle.error : ''}</div>
                   <div className={`form-group ${learnerStyle.touched && learnerStyle.error ? 'has-danger' : ''}`}>
-                    <label ><small><strong>What is your prefered learning style.   </strong>   <em className="sub-form">Please hold command choose more than one</em></small></label>
+                    <label ><small><strong>What is your prefered learning style?</strong><em className="sub-form">Please hold command to choose more than one.</em></small></label>
                     <select  className="form-control form-muti"  multiple{...learnerStyle} >
                       {this.createLearnerStylePreferences()}
                     </select>
                   </div>
                   <div className="error-message">{meetingFormat.touched && meetingFormat.error ? meetingFormat.error : ''}</div>
                   <div className={`form-group ${meetingFormat.touched && meetingFormat.error ? 'has-danger' : ''}`}>
-                    <label ><small><strong>How would you like to meet.   </strong>  <em className="sub-form">Please hold command choose more than one</em></small></label>
+                    <label ><small><strong>How would you like to meet?</strong>  <em className="sub-form">Please hold command to choose more than one.</em></small></label>
                     <select className="form-control form-muti" multiple{...meetingFormat} >
                       {this.createMeetingFormatPreferences()}
                     </select>

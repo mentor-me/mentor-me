@@ -22,10 +22,10 @@ import {
 
 export function newSearchQuery(query) {
   return (dispatch, getState) => {
-    console.log('query: ', query)
+    // console.log('query: ', query)
     let state = getState();
     let searchableMentors = state.learner.searchableMentors;
-    let searchableList = mentorSearchByTerm(searchableMentors, query)
+    let searchableList = mentorSearchByTerm(searchableMentors, query);
     dispatch({
       type: MODIFIED_MENTORS,
       payload: searchableList
@@ -34,11 +34,9 @@ export function newSearchQuery(query) {
 }
 
 export function fetchPreferences(uid, zip, radius) {
-  const endpoint = `/api/learner/users/${1}/preferences`;
+  const endpoint = `/api/learner/users/${uid}/preferences`;
   return dispatch => {
-    dispatch({
-      type: LOADING_LEARNER_DASHBOARD
-    });
+    dispatch({ type: LOADING_LEARNER_DASHBOARD });
     axios.get(endpoint)
       .then(response => {
         let preferences = _.pick(response.data, 'id', 'academic', 'inPerson', 'visual', 'remote', 'radiusZip', 'radius');
@@ -47,12 +45,12 @@ export function fetchPreferences(uid, zip, radius) {
         fetchModifiedMentors(uid, preferences, dispatch)
         dispatch({
           type: LEARNER_PREFERENCES,
-          payload: preferences,
+          payload: preferences
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('fetchPreferences Error: ', err);
-    })
+    });
   };
 }
 
@@ -71,11 +69,9 @@ function fetchModifiedMentors(uid, formProps, dispatch) {
       type: SEARCHABLE_MENTORS,
       payload: modifiedResp
     });
-    dispatch({
-      type: LOADING_LEARNER_DASHBOARD_COMPLETE
-    });
+    dispatch({ type: LOADING_LEARNER_DASHBOARD_COMPLETE });
   })
-  .catch((err) => {
+  .catch(err => {
     console.log('putPreferences Error: ', err);
   });
 }
@@ -83,30 +79,22 @@ function fetchModifiedMentors(uid, formProps, dispatch) {
 export function fetchCurrentMentor(mentorObj) {
   let endpoint = `/api/mentor/users/${mentorObj.id}/reviews`;
   return (dispatch) => {
-    dispatch({
-      type: LOADING_MENTOR
-    });
-    dispatch({
-      type: CLEAR_MENTOR_REVIEWS
-    });
-    dispatch({
-      type: CLEAR_MENTOR
-    });
+    dispatch({ type: LOADING_MENTOR });
+    dispatch({ type: CLEAR_MENTOR_REVIEWS });
+    dispatch({ type: CLEAR_MENTOR });
     axios.get(endpoint)
     .then(response => {
       dispatch({
         type: CURRENT_MENTOR_REVIEWS,
         payload: response.data
-      })
+      });
       dispatch({
         type: CURRENT_MENTOR,
         payload: mentorObj
-      })
-      dispatch({
-        type: LOADING_MENTOR_COMPLETE
       });
+      dispatch({ type: LOADING_MENTOR_COMPLETE });
     })
-    .catch((err) => {
+    .catch(err => {
       console.log('fetchCurrentMentor Error: ', err);
     })
   }
@@ -122,7 +110,7 @@ export function submitReview(data) {
         payload: data
       });
     })
-    .catch((err) => {
+    .catch(err => {
       console.log('submitReview Error: ', err);
     })
   };
@@ -146,7 +134,7 @@ export function changePreferences(uid, formProps) {
         payload: data
       })
     })
-    .catch((err) => {
+    .catch(err => {
       console.log('changePreferences Error: ', err);
     });
   }

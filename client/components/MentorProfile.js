@@ -13,12 +13,18 @@ import { accessConversation, currentConversation, openChatBox } from '../actions
 class MentorProfile extends Component {
 
 componentWillMount() {
-  // local storage IS available at this stage
   let user = JSON.parse(localStorage.getItem('user'));
   this.props.fetchMentorReviews(user.id);
-  // if (user.secondary_role == 2) {
-    this.props.incrementTotalVisits(user.id);
-  // }
+}
+
+componentWillReceiveProps(nextProps) {
+  let { auth, currentMentor } = this.props;
+  if (nextProps.currentMentor.id != currentMentor.id) {
+    if (auth.secondary_role == 2) {
+      this.props.incrementTotalVisits(nextProps.currentMentor.id);
+      this.props.fetchMentorReviews(nextProps.currentMentor.id);
+    }
+  }
 }
 
 loadChatMessages(convo) {
@@ -121,12 +127,9 @@ renderTopCard() {
   }
 
   renderExpertiseCard() {
-    // CHANGE THIS
     let { Skills } = this.props.currentMentor;
-    // TODO: DO NOT HARD CODE THIS - FIND DIFF WAY TO ACCESS
-    // CURRENT MENTOR SKILLS FOR MENTOR!!!!
-    let tempPills = [ {title: 'coffee'}, {title: 'tea'} ];
-      let pills = tempPills.map((skill, i) => {
+    if (Skills) {
+      let pills = Skills.map((skill, i) => {
         return <SkillPill skill={ skill.title } key={ i } />
       })
       return (
@@ -142,6 +145,7 @@ renderTopCard() {
         </div>
       );
     }
+  }
 
   renderReview() {
     let { currentMentorReviews, currentMentor, mentor, auth } = this.props;
@@ -152,7 +156,12 @@ renderTopCard() {
   }
 
   render() {
-    let { loading } = this.props;
+
+    let { loading, auth } = this.props;
+
+    let width = auth.primary_role == 1 ? 'col-sm-12 left-card-compensate' : 'col-sm-6';
+    let variableCard = `${width} left-card`;
+
     if (loading) {
       return (
         <Loader />
@@ -166,7 +175,7 @@ renderTopCard() {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-6 left-card">
+            <div className={ variableCard }>
               { this.renderAboutCard() }
             </div>
             <div className="col-sm-6 right-card">

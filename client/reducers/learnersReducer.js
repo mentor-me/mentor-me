@@ -14,7 +14,7 @@ import {
 
 const INITIAL_STATE = {
   preferences: {},
-  currentMentor: {},
+  currentMentor: { id: null },
   currentMentorReviews: [],
   modifiedMentors : [],
   searchableMentors: [],

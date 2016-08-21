@@ -12,7 +12,7 @@ import {
 } from './actionTypes';
 
 export function authError(error) {
-  console.log("I'm in authError")
+  // console.log("I'm in authError")
   return {
     type: AUTH_ERROR,
     payload: error
@@ -53,7 +53,7 @@ function removeSensitiveUserData(data) {
  }
 
  export function signupUser(loginProps) {
-     console.log("this is in signup Learner", loginProps.learnerStyle[0])
+    //  console.log("this is in signup Learner", loginProps.learnerStyle[0])
 
   let data = {
     username: loginProps.username,
@@ -72,14 +72,13 @@ function removeSensitiveUserData(data) {
       inPerson: loginProps.meetingFormat[1] == "In Person" ? 'true' : 'false'
     }
   }
-
    return dispatch => {
      axios.post('/api/signup', data)
        .then(response => {
          let data = removeSensitiveUserData(response.data);
          localStorage.setItem('token', "response.headers.auth");
          localStorage.setItem('user', JSON.stringify(data));
-         console.log('sign up resp: ', response)
+        //  console.log('sign up resp: ', response)
          dispatch({
            type: AUTH_USER,
            payload: data
@@ -92,7 +91,6 @@ function removeSensitiveUserData(data) {
        });
    }
  }
-
 
 export function signoutUser(uid) {
    return dispatch => {
@@ -112,7 +110,7 @@ export function signoutUser(uid) {
      browserHistory.push('/');
      axios.put(`/api/logout/${uid}`)
      .then(response => {
-       console.log('Successfully signed out user.')
+      //  console.log('Successfully signed out user.')
      })
    }
  }
@@ -122,7 +120,7 @@ export function signoutUser(uid) {
 //////////////////////////////////////////
 
 export function signupMentor(loginProps) {
-  console.log("this is in singup mentor", loginProps.learnerStyle[0])
+  // console.log("this is in singup mentor", loginProps.learnerStyle[0])
  let data = {
    username: loginProps.username,
    firstname: loginProps.firstname,
@@ -131,7 +129,7 @@ export function signupMentor(loginProps) {
    email: loginProps.email,
    password: loginProps.password,
    description: loginProps.description,
-   skills: loginProps.skills.split(' '),
+   skills: loginProps.skills.split(',').map(skill => skill.trim()),
    zip: loginProps.zipCode,
    primary_role: "1",
    lastLogIn: new Date(),
@@ -142,9 +140,6 @@ export function signupMentor(loginProps) {
      inPerson: loginProps.meetingFormat[1] == "In Person" ? 'true' : 'false'
    }
  }
-
- console.log("data from mentor signup", data )
-
   return dispatch => {
     axios.post('/api/mentor/signup', data)
       .then(response => {
@@ -173,7 +168,6 @@ export function loginMentor(loginProps) {
         let data = removeSensitiveUserData(response.data);
         localStorage.setItem('token', "response.headers.auth");
         localStorage.setItem('user', JSON.stringify(data));
-        console.log(response.data)
         dispatch({
           type: AUTH_USER,
           payload: data
@@ -204,11 +198,11 @@ export function updateMentor(formProps, currentUser){
       inPerson: formProps.meetingFormat = "In Person" ? 'true' : 'false'
     }
   }
-  console.log("this is the data obj" , data)
+  // console.log("this is the data obj" , data)
   return dispatch => {
     axios.put(`/api/learner/${currentUser.id}/becomeAmentor`, data)
     .then(response => {
-      console.log("This is the response data obj", response.data);
+      // console.log("This is the response data obj", response.data);
       dispatch({
         type: AUTH_USER,
         payload: response.data
@@ -235,7 +229,7 @@ export function updateLearner(formProps, currentUser){
   return dispatch => {
     axios.put(`/api/mentor/${currentUser.id}/becomeAlearner`, data)
     .then(response => {
-      console.log("This is the response data obj", response.data);
+      // console.log("This is the response data obj", response.data);
       dispatch({
         type: AUTH_USER,
         payload: response.data
@@ -254,7 +248,7 @@ function getInitialConversations(uid, dispatch) {
   const endpoint = `/api/conversations/${uid}`;
   axios.get(endpoint)
     .then(response => {
-      console.log('User conversations----', response.data)
+      // console.log('User conversations----', response.data)
       dispatch({
         type: USER_CONVERSATIONS,
         payload: response.data
@@ -263,7 +257,7 @@ function getInitialConversations(uid, dispatch) {
       return convoIdArr;
     })
     .then( convoIdArr => {
-      console.log('convoIdArr', convoIdArr)
+      // console.log('convoIdArr', convoIdArr)
       convosWithUnreadMessages(convoIdArr, dispatch);
     })
     .catch( err => {
@@ -275,7 +269,7 @@ function convosWithUnreadMessages(convoIdArr, dispatch) {
   const endpoint = `/api/conversations/unread`;
   axios.put(endpoint, convoIdArr)
     .then(response => {
-      console.log('convosWithUnreadMessages----', response.data)
+      // console.log('convosWithUnreadMessages----', response.data)
       dispatch({
         type: ADD_NOTIFICATION,
         payload: response.data
