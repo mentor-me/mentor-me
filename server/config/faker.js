@@ -6,7 +6,7 @@ var userId = Math.floor(Math.random() * 50) + 1
 var mentorId = Math.floor(Math.random() * 4) + 1
 
 // buildLearnerUser(10)
- buildMentorUser(3)
+ buildMentorUser(5)
 // buildAppointmentData(5)
 // buildReviewData(5)
 
@@ -36,9 +36,9 @@ function getMentorDummyObj() {
       password       : faker.Internet.userName(),
       description    : " some description",
       skills         : ["lovemaking", "riding dirty"],
-      zip            : faker.Address.zipCode,
+      zip            : faker.Address.zipCode(),
       primary_role   : "1",
-      lastLogIn      : faker.Date.recent,
+      lastLogIn      : faker.Date.recent(),
       qualities    : {
           visual     : true,
           academic   : false,
@@ -51,23 +51,23 @@ function getMentorDummyObj() {
 };
 
 
-let data = {
-  username: loginProps.username,
-  firstname: loginProps.firstname,
-  lastname: loginProps.lastname,
-  availability: true,
-  email: loginProps.email,
-  password: loginProps.password,
-  zip: loginProps.zipCode,
-  secondary_role: "2",
-  lastLogIn: new Date(),
-  preferences: {
-    visual: loginProps.learnerStyle[0] == "Visual" ? 'true' : 'false',
-    academic: loginProps.learnerStyle[1] == "Academic" ? 'true' : 'false',
-    remote: loginProps.meetingFormat[0] == "Remote" ? 'true' : 'false',
-    inPerson: loginProps.meetingFormat[1] == "In Person" ? 'true' : 'false'
-  }
-}
+// let data = {
+//   username: loginProps.username,
+//   firstname: loginProps.firstname,
+//   lastname: loginProps.lastname,
+//   availability: true,
+//   email: loginProps.email,
+//   password: loginProps.password,
+//   zip: loginProps.zipCode,
+//   secondary_role: "2",
+//   lastLogIn: new Date(),
+//   preferences: {
+//     visual: loginProps.learnerStyle[0] == "Visual" ? 'true' : 'false',
+//     academic: loginProps.learnerStyle[1] == "Academic" ? 'true' : 'false',
+//     remote: loginProps.meetingFormat[0] == "Remote" ? 'true' : 'false',
+//     inPerson: loginProps.meetingFormat[1] == "In Person" ? 'true' : 'false'
+//   }
+// }
 
 function getLearnerDummyObj() {
 
