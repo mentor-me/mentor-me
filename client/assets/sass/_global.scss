@@ -232,3 +232,7 @@ select.form-control:hover {
   box-shadow: none;
   appearance: none;
 }
+
+input[type="checkbox"] {
+  filter: grayscale(100%) brightness(1.2);
+}

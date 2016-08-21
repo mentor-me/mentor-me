@@ -22,3 +22,7 @@ div.mentor-card {
     100% { transform: scale(1.01); }
   }
 }
+
+input[type="checkbox"] { /* change "blue" browser chrome to yellow */
+  filter: grayscale(100%) brightness(1.1);
+}

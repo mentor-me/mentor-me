@@ -63,24 +63,24 @@ class SignupMentor extends Component {
                   <div className="form-group">
                     <input type="text" className="form-control" placeholder="Last Name" {...lastname} />
                   </div>
-                  <div className="form-group">
-                    <input type="text" className="form-control" placeholder="Your Skills" {...skills} />
-                  </div>
                   <div className="error-message">{zipCode.touched && zipCode.error ? zipCode.error : ''}</div>
                   <div className={`form-group ${email.touched && email.error ? 'has-danger' : ''}`}>
                     <input type="text" className="form-control" placeholder="Zip Code" {...zipCode} />
                   </div>
-
+                  <div className="form-group">
+                    <label><small><strong>Enter your skills.</strong><em className="sub-form">Please seperate using commas.</em></small></label>
+                    <input type="text" className="form-control" placeholder="e.g. JavaScript, Python, Baking" {...skills} />
+                  </div>
                   <div className="error-message">{learnerStyle.touched && learnerStyle.error ? learnerStyle.error : ''}</div>
                   <div className={`form-group ${learnerStyle.touched && learnerStyle.error ? 'has-danger' : ''}`}>
-                    <label ><small><strong>What is your Qualities learning style.   </strong>   <em className="sub-form">Please hold command choose more than one</em></small></label>
+                    <label><small><strong>What is your learning style?</strong><em className="sub-form">Please hold command to choose more than one.</em></small></label>
                     <select  className="form-control form-muti"  multiple {...learnerStyle} >
                       {this.createLearnerStylePreferences()}
                     </select>
                   </div>
                   <div className="error-message">{meetingFormat.touched && meetingFormat.error ? meetingFormat.error : ''}</div>
                   <div className={`form-group ${meetingFormat.touched && meetingFormat.error ? 'has-danger' : ''}`}>
-                    <label ><small><strong>How would you like to meet.   </strong>  <em className="sub-form">Please hold command choose more than one</em></small></label>
+                    <label ><small><strong>How would you like to meet?</strong><em className="sub-form">Please hold command to choose more than one.</em></small></label>
                     <select className="form-control form-muti" multiple {...meetingFormat} >
                       {this.createMeetingFormatPreferences()}
                     </select>

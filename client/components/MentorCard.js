@@ -39,7 +39,7 @@ class MentorCard extends Component {
               <span className="mentor-card-rating pull-right">
                 <StarRatingComponent
                   name="rate1"
-                  value={ mentor.rating }
+                  value={ mentor.rating / 100 }
                   starCount={5}
                   starColor={"#d94744"}
                   editing={false}
@@ -49,7 +49,7 @@ class MentorCard extends Component {
             <div className="card-text" style={{"display": "table", "marginBottom": "10px"}}>
               { pills }
             </div>
-            <p className="card-text">
+            <p className="card-text card-description">
               { mentor.description }
             </p>
             <Link to={this.props.link} >
