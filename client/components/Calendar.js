@@ -3,9 +3,9 @@ import BigCalendar from 'react-big-calendar';
 import Moment from 'moment';
 import * as actions from '../actions/calendar';
 import Modal from 'react-modal';
-import Popup from './Popup.js'
-import AppointmentEdit from './AppointmentEdit.js'
-import {connect} from 'react-redux'
+import Popup from './Popup.js';
+import AppointmentEdit from './AppointmentEdit.js';
+import {connect} from 'react-redux';
 
 BigCalendar.setLocalizer(
   BigCalendar.momentLocalizer(Moment)
