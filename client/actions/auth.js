@@ -143,6 +143,8 @@ export function signupMentor(loginProps) {
    }
  }
 
+ console.log("data from mentor signup", data )
+
   return dispatch => {
     axios.post('/api/mentor/signup', data)
       .then(response => {

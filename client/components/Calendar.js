@@ -39,6 +39,7 @@ componentWillReceiveProps(nextProps){
       if (auth.currentUser.secondary_role === "2") {
             console.log( "*******auth.currentUser.secondary_role = 2")
         this.props.fetchAppointments(userId);
+
     }  else if (auth.currentUser.primary_role === "1"){
             console.log( "*******auth.currentUser.primary_role = 1")
         this.props.fetchMentorAppointments(userId);
@@ -61,12 +62,27 @@ componentWillReceiveProps(nextProps){
 
   open(slotInfo) {
 
+
+   console.log( "inside open ")
+    const { auth } = this.props;
+
+    let user = JSON.parse(localStorage.getItem('user'));
+    let userId = user.id
+
+    if (auth.authenticated && auth.currentUser) {
+      if (auth.currentUser.secondary_role === "2") {
+
+
     this.props.selectedSlot(slotInfo)
 
     this.setState({
       editModalIsOpen: false,
       modalIsOpen: true
     });
+
+      }
+    }
+
   }
 
   close() {
