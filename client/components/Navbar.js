@@ -31,11 +31,16 @@ class Navbar extends Component {
 
   loadChatMessages(convo) {
     // console.log('clicked conversation!', convo);
+    let mentorObj;
     let { chat, auth, chatBox, mentorList } = this.props;
     let conversationWith = convo.name.replace(auth.currentUser.username, '');
     socket.emit('disconnect chat', chat.currentConversation.id);
     socket.emit('chat mounted', convo.id);
-    let mentorObj = mentorList.filter(mentor => mentor.username == conversationWith);
+    if (auth.currentUser.secondary_role == "2") {
+      mentorObj = mentorList.filter(mentor => mentor.username == conversationWith);
+    } else {
+      mentorObj = [{ availability: false }];
+    }
     this.props.currentConversation({
       id: convo.id,
       recipient: conversationWith,
@@ -43,8 +48,8 @@ class Navbar extends Component {
     });
     this.props.removeNotification(convo.id);
     this.props.markAsRead(convo.id);
-    if (!chatBox.open) { this.props.openChatBox(); }
     this.props.fetchMessages( convo.id );
+    if (!chatBox.open) { this.props.openChatBox(); }
   }
 
   onlineList() {

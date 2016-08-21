@@ -13,7 +13,6 @@ class MentorLogin extends Component {
     this.props.loginMentor(formProps);
   }
   renderMessageAlert() {
-    console.log("this is in the render")
     if (this.props.errorMessage) {
       return (
         <div className="message-info">

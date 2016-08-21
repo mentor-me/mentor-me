@@ -480,6 +480,10 @@ div.mentor-profile .left-card {
   padding-right: 7.5px;
 }
 
+div.mentor-profile .left-card-compensate {
+  padding-right: 15px;
+}
+
 div.mentor-profile .right-card {
   padding-left: 7.5px;
 }
@@ -1653,10 +1657,12 @@ div.chatBox div.text-window div.msg {
 
 div.chatBox div.text-window div.left {
   text-align: left;
+  margin-right: 40px;
 }
 
 div.chatBox div.text-window div.right {
   text-align: right;
+  margin-left: 40px;
 }
 
 div.chatBox div.text-window div.left div.msg {

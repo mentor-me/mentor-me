@@ -48,7 +48,7 @@ class ChatBox extends Component {
       this.setState({
         messages: [...nextProps.messages],
         loading: false
-      }, () => this.scrollToBottom() );
+      }, () => this.scrollToBottom().bind(this) );
     }
   }
 
