@@ -1,8 +1,8 @@
 # **MENTOR ME**
 
-##### https://getmentor.me
+[www.getmentor.me](https://getmentor.me)
 
-* [API Documentation](https://dl.dropboxusercontent.com/u/106304615/MentorMeDocumentation.pdf)
+[API Documentation](https://dl.dropboxusercontent.com/u/106304615/MentorMeDocumentation.pdf)
 
 ### Quick Start
 `$ git clone https://github.com/mentor-me/mentor-me.git`  
