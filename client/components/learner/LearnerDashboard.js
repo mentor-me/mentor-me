@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchPreferences } from '../actions/learners';
-import { mentorSortPrefs } from '../utils/utils';
+import { fetchPreferences } from '../../actions/learners';
+import { mentorSortPrefs } from '../../utils/utils';
 
-/* Sub Components */
 import MentorCard from './MentorCard';
 import Search from './Search';
 import LearnerPreferences from './LearnerPreferences';
-import Loader from './Loader';
+import Loader from '../universal/Loader';
 
 class LearnerDashboard extends Component {
 
   componentWillMount() {
-    /* Hard coding UID for dev purposes */
-    /* Omit second argument unless passing in zip  */
     let user = JSON.parse(localStorage.getItem('user'));
     this.props.fetchPreferences(user.id);
   }
@@ -24,8 +21,6 @@ class LearnerDashboard extends Component {
     if(mentors.length === 0 ) {
       return <div className="message-info">We did not find anyone matching your search terms </div>
     }
-    /* Wait until mentors prop exists  */
-    /* TODO: incorporate redux fetch / fetch-complete prop  */
     if(mentors){
       return mentors.map((mentor, i) => {
         if (mentor) {
@@ -34,7 +29,6 @@ class LearnerDashboard extends Component {
         }
       });
     }
-
   }
 
   render() {

@@ -18,6 +18,7 @@
 + Redux-Thunk
 + Babel
 + Webpack
++ Gulp
 + Socket.io
 + Sequelize
 + Node

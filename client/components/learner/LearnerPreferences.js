@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { reduxForm } from 'redux-form';
 
-import { changePreferences, fetchModifiedMentors, fetchPreferences } from '../actions/learners';
-import { mentorSortPrefs } from '../utils/utils';
+import { changePreferences, fetchModifiedMentors, fetchPreferences } from '../../actions/learners';
+import { mentorSortPrefs } from '../../utils/utils';
 
 /* Redux Form Fields */
 export const fields = ['visual', 'academic', 'remote', 'inPerson', 'radiusZip', 'radius'];

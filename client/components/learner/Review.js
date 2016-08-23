@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import { submitReview, fetchCurrentMentor } from '../actions/learners';
+import { submitReview, fetchCurrentMentor } from '../../actions/learners';
 import StarRatingComponent from 'react-star-rating-component';
 
 class Review extends Component {

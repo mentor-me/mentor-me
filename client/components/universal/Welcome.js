@@ -45,7 +45,7 @@ export default class Welcome extends Component {
           </form>
         </div>
         <div id="become_mentor" >
-          <h1>Give back and become a mentor. Sign up today and help someone change thier life.</h1>
+          <h1>Give back and become a mentor. Sign up today and help someone change their life.</h1>
           <Link to={"/become"}><button className="btn-accent" > Sign Up </button></Link>
         </div>
         <footer>

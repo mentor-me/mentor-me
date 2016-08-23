@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 /* Sub Components */
-import LearnerProfileForm from './learner/learnerProfileForm';
-import MentorProfileForm  from './mentor/mentorProfileForm';
+import LearnerProfileForm from '../learner/learnerProfileForm';
+import MentorProfileForm  from '../mentor/mentorProfileForm';
 
 class Profile extends Component {
   constructor(props) {

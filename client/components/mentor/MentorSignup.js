@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { reduxForm } from 'redux-form';
-import { signupMentor, authError } from '../actions/auth.js';
+import { signupMentor, authError } from '../../actions/auth.js';
 
 
 class SignupMentor extends Component {
