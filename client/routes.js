@@ -1,13 +1,10 @@
 import React from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
-/* General Purpose Components */
 import App from './components/App';
 import Welcome from './components/Welcome';
 import Conversations from './components/Conversations';
 import Messages from './components/Messages'
-
-/* Learner Related Components */
 import Login from './components/Login';
 import Signup from './components/Signup';
 import LearnerDashboard from './components/LearnerDashboard';
@@ -17,14 +14,11 @@ import Calendar from './components/Calendar';
 import Review from './components/Review';
 import Profile from './components/Profile';
 import MentorProfile from './components/MentorProfile';
-// still in testing
 import authUser from './components/auth/auth_user';
-/* Mentor Related Components */
 import MentorSignup from './components/MentorSignup';
 import MentorLogin from './components/MentorLogin';
 import Mentor from './components/Mentor';
 import VideoChatPage from './components/VideoChatPage';
-
 
 const routes = (
     <Route path="/" component={App} >
