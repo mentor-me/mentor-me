@@ -105,7 +105,7 @@ export function postMessage(conversationId, data) {
   return dispatch => {
     axios.post(endpoint, data)
     .then(response => {
-      console.log('message successfully posted to db', response)
+      // console.log('message successfully posted to db', response)
     })
     .catch(err => {
       console.log('postMessage Error: ', err);
@@ -118,7 +118,7 @@ export function markAsRead(conversationId) {
   return dispatch => {
     axios.put(endpoint)
     .then(response => {
-      console.log('all messages in this convo now marked as read');
+      // console.log('all messages in this convo now marked as read');
     })
     .catch(err => {
       console.log('mark msgs as read Error: ', err);

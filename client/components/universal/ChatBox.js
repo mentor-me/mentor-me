@@ -6,9 +6,16 @@ import moment from 'moment';
 import Linkify from 'react-linkify';
 import { Link, browserHistory } from 'react-router';
 
-import { fetchMessages, postMessage, clearMessages, saveMessage, receiveSocket, closeChatBox, addNotification } from '../actions/chat';
 import Message from './Message';
 import Loader from './Loader';
+
+import { fetchMessages,
+         postMessage,
+         clearMessages,
+         saveMessage,
+         receiveSocket,
+         closeChatBox,
+         addNotification } from '../../actions/chat';
 
 class ChatBox extends Component {
   constructor(props) {
@@ -48,7 +55,7 @@ class ChatBox extends Component {
       this.setState({
         messages: [...nextProps.messages],
         loading: false
-      }, () => this.scrollToBottom().bind(this) );
+      }, () => this.scrollToBottom() );
     }
   }
 
@@ -113,7 +120,6 @@ class ChatBox extends Component {
       recipient: currentConversation.recipient,
       from: auth.currentUser.id
     });
-    // TODO: NOT POSTING TO DB
     // this.newMessage(newMessage);
     browserHistory.push(`/${invitorRole}/${auth.currentUser.username}/videochat/${auth.currentUser.id}`)
     // this.props.postMessage(currentConversation.id, newMessage);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 var ReactDOM = window.ReactDOM = require('react-dom');
-import VideoWindow from '../components/VideoWindow'
+import VideoWindow from '../components/universal/VideoWindow'
 import React, { Component } from 'react';
 import {browserHistory
 } from 'react-router';

@@ -7,8 +7,8 @@ import SkillPill from './SkillPill';
 import ReviewEntry from './ReviewEntry';
 import Loader from './Loader';
 
-import { fetchMentorReviews, incrementTotalVisits } from '../actions/mentors';
-import { accessConversation, currentConversation, openChatBox } from '../actions/chat';
+import { fetchMentorReviews, incrementTotalVisits } from '../../actions/mentors';
+import { accessConversation, currentConversation, openChatBox } from '../../actions/chat';
 
 class MentorProfile extends Component {
 

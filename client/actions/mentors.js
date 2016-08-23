@@ -25,7 +25,7 @@ export function incrementTotalVisits(uid) {
   return (dispatch) => {
     axios.put(endpoint)
     .then(response => {
-      console.log('increment total visits success.');
+      // console.log('increment total visits success.');
     })
     .catch(err => {
       console.log('increment total visits error: ', err);

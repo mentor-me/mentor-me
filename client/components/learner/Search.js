@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import { newSearchQuery } from '../actions/learners';
-
 import _ from 'underscore';
 
+import { newSearchQuery } from '../../actions/learners';
 
 class Search extends Component {
   constructor(props) {

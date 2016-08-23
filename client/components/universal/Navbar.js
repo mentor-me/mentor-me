@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
-import { signoutUser } from '../actions/auth';
+import { signoutUser } from '../../actions/auth';
 import _ from 'underscore';
 import { fetchConversations,
          currentConversation,
@@ -11,7 +11,7 @@ import { fetchConversations,
          fetchMessages,
          clearMessages,
          markAsRead
-       } from '../actions/chat';
+       } from '../../actions/chat';
 
 class Navbar extends Component {
 
@@ -90,7 +90,7 @@ class Navbar extends Component {
       if (auth.currentUser.secondary_role == "2") {
         return (
           <ul className="nav navbar-nav pull-xs-right">
-            <li className="nav-item" onClick={ () => console.log('clicked messages!') } >
+            <li className="nav-item" >
               <DropdownButton
                 eventKey="4"
                 title={ chat.notifications.length ? <i className="fa fa-comments-o" /> : <i className="fa fa-comments-o none" /> }
