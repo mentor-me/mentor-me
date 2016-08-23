@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { getToken } from '../actions/video.js'
+import { getToken } from '../../actions/video.js'
 import VideoWindow from './VideoWindow'
 import Loader from './Loader';
 

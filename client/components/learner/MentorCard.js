@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-
-// import TimeAgo from 'react-timeago';
 import StarRatingComponent from 'react-star-rating-component';
 
-import MentorProfile from './MentorProfile';
-import SkillPill from './SkillPill';
+import MentorProfile from '../universal/MentorProfile';
+import SkillPill from '../universal/SkillPill';
 
-import { fetchCurrentMentor } from '../actions/learners';
+import { fetchCurrentMentor } from '../../actions/learners';
 
 class MentorCard extends Component {
 

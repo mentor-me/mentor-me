@@ -20,22 +20,22 @@ export default class Welcome extends Component {
               <div className="col-xs-12 col-sm-12 col-md-4  col-lg-4">
                 <div className="callout">
                   <i className="fa fa-comment-o" aria-hidden="true"></i>
-                  <h2>Chat built In</h2>
-                  <p>Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget.</p>
+                  <h2>Chat Built-In</h2>
+                  <p>Search our directory of top-notch professionals for the perfect mentor today and communicate with them via secured peer-to-peer, real-time chat.</p>
                 </div>
               </div>
               <div className="col-xs-12 col-sm-12 col-md-4  col-lg-4">
                 <div className="callout">
                   <i className="fa fa-desktop" aria-hidden="true"></i>
                   <h2>Video Chat</h2>
-                  <p>Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget.</p>
+                  <p>There is no need to leave our platform for your future meetings. Mentor Me provides fast video chat that can be launched directly from your private messanger.</p>
                 </div>
               </div>
               <div className="col-xs-12 col-sm-12 col-md-4  col-lg-4">
                 <div className="callout">
                   <i className="fa fa-question-circle-o" aria-hidden="true"></i>
                   <h2>Mentoring</h2>
-                  <p>Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget.</p>
+                  <p>With the rapid pace of today's industries, it has never been more vital to stay abreast by connecting with working professional in the areas you're most interested in.</p>
                 </div>
               </div>
             </div>
@@ -45,7 +45,7 @@ export default class Welcome extends Component {
           </form>
         </div>
         <div id="become_mentor" >
-          <h1>Give back by becoming a mentor. Sign up today and help someone change thier life</h1>
+          <h1>Give back and become a mentor. Sign up today and help someone change their life.</h1>
           <Link to={"/become"}><button className="btn-accent" > Sign Up </button></Link>
         </div>
         <footer>

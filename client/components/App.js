@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Navbar from './Navbar';
-import ChatBox from './ChatBox';
+import Navbar from './universal/Navbar';
+import ChatBox from './universal/ChatBox';
 
 export default class App extends Component {
   render() {

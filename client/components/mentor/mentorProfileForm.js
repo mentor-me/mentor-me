@@ -3,7 +3,6 @@ import { Link } from 'react-router';
 import { reduxForm } from 'redux-form';
 import { signupMentor, updateLearner } from '../../actions/auth.js';
 
-
 class BecomeMentor extends Component {
 
   handleFormSubmit(formProps) {
