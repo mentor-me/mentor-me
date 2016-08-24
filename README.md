@@ -9,7 +9,7 @@
 `$ cd mentor-me`  
 `$ npm i`  
 `$ npm start`  
-`$ npm run bundle`
+`$ npm run bundle`  
 `$ npm run sass`
 
 ### Stack
